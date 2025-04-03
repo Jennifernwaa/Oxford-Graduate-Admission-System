@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+    <style>
+        body {
+            max-width: 1200px;
+            margin: auto;
+            background-color: #fff;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            color: #000;
+        }
+        .form-section {
+            background: white;
+            padding: 15px;
+            border: 1px solid black;
+            margin-bottom: 20px;
+        }
+        .table-bordered td, .table-bordered th {
+            border: 1px solid #000 !important;
+            text-align: center;
+            vertical-align: middle;
+            width: 40px;
+            height: 40px;
+        }
+
+        legend {
+            font-weight: bold;
+            font-size: 28px;
+            text-transform: uppercase;
+        }
+        label {
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 15px;
+        }
+        label.no-uppercase {
+            text-transform: none;
+            font-weight: normal;
+        }
+        .form-control {
+            border: 1px solid black;
+        }
+        .logo {
+            height: 60px;
+            width: auto;
+        }
+        input[type="checkbox"] {
+            transform: scale(1.5); /* Increase size */
+            margin: 5px;
+        }
+        .oxford-blue-header.header {
+            background-color: #002147; /* Oxford Blue */
+            padding: 20px; /* Adds spacing inside the header */
+        }
+        .paddingbetweencards{
+            margin-bottom: 20px;
+        }
+        .whitetext{
+            color:#ffff
+        }
+        .oxford-blue-header {
+            background-color: #002147; 
+        }
+        .progressbarstyle{
+            margin: 10px;
+        }
+          .nav-btn {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .btn-primary {
+             background-color: #002147 !important;
+              border-color: #002147 !important;
+        }
+    </style>
+</head>
+<body>
+    <header class="oxford-blue-header header">
+        <img src="oxlogo-rect-border.svg" alt="logo" class="logo">
+
+    </header>
+    <div class="progress progressbarstyle border border-black" role="progressbar" aria-label="Default striped example" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-bar progress-bar-striped" style="width: 70%">70%</div>
+      </div>
+    <fieldset class="form-section">
+    <form>
+        <fieldset class="form-section">
+            <legend>Section P: Final checklist</legend>
+            <p>Please confirm that you have:</p>
+    
+            <div class="form-check">
+                <input class="form-check-input border border-black" type="checkbox" value="" id="filledSections">
+                <label class="form-check-label" for="filledSections">Filled out all required sections of the application form</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input border border-black" type="checkbox" value="" id="gatheredMaterials">
+                <label class="form-check-label" for="gatheredMaterials">Gathered together all supporting materials required for your course</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input border border-black" type="checkbox" value="" id="requestedReferences">
+                <label class="form-check-label" for="requestedReferences">Requested references from your named referees and told them the correct deadline</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input border border-black" type="checkbox" value="" id="enclosedFee">
+                <label class="form-check-label" for="enclosedFee">Enclosed the application fee of £75, provided the payment order number or requested a relevant fee waiver</label>
+            </div>
+    
+            <p><strong>Before reading and signing the declaration below, please complete Appendix A</strong></p>
+        </fieldset>
+
+        <fieldset class="form-section">
+            <legend>Appendix A: Additional Information</legend>
+            <p>The information you provide in this section will not form part of the selection process and will not be seen by anyone involved in assessing your application.</p>
+            <p>The University of Oxford embraces diversity and seeks to achieve equity in the experience, progression and achievement of all our students. The personal data we collect from applicants and current students enables us to meet our statutory obligations under the Equality Act and assess the impact of our policies and practices on people from different equality groups and put in place appropriate provision and support for all students. We recognise that these are sensitive questions, but hope you will feel able to provide this information, in confidence, to support our efforts to create a more inclusive, diverse and equitable Oxford. Please see the Equality and Diversity Unit website www.admin.ox.ac.uk/eop/ for more information about equality at Oxford.</p>
+            <p>Your personal information will be treated in accordance with the General Data Protection Regulation (GDPR) and related UK data protection legislation. Full details are set out in the University's Postgraduate Applicant Privacy Policy (Appendix B).</p>
+            <h5><strong>Section 1: Ethnicity & Diversity</strong></h5>
+            <p><em>We recognise that these are sensitive questions, but hope you feel able to provide this information, in confidence, to support our efforts to create a more inclusive, diverse and equitable Oxford.</em></p>
+    
+            <div class="card paddingbetweencards">
+                <h5 class="card-header oxford-blue-header whitetext">With which ethnic group do you most identify?</h5>
+                <div class="card-body">
+            <table class="table table-bordered border-primary">
+                <tr>
+                    <td><div class="form-check">
+                        <input class="form-check-input border border-black" type="checkbox" value="" name="ethnicity" id="arab">
+                        <label class="form-check-label no-uppercase" for="arab">Arab</label>
+                    </div></td>
+                    <td><div class="form-check">
+                        <input class="form-check-input border border-black" type="checkbox" name="ethnicity" id="blackCaribbean" value="blackCaribbean">
+                        <label class="form-check-label no-uppercase" for="blackCaribbean">Black or Black British – Caribbean</label>
+                    </div></td>
+                    <td>
+                        <div class="form-check">
+                            <input class="form-check-input border border-black" type="checkbox" name="ethnicity" id="mixedWhiteAsian" value="mixedWhiteAsian">
+                            <label class="form-check-label no-uppercase" for="mixedWhiteAsian">Mixed – White and Asian</label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><div class="form-check">
+                        <input class="form-check-input border border-black" type="checkbox" name="ethnicity" id="asianIndian" value="asianIndian">
+                        <label class="form-check-label no-uppercase" for="asianIndian">Asian or Asian British - Indian</label>
+                    </div></td>
+                    <td><div class="form-check">
+                        <input class="form-check-input border border-black" type="checkbox" name="ethnicity" id="blackAfrican" value="blackAfrican">
+                        <label class="form-check-label no-uppercase" for="blackAfrican">Black or Black British - African</label>
+                    </div></td>
+                    <td><div class="form-check">
+                        <input class="form-check-input border border-black" type="checkbox" name="ethnicity" id="mixedOther" value="mixedOther">
+                        <label class="form-check-label no-uppercase" for="mixedOther">Other mixed background</label>
+                    </div></td>
+                </tr>
+                <tr>
+                    <td><div class="form-check">
+                        <input class="form-check-input border border-black" type="checkbox" name="ethnicity" id="asianPakistani" value="asianPakistani">
+                        <label class="form-check-label no-uppercase" for="asianPakistani">Asian or Asian British - Pakistani</label>
+                    </div></td>
+                    <td><div class="form-check">
+                        <input class="form-check-input border border-black" type="checkbox" name="ethnicity" id="otherBlack" value="otherBlack">
+                        <label class="form-check-label no-uppercase" for="otherBlack">Other Black background</label>
+                    </div></td>
+                    <td><div class="form-check">
+                        <input class="form-check-input border border-black" type="checkbox" name="ethnicity" id="otherEthnic" value="otherEthnic">
+                        <label class="form-check-label no-uppercase" for="otherEthnic">Other ethnic background</label>
+                    </div></td>
+                </tr>
+                <tr>
+                    <td><div class="form-check">
+                        <input class="form-check-input border border-black" type="checkbox" name="ethnicity" id="asianBangladeshi" value="asianBangladeshi">
+                        <label class="form-check-label no-uppercase" for="asianBangladeshi">Asian or Asian British - Bangladeshi</label>
+                    </div></td>
+                    <td><div class="form-check">
+                        <input class="form-check-input border border-black" type="checkbox" name="ethnicity" id="gypsyTraveller" value="gypsyTraveller">
+                        <label class="form-check-label no-uppercase" for="gypsyTraveller">Gypsy or Traveller</label>
+                    </div></td>
+                    <td><div class="form-check">
+                        <input class="form-check-input border border-black" type="checkbox" name="ethnicity" id="white" value="white">
+                        <label class="form-check-label no-uppercase" for="white">White</label>
+                    </div></td>
+                </tr>
+                <tr><td><div class="form-check">
+                    <input class="form-check-input border border-black" type="checkbox" name="ethnicity" id="chinese" value="chinese">
+                    <label class="form-check-label no-uppercase" for="chinese">Chinese</label>
+                </div></td>
+                <td><div class="form-check">
+                    <input class="form-check-input border border-black" type="checkbox" name="ethnicity" id="whiteCaribbean" value="whiteCaribbean">
+                    <label class="form-check-label no-uppercase" for="whiteCaribbean">Mixed - White and Black Caribbean</label>
+                </div></td>
+                <td><div class="form-check">
+                    <input class="form-check-input border border-black" type="checkbox" name="ethnicity" id="notKnown" value="notKnown">
+                    <label class="form-check-label no-uppercase" for="notKnown">Not known</label>
+                </div></td>
+            </tr>
+            <tr>
+                <td><div class="form-check">
+                    <input class="form-check-input border border-black" type="checkbox" name="ethnicity" id="otherAsian" value="otherAsian">
+                    <label class="form-check-label no-uppercase" for="otherAsian">Other Asian background</label>
+                </div></td>
+                <td><div class="form-check">
+                    <input class="form-check-input border border-black" type="checkbox" name="ethnicity" id="mixedAfrican" value="mixedAfrican">
+                    <label class="form-check-label no-uppercase" for="mixedAfrican">Mixed - White and Black African</label>
+                </div></td>
+                <td><div class="form-check">
+                    <input class="form-check-input border border-black" type="checkbox" name="ethnicity" id="preferNot" value="preferNot">
+                    <label class="form-check-label no-uppercase" for="preferNot">Prefer not to say</label>
+                </div></td>
+            </tr>
+        </table>
+        </div>
+        </div>
+
+        <div class="card paddingbetweencards">
+            <h5 class="card-header oxford-blue-header whitetext">What is your religion or belief? (Pick One)</h5>
+            <div class="card-body">
+                <div class="form-check">
+                    <input class=" form-check-input border border-black" type="radio" name="religion" id="noReligion" value="noReligion">
+                    <label class="form-check-label no-uppercase" for="noReligion">No religion</label>
+                </div>
+                <div class="form-check">
+                    <input class=" form-check-input border border-black" type="radio" name="religion" id="buddhist" value="buddhist">
+                    <label class="form-check-label no-uppercase" for="buddhist">Buddhist</label>
+                </div>
+                <div class="form-check">
+                    <input class=" form-check-input border border-black" type="radio" name="religion" id="christian" value="christian">
+                    <label class="form-check-label no-uppercase" for="christian">Christian</label>
+                </div>
+                <div class="form-check">
+                    <input class=" form-check-input border border-black" type="radio" name="religion" id="hindu" value="hindu">
+                    <label class="form-check-label no-uppercase" for="hindu">Hindu</label>
+                </div>
+                <div class="form-check">
+                    <input class=" form-check-input border border-black" type="radio" name="religion" id="jewish" value="jewish">
+                    <label class="form-check-label no-uppercase" for="jewish">Jewish</label>
+                </div>
+                <div class="form-check">
+                    <input class=" form-check-input border border-black" type="radio" name="religion" id="muslim" value="muslim">
+                    <label class="form-check-label no-uppercase" for="muslim">Muslim</label>
+                </div>
+                <div class="form-check">
+                    <input class=" form-check-input border border-black" type="radio" name="religion" id="sikh" value="sikh">
+                    <label class="form-check-label no-uppercase" for="sikh">Sikh</label>
+                </div>
+                <div class="form-check">
+                    <input class=" form-check-input border border-black" type="radio" name="religion" id="otherReligion" value="otherReligion">
+                    <label class="form-check-label no-uppercase" for="otherReligion">Other religion</label>
+                </div>
+                <div class="form-check">
+                    <input class=" form-check-input border border-black" type="radio" name="religion" id="preferNotReligion" value="preferNotReligion">
+                    <label class="form-check-label no-uppercase" for="preferNotReligion">Prefer not to say</label>
+                </div>
+            </div>       
+            </div>
+        
+        <div class="card paddingbetweencards">
+            <h5 class="card-header oxford-blue-header whitetext">What is your sexual orientation? (Pick One)</h5>
+        <div class="card-body">
+            <div class="form-check">
+                <input class=" form-check-input border border-black" type="radio" name="sexualOrientation" id="heterosexual" value="heterosexual">
+                <label class="form-check-label no-uppercase" for="heterosexual">Heterosexual</label>
+            </div>
+            <div class="form-check">
+                <input class=" form-check-input border border-black" type="radio" name="sexualOrientation" id="gayMan" value="gayMan">
+                <label class="form-check-label no-uppercase" for="gayMan">Gay man</label>
+            </div>
+            <div class="form-check">
+                <input class=" form-check-input border border-black" type="radio" name="sexualOrientation" id="gayWoman" value="gayWoman">
+                <label class="form-check-label no-uppercase" for="gayWoman">Gay woman/lesbian</label>
+            </div>
+            <div class="form-check">
+                <input class=" form-check-input border border-black" type="radio" name="sexualOrientation" id="bisexual" value="bisexual">
+                <label class="form-check-label no-uppercase" for="bisexual">Bisexual</label>
+            </div>
+            <div class="form-check">
+                <input class=" form-check-input border border-black" type="radio" name="sexualOrientation" id="otherSexualOrientation" value="otherSexualOrientation">
+                <label class="form-check-label no-uppercase" for="otherSexualOrientation">Other sexual orientation</label>
+            </div>
+            <div class="form-check">
+                <input class=" form-check-input border border-black" type="radio" name="sexualOrientation" id="preferNotSexualOrientation" value="preferNotSexualOrientation">
+                <label class="form-check-label no-uppercase" for="preferNotSexualOrientation">Prefer not to say</label>
+        </div>
+        </div>
+        </div>
+
+        <div class="card paddingbetweencards">
+        <h5 class="card-header oxford-blue-header whitetext">What is your gender? (Pick One)</h5>
+        <div class="card-body">
+            <div class="form-check">
+                <input class=" form-check-input border border-black" type="radio" name="gender" id="male" value="male">
+                <label class="form-check-label no-uppercase" for="male">Male</label>
+            </div>
+            <div class="form-check">
+                <input class=" form-check-input border border-black" type="radio" name="gender" id="female" value="female">
+                <label class="form-check-label no-uppercase" for="female">Female</label>
+            </div>
+            <div class="form-check">
+                <input class=" form-check-input border border-black" type="radio" name="gender" id="otherGender" value="otherGender">
+                <label class="form-check-label no-uppercase" for="otherGender">Other</label>
+            </div>
+            <div class="form-check">
+                <input class=" form-check-input border border-black" type="radio" name="gender" id="preferNotGender" value="preferNotGender">
+                <label class="form-check-label no-uppercase" for="preferNotGender">Prefer not to say</label>
+            </div>
+        </div>
+        </div>
+        
+        <div class="card paddingbetweencards">
+            <h5 class="card-header oxford-blue-header whitetext">Do you have day-to-day caring responsibilities for:</h5>
+        <div class="card-body">
+            <div class="form-check">
+                <input class=" form-check-input border border-black" type="checkbox" value="" id="child">
+                <label class="form-check-label no-uppercase" for="child">A child/children</label>
+            </div>
+            <div class="form-check">
+                <input class=" form-check-input border border-black" type="checkbox" value="" id="disabledAdult">
+                <label class="form-check-label no-uppercase" for="disabledAdult">A disabled adult</label>
+            </div>
+            <div class="form-check">
+                <input class=" form-check-input border border-black" type="checkbox" value="" id="olderAdult">
+                <label class="form-check-label no-uppercase" for="olderAdult">An older adult</label>
+            </div>
+            <div class="form-check">
+                <input class=" form-check-input border border-black" type="checkbox" value="" id="otherCare">
+                <label class="form-check-label no-uppercase" for="otherCare">Other</label>
+            </div>
+            <div class="form-check">
+                <input class=" form-check-input border border-black" type="checkbox" value="" id="noCare">
+                <label class="form-check-label no-uppercase" for="noCare">None</label>
+            </div>
+            <div class="form-check">
+                <input class=" form-check-input border border-black" type="checkbox" value="" id="preferNotCare">
+                <label class="form-check-label no-uppercase" for="preferNotCare">Prefer not to say</label>
+            </div>
+        </div>
+        </div>
+        </fieldset>
+
+        <!-- <fieldset class="form-section">
+        <legend>Section Q: Data Protection Notice and Declaration</legend>
+        <p>Please read the following Data Protection Notice and Declaration carefully. By signing the Declaration you confirm your acceptance of the statements which form the Declaration. If you do not sign this form, we cannot process your application.</p>
+    
+        <h4>DATA PROTECTION NOTICE</h4>
+        <p>Personal data will be collected, stored and retained in accordance with the General Data Protection Regulation and related UK data protection legislation. Please read the University's Data Protection Notice (Appendix B) before accepting the terms and conditions and submitting your application.</p>
+    
+        <p>PLEASE NOTE: All admissions decisions taken by the University of Oxford and its Colleges rely on the statements made on the application form and on the supporting documents supplied by you and your referees. This information will be held and used for the purpose of processing your application for study, for student administration and, where relevant, for funding purposes.</p>
+        <p>If the University, or any College of the University, believes that any information or statement, including references, contained on your application form may not be true, accurate, current and complete, or that any document submitted in support of your application may not be entirely your own original work, except where clearly stated otherwise, it may take any necessary steps, including contacting third parties, toverify that information or statement, or to confirm that any supporting document is entirely your own original work, except where clearly stated otherwise.</p>
+        <p>As part of the admissions process the University may use a plagiarism detection system. This system screens any written work submitted as part of your application for plagiarism, paraphrasing and collusion. The plagiarism detection system will store on its database any written work submitted for screening. For the University’s definition of plagiarism and more information on how the plagiarism detection system works please see the Application Guide (<a href="https://www.ox.ac.uk/admissions/graduate/applying-to-oxford/university-policies/plagiarism?wssl=1">Policies</a>)</p>
+        <p>If, in the opinion of the University, or any College of the University, any information or statement, including references, provided on this	application form is not true, accurate, current and complete, or any supporting document is not entirely your own original work, except where clearly stated otherwise, the University, or any College of the University, retains the right to reject your application. If you have been made an offer by the University, or any College of the University, then the University, or any College of the University, may in these circumstances withdraw or amend that offer, or terminate your contact with the University or College if you have accepted your offer. If you have been admitted as a student, you may be subject to disciplinary action which could result in your expulsion from the University and your College.</p>
+        
+        <h4>DECLARATION</h4>
+        <div class="form-check">
+            <input class="  form-check-input border border-black border border-black" type="checkbox" name="confirm1" id="confirm1" value="confirm1">
+        <p><strong>I confirm that the information I have provided on this application form is (to the best of my knowledge) true, accurate, current and complete; and I agree to notify the University promptly if any information contained on this application form should change, in order to keep it true, accurate, current and complete.</strong></p> 
+        </div>
+        <div class="form-check">
+            <input class="  form-check-input border border-black border border-black" type="checkbox" name="confirm1" id="confirm1" value="confirm1">
+            <p><strong>I confirm that all supporting work submitted as part of this application is entirely my own original work, except where clearly stated otherwise, and does not include any plagiarised elements.</strong></p>
+        </div>
+        <div class="form-check">
+            <input class="  form-check-input border border-black border border-black" type="checkbox" name="confirm1" id="confirm1" value="confirm1">
+            <p><strong>I accept that if I become a student at the University of Oxford the terms of the University’s Statue XVI (<a href="https://www.admin.ox.ac.uk/statutes/790-121.shtml">Terms & Condition</a>) relating to intellectual property will apply to me, and that the University will be entitledin accordance with those terms to claim ownership of intellectual property which I produce.</strong></p>
+        </div>
+
+        <p>Please sign in the box below and print your name to accept this declaration:</p>
+        <div class="mb-3">
+            <label for="signFile" class="form-label">SIGNATURE</label>
+            <input class="form-control" type="file" id="signFile">
+          </div>
+
+        <div class="form-group">
+            <label for="date">DATE</label>
+            <input type="date" class="form-control" id="date" required>
+        </div>
+        <br>
+
+        <div class="form-group">
+            <label for="printName" required>PLEASE PRINT NAME</label>
+            <input type="text" class="form-control" id="printName" required>
+        </div>
+    </fieldset> -->
+     <div class="nav-btn">
+        <input class="btn btn-warning" type="reset" value="Reset">
+        <a href="piksection.html" class="btn btn-primary">Continue to Next Section</a>
+    </div>
+    </form>
+</fieldset>
+</body>
+</html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+    <style>
+        body {
+            max-width: 1200px;
+            margin: auto;
+            background-color: #fff;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            color: #000;
+        }
+        .form-section {
+            background: white;
+            padding: 15px;
+            border: 1px solid black;
+            margin-bottom: 20px;
+        }
+        .table-bordered td, .table-bordered th {
+            border: 1px solid #000 !important;
+            text-align: center;
+            vertical-align: middle;
+            width: 40px;
+            height: 40px;
+        }
+
+        legend {
+            font-weight: bold;
+            font-size: 28px;
+            text-transform: uppercase;
+        }
+        label {
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 15px;
+        }
+        label.no-uppercase {
+            text-transform: none;
+        }
+        .form-control {
+            border: 1px solid black;
+        }
+        .logo {
+            height: 60px;
+            width: auto;
+        }
+        .oxford-blue-header.header {
+            background-color: #002147; /* Oxford Blue */
+            padding: 20px; /* Adds spacing inside the header */
+        }
+        .progressbarstyle{
+            margin: 10px;
+        }
+
+          .nav-btn {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .btn-primary {
+             background-color: #002147 !important;
+              border-color: #002147 !important;
+        }
+    </style>
+</head>
+<body>
+    <header class="oxford-blue-header header">
+        <img src="oxlogo-rect-border.svg" alt="logo" class="logo">
+    </header>
+    <div class="progress progressbarstyle border border-black"  role="progressbar" aria-label="Default striped example" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-bar progress-bar-striped" style="width: 50%">50%</div>
+      </div>
+    <form>
+    <fieldset class="form-section">
+        <legend>Section M: Proposed funding arrangements</legend>
+        <p>If you are not offered a scholarship by the University, please indicate the main source(s) of funding you plan to use to fund your fees and living expenses. <em>This will not affect the assessment of your application in any way.</em> Please do not include any Oxford scholarships.</p>
+        <div class="form-group">
+            <label>I have information on my alternative funding arrangements.</label>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input border border-primary-subtle" type="radio" name="fundingInfo" id="fundingInfoYes" value="yes">
+                <label class="form-check-label" for="fundingInfoYes">Yes</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input border border-primary-subtle" type="radio" name="fundingInfo" id="fundingInfoNo" value="no">
+                <label class="form-check-label" for="fundingInfoNo">No</label>
+            </div>
+        </div>
+
+        <table class="table table-bordered mx-auto p-2">
+            <thead class="table-dark">
+                <tr>
+                    <th>Proposed Funding Sources e.g. family, scholarship, etc. (If government funds or foundations, please specify)</th>
+                    <th>Amount of funding per year (£)</th>
+                    <th>Period Covered (e.g. 1yr, 2yrs etc.)</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><textarea class="form-control" rows="3"></textarea></td>
+                    <td><div class="input-group mb-3">
+                        <span class="input-group-text">£</span>
+                        <input type="number" class="form-control" aria-label="Amount (to the nearest pound)" min="0">
+                      </div>
+                    </td>
+                    <td><input type="text" class="form-control"></td>
+                    <td>
+                        <div class="form-check">
+                            <input class="form-check-input border border-black" type="radio" value="" id="status1_1">
+                            <label class="form-check-label no-uppercase" for="status1_1">Intend to apply</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input border border-black" type="radio" value="" id="status1_2">
+                            <label class="form-check-label no-uppercase" for="status1_2">Applied for</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input border border-black" type="radio" value="" id="status1_3">
+                            <label class="form-check-label no-uppercase" for="status1_3">Firmly secured</label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><textarea class="form-control" rows="3"></textarea></td>
+                    <td><div class="input-group mb-3">
+                        <span class="input-group-text">£</span>
+                        <input type="number" class="form-control" aria-label="Amount (to the nearest pound)" min="0">
+                      </div>
+                    </td>
+                    <td><input type="text" class="form-control"></td>
+                    <td>
+                        <div class="form-check">
+                            <input class="form-check-input border border-black" type="radio" value="" id="status2_1">
+                            <label class="form-check-label no-uppercase" for="status2_1">Intend to apply</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input border border-black" type="radio" value="" id="status2_2">
+                            <label class="form-check-label no-uppercase" for="status2_2">Applied for</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input border border-black" type="radio" value="" id="status2_3">
+                            <label class="form-check-label no-uppercase" for="status2_3">Firmly secured</label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><textarea class="form-control" rows="3"></textarea></td>
+                    <td><div class="input-group mb-3">
+                        <span class="input-group-text">£</span>
+                        <input type="number" class="form-control" aria-label="Amount (to the nearest pound)" min="0">
+                      </div>
+                    </td>
+                    <td><input type="text" class="form-control"></td>
+                    <td>
+                        <div class="form-check">
+                            <input class="form-check-input border border-black" type="radio" value="" id="status3_1">
+                            <label class="form-check-label no-uppercase" for="status3_1">Intend to apply</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input border border-black" type="radio" value="" id="status3_2">
+                            <label class="form-check-label no-uppercase" for="status3_2">Applied for</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input border border-black" type="radio" value="" id="status3_3">
+                            <label class="form-check-label no-uppercase" for="status3_3">Firmly secured</label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><textarea class="form-control" rows="3"></textarea></td>
+                    <td><div class="input-group mb-3">
+                        <span class="input-group-text">£</span>
+                        <input type="number" class="form-control" aria-label="Amount (to the nearest pound)" min="0">
+                      </div></td>
+                    <td><input type="text" class="form-control"></td>
+                    <td>
+                        <div class="form-check">
+                            <input class="form-check-input border border-black" type="radio" value="" id="status4_1">
+                            <label class="form-check-label no-uppercase" for="status4_1">Intend to apply</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input border border-black" type="radio" value="" id="status4_2">
+                            <label class="form-check-label no-uppercase" for="status4_2">Applied for</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input border border-black" type="radio" value="" id="status4_3">
+                            <label class="form-check-label no-uppercase" for="status4_3">Firmly secured</label>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    
+        <p class="h4 fw-bold">Departmental studentship applications:</p>
+        <div class="form-group">
+            <label>Are you applying for an advertised studentship(s) competition(s)?</label>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input border border-primary-subtle" type="radio" name="studentshipApply" id="studentshipApplyYes" value="yes">
+                <label class="form-check-label" for="studentshipApplyYes">Yes</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input border border-primary-subtle" type="radio" name="studentshipApply" id="studentshipApplyNo" value="no">
+                <label class="form-check-label" for="studentshipApplyNo">No</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <p for="referenceCode"><strong>If yes, </strong>please provide the advertised reference code from the academic department webpages where the studentship is advertised:</p>
+            <td><textarea class="form-control" rows="2" id="referenceCode"></textarea></td>
+        </div>
+    
+        <legend>University of Oxford Scholarships:</legend>
+        <p style="text-align:justify">For many Oxford scholarships (<a href="www.graduate.ox.ac.uk/scholarships">Scholarships</a>), all eligible applicants are considered automatically. However, if you are eligible and wish to be considered for one of the six scholarships listed below, you need to tick the relevant box(es). Where a scholarship is marked with a '*', you also need to supply an additional supporting document by attaching it in the Supporting Documents section of this form. You can check the eligibility criteria and requirements for supporting documents by visiting the relevant scholarship links below. Please note that the University reserves the right to consider any eligible candidates for Oxford scholarships.</p>
+        <div class="form-check">
+            <input class="form-check-input border border-black" type="checkbox" value="" id="hillFoundation">
+            <label class="form-check-label" for="hillFoundation">Hill Foundation (www.graduate.ox.ac.uk/hill)</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input border border-black" type="checkbox" value="" id="ertegun">
+            <label class="form-check-label" for="ertegun">Mica and Ahmet Ertegun Postgraduate Scholarships in the Humanities* (www.graduate.ox.ac.uk/ertegun)</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input border border-black type="checkbox" value="" id="ocis">
+            <label class="form-check-label" for="ocis">Oxford Centre for Islamic Studies* (www.graduate.ox.ac.uk/ocis)</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input border border-black" type="checkbox" value="" id="weidenfeld">
+            <label class="form-check-label" for="weidenfeld">Weidenfeld-Hoffmann Scholarships and Leadership Programme* (www.graduate.ox.ac.uk/weidenfeld)</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input border border-black" type="checkbox" value="" id="oocdtp">
+            <label class="form-check-label" for="oocdtp">AHRC: OOC DTP* (https://www.oocdtp.ac.uk/)</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input border border-black" type="checkbox" value="" id="granduniondtp">
+            <label class="form-check-label" for="granduniondtp">Grand Union DTP * (www.granduniondtp.ac.uk/how-apply)</label>
+        </div>
+    </fieldset>
+    <div class="nav-btn">
+        <input class="btn btn-warning" type="reset" value="Reset">
+        <a href="jensection2.html" class="btn btn-primary">Continue to Next Section</a>
+    </div>
+</form>
+    
+</body>
+</html>

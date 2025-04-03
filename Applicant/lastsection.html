@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+    <style>
+        body {
+            max-width: 1200px;
+            margin: auto;
+            background-color: #fff;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            color: #000;
+        }
+        .form-section {
+            background: white;
+            padding: 15px;
+            border: 1px solid black;
+            margin-bottom: 20px;
+        }
+        .table-bordered td, .table-bordered th {
+            border: 1px solid #000 !important;
+            text-align: center;
+            vertical-align: middle;
+            width: 40px;
+            height: 40px;
+        }
+
+        legend {
+            font-weight: bold;
+            font-size: 28px;
+            text-transform: uppercase;
+        }
+        label {
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 15px;
+        }
+        label.no-uppercase {
+            text-transform: none;
+            font-weight: normal;
+        }
+        .form-control {
+            border: 1px solid black;
+        }
+        .logo {
+            height: 60px;
+            width: auto;
+        }
+        input[type="checkbox"] {
+            transform: scale(1.5); /* Increase size */
+            margin: 5px;
+        }
+        .oxford-blue-header.header {
+            background-color: #002147; /* Oxford Blue */
+            padding: 20px; /* Adds spacing inside the header */
+        }
+        .paddingbetweencards{
+            margin-bottom: 20px;
+        }
+        .whitetext{
+            color:#ffff
+        }
+        .oxford-blue-header {
+            background-color: #002147; 
+        }
+        .progressbarstyle{
+            margin: 10px;
+        }
+          .nav-btn {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .btn-primary {
+             background-color: #002147 !important;
+              border-color: #002147 !important;
+        }
+    </style>
+</head>
+<body>
+    <header class="oxford-blue-header header">
+        <img src="oxlogo-rect-border.svg" alt="logo" class="logo">
+    </header>
+
+    <div class="progress progressbarstyle border border-black" role="progressbar" aria-label="Default striped example" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-bar progress-bar-striped" style="width: 99%">99%</div>
+    </div>
+
+    <form>
+        <fieldset class="form-section">
+            <legend>Section Q: Data Protection Notice and Declaration</legend>
+            <p>Please read the following Data Protection Notice and Declaration carefully. By signing the Declaration you confirm your acceptance of the statements which form the Declaration. If you do not sign this form, we cannot process your application.</p>
+        
+            <h4>DATA PROTECTION NOTICE</h4>
+            <p>Personal data will be collected, stored and retained in accordance with the General Data Protection Regulation and related UK data protection legislation. Please read the University's Data Protection Notice (Appendix B) before accepting the terms and conditions and submitting your application.</p>
+        
+            <p>PLEASE NOTE: All admissions decisions taken by the University of Oxford and its Colleges rely on the statements made on the application form and on the supporting documents supplied by you and your referees. This information will be held and used for the purpose of processing your application for study, for student administration and, where relevant, for funding purposes.</p>
+            <p>If the University, or any College of the University, believes that any information or statement, including references, contained on your application form may not be true, accurate, current and complete, or that any document submitted in support of your application may not be entirely your own original work, except where clearly stated otherwise, it may take any necessary steps, including contacting third parties, toverify that information or statement, or to confirm that any supporting document is entirely your own original work, except where clearly stated otherwise.</p>
+            <p>As part of the admissions process the University may use a plagiarism detection system. This system screens any written work submitted as part of your application for plagiarism, paraphrasing and collusion. The plagiarism detection system will store on its database any written work submitted for screening. For the University’s definition of plagiarism and more information on how the plagiarism detection system works please see the Application Guide (<a href="https://www.ox.ac.uk/admissions/graduate/applying-to-oxford/university-policies/plagiarism?wssl=1">Policies</a>)</p>
+            <p>If, in the opinion of the University, or any College of the University, any information or statement, including references, provided on this	application form is not true, accurate, current and complete, or any supporting document is not entirely your own original work, except where clearly stated otherwise, the University, or any College of the University, retains the right to reject your application. If you have been made an offer by the University, or any College of the University, then the University, or any College of the University, may in these circumstances withdraw or amend that offer, or terminate your contact with the University or College if you have accepted your offer. If you have been admitted as a student, you may be subject to disciplinary action which could result in your expulsion from the University and your College.</p>
+            
+            <h4>DECLARATION</h4>
+                <div class="form-check">
+                    <input class="  form-check-input border border-black border border-black" type="checkbox" name="confirm1" id="confirm1" value="confirm1">
+                <p><strong>I confirm that the information I have provided on this application form is (to the best of my knowledge) true, accurate, current and complete; and I agree to notify the University promptly if any information contained on this application form should change, in order to keep it true, accurate, current and complete.</strong></p> 
+                </div>
+
+                <div class="form-check">
+                    <input class="  form-check-input border border-black border border-black" type="checkbox" name="confirm1" id="confirm1" value="confirm1">
+                    <p><strong>I confirm that all supporting work submitted as part of this application is entirely my own original work, except where clearly stated otherwise, and does not include any plagiarised elements.</strong></p>
+                </div>
+
+                <div class="form-check">
+                    <input class="  form-check-input border border-black border border-black" type="checkbox" name="confirm1" id="confirm1" value="confirm1">
+                    <p><strong>I accept that if I become a student at the University of Oxford the terms of the University’s Statue XVI (<a href="https://www.admin.ox.ac.uk/statutes/790-121.shtml">Terms & Condition</a>) relating to intellectual property will apply to me, and that the University will be entitledin accordance with those terms to claim ownership of intellectual property which I produce.</strong></p>
+                </div>
+
+            <p>Please sign in the box below and print your name to accept this declaration:</p>
+                <div class="mb-3">
+                    <label for="signFile" class="form-label">SIGNATURE</label>
+                    <input class="form-control" type="file" id="signFile">
+                </div>
+
+                <div class="form-group">
+                    <label for="date">DATE</label>
+                    <input type="date" class="form-control" id="date" required>
+                </div>
+                <br>
+
+                <div class="form-group">
+                    <label for="printName" required>PLEASE PRINT NAME</label>
+                    <input type="text" class="form-control" id="printName" required>
+                </div>
+        </fieldset>
+        <button type="submit" class="btn btn-dark w-100">SUBMIT APPLICATION</button>
+    </form>
+</body>
+</html>

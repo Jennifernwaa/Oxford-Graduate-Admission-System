@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+    <style>
+        body {
+          max-width: 1200px;
+            margin: auto;
+            background-color: #F8F9FA;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            color: #000;
+        }
+        .form-section {
+            background: white;
+            padding: 15px;
+            border: 1px solid black;
+            margin-bottom: 20px;
+        }
+        .table-bordered td, .table-bordered th {
+            border: 1px solid #000 !important;
+            text-align: center;
+            vertical-align: middle;
+            width: 40px;
+            height: 40px;
+        }
+        .table-bordered th.normal{
+          font-weight: normal;
+        }
+
+        legend {
+            font-weight: bold;
+            font-size: 28px;
+            text-transform: uppercase;
+        }
+        label {
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 15px;
+        }
+        label.no-uppercase {
+            text-transform: none;
+            font-weight: normal;
+        }
+        .form-control {
+            border: 1px solid black;
+        }
+        .logo {
+            height: 60px;
+            width: auto;
+        }
+        input[type="checkbox"] {
+            transform: scale(1.5); /* Increase size */
+            margin: 5px;
+        }
+        .oxford-blue-header.header {
+            background-color: #002147; /* Oxford Blue */
+            padding: 20px; /* Adds spacing inside the header */
+        }
+        .progressbarstyle{
+            margin: 10px;
+        }
+        .nav-btn {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .btn-primary {
+             background-color: #002147 !important;
+              border-color: #002147 !important;
+        }
+
+    </style>
+</head>
+<body>
+    <header class="oxford-blue-header header">
+        <img src="oxlogo-rect-border.svg" alt="logo" class="logo">
+    </header>
+    <div class="progress progressbarstyle border border-black" role="progressbar" aria-label="Default striped example" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100">
+      <div class="progress-bar progress-bar-striped" style="width: 60%">60%</div>
+    </div>
+    <form>
+    <fieldset class="form-section">
+    <legend>Section N: Supporting documents checklist</legend>
+    <table class="table table-bordered td">
+        <thead>
+          <tr>
+            <th scope="col">MANDATORY FOR ALL COURSES</th>
+            <th><em>Tick Documents being Added </em></th>
+          </tr>
+        </thead>
+        <tbody class="table-group-divider">
+          <tr>
+            <th class="text-start normal" scope="row">Transcripts</th>
+            <td class="text-center">
+                <input class="form-check-input border border-black" style="align-items: end;"type="checkbox" value="" id="TranscriptsCheck">
+        </td>
+          </tr>
+          <tr>
+            <th class="text-start normal" scope="row">CV/Résumé</th>
+            <td class="text-center">
+                <input class="form-check-input border border-black" style="align-items: end;"type="checkbox" value="" id="CVCheck">
+        </td>
+    
+          </tr>
+          <tr>
+            <th class="text-start normal" scope="row">Statement of purpose/Research proposal</th>
+            <td class="text-center">
+                <input class="form-check-input border border-black" style="align-items: end;"type="checkbox" value="" id="StatementCheck">
+        </td>
+          </tr>
+          <tr>
+            <th class="text-start normal" scope="row">Written work 1</th>
+            <td class="text-center">
+                <input class="form-check-input border border-black" style="align-items: end;"type="checkbox" value="" id="WW1Check">
+        </td>
+          </tr>
+          <tr>
+            <th class="text-start normal" scope="row">Written work 2</th>
+            <td class="text-center">
+                <input class="form-check-input border border-black" style="align-items: end;"type="checkbox" value="" id="WW2Check">
+        </td>
+          </tr>
+          <tr>
+            <th class="text-start normal" scope="row">If your course permits one longer piece of written work instead of two shorter pieces (you can check this in the How to Apply section for your course on its course page at <a href="https://www.graduate.ox.ac.uk/applicationguide" target="_blank">www.graduate.ox.ac.uk/applicationguide</a>), please tick this box</th>
+            <td class="text-center">
+                <input class="form-check-input border border-black" style="align-items: end;"type="checkbox" value="" id="LongsentenceCheck">
+        </td>
+          </tr>
+          <tr>
+            <th class="text-start normal" scope="row">Portfolio/audio-visual media/maths test/music scores</th>
+            <td class="text-center">
+                <input class="form-check-input border border-black" style="align-items: end;"type="checkbox" value="" id="portfolioCheck">
+        </td>
+          </tr>
+          <tr>
+            <th class="text-start normal" scope="row">English Language Test Result (e.g. TOEFL, IELTS, etc.)</th>
+            <td class="text-center">
+                <input class="form-check-input border border-black" style="align-items: end;"type="checkbox" value="" id="EnglishTestCheck">
+        </td>
+          </tr>
+          <tr>
+            <th class="text-start normal" scope="row">GRE admissions test certificate(s)</th>
+            <td class="text-center">
+                <input class="form-check-input border border-black" style="align-items: end;"type="checkbox" value="" id="GRECheck">
+        </td>
+          </tr>
+          <tr>
+            <th class="text-start normal" scope="row">Other items (please tick box(es) as appropriate)<p>If you ticked “Yes” to English Language Test Waiver, please add a brief letter outlining the reasons why you should be exempted ☐ from the requirement - see the Application Guide www.graduate.ox.ac.uk/applicationguide for further information. If you do not
+                need to provide an English language test result or are not requesting a test waiver, please do not submit a document.</p></th>
+            <td class="text-center normal">
+                <input class="form-check-input border border-black" style="align-items: end;"type="checkbox" value="" id="LongSentenceCheck2">
+        </td>
+          </tr>
+          <tr>
+            <th class="text-start normal" scope="row">
+                <label for="scholarshipSelect" class="form-label">Scholarship application(s)</label>
+                <p>If you are applying for one or more University of Oxford scholarships listed in Section M that require you to submit a supporting statement to complete your scholarship application, please add a separate supporting statement for each scholarship you have ticked. You must read the relevant scholarship profile(s) (<u>www.ox.ac.uk/feesandfunding/prospectivegrad/scholarships</u>) for full details about the awards, the required format for your supporting statement and the eligibility requirements before completing your scholarship application.</p>
+                <p class="d-flex"><strong>Number of scholarship applications being added:</strong><input class="small-input form-control" type="number" id="noScholarshipAdded" min="0" style="width: 200px; margin-left: 25px;"></p>
+            
+            </th>
+            <td class="text-center">
+                <input class="form-check-input border border-black" type="checkbox" value="" id="scholarshipCheck">
+            </td>
+        </tr>
+    
+        </tbody>
+      </table>
+    </fieldset>
+    
+    <fieldset class="form-section">
+        <legend>Section O: Application fee payment</legend>
+        <p>The application fee is £75 per application. Payment can be made by any MasterCard, Visa, Visa debit, Visa Electron or Maestro card. Check your bank card has one of these logos.</p>
+        <p>If you intend to submit more than one application you must make separate payments and provide us with the order number for each application.</p>
+
+        <h4>To make a payment online:</h4>
+        <ol>
+            <li>Please go to <a href="www.graduate.ox.ac.uk/applicationfee" target="_blank">www.graduate.ox.ac.uk/applicationfee</a> and make a purchase of the application fee. Click on ‘Add to Basket’ and then proceed to make payment. If you have not used the Online Stores before, you will need to create an account, and provide some personal details and the name of the course to which you are applying.</li>
+            <li>Once you have paid your application fee, enter the six digit application fee order number (from confirmation of purchase email) in the box below – all have the prefix “OXF”: Please check the order number you have entered carefully, as it will be audited; any application with an invalid order number will not normally be considered.</li>
+            <li>We will contact you by email if there is any issue with your payment.</li>
+        </ol>
+
+        <div class="d-flex justify-content-center align-items-center flex-column text-center">
+        <div class="form-group" >
+          <div class="input-group" style="width: 300px;">
+            <div class="input-group-text border border-black" for="orderNumber"><strong>OXF</strong></div>
+            <input type="text" class="form-control" id="orderNumber" placeholder="Enter order number">
+        </div>
+        </div>
+        </div>
+        <br>
+        <p class="d-flex justify-content-start">It is acceptable for someone else to pay the application fee on your behalf. When creating the account, they should enter their own details rather than those of the applicant. Please advise them that once they have clicked "Add to Basket" they will be required to provide some personal information about you to allow the Graduate Admissions Office to match the payment to your application: your name, date of birth and the full title of the course and course code to which you are applying.</p>
+
+        <div class="accordion" id="accordionPanelsStayOpenExample" style="margin:20px">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                    To make payment by Western Union
+                </button>
+              </h2>
+              <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+                <div class="accordion-body">
+                If you are not able to pay the application fee online or by cheque, please contact the Graduate Admissions Office on <a href="mailto:graduate.admissions@admin.ox.ac.uk">graduate.admissions@admin.ox.ac.uk</a> or +44 (0) 1865 270059 for further information about how to make the payment by Western Union.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                    To make a payment by cheque
+                </button>
+              </h2>
+              <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                    Please enclose payment (in £ UK Sterling, drawn on a UK bank and made payable to “University of Oxford”).
+                    Please write your name, date of birth and course name on the reverse of your cheque.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                  Fee Waivers
+                </button>
+              </h2>
+              <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                    Fee waivers may be applied if your current country of ordinary residence is part of the World Bank Low Income Group. Fee waivers are only possible where you are currently <strong>resident</strong> in one of the above countries, meet the entry requirements and cannot pay the application fee. The eligible countries are:
+                    <ul class="list-group">
+                        <li class="list-group-item">Afghanistan</li>
+                        <li class="list-group-item">Chad</li>
+                        <li class="list-group-item">Guinea</li>
+                        <li class="list-group-item">Madagascar</li>
+                        <li class="list-group-item">Niger</li>
+                        <li class="list-group-item">Syrian</li>
+                        <li class="list-group-item">Arab</li>
+                        <li class="list-group-item">Yemen, Rep.</li>
+                        <li class="list-group-item">Benin</li>
+                        <li class="list-group-item">Congo, Dem. Rep</li>
+                        <li class="list-group-item">Guinea-Bissau</li>
+                        <li class="list-group-item">Malawi</li>
+                        <li class="list-group-item">Rwanda</li>
+                        <li class="list-group-item">Tajikistan</li>
+                        <li class="list-group-item">Burkina</li>
+                        <li class="list-group-item">Faso</li>
+                        <li class="list-group-item">Eritrea</li>
+                        <li class="list-group-item">Haiti</li>
+                        <li class="list-group-item">Mali</li>
+                        <li class="list-group-item">Sierra Leone</li>
+                        <li class="list-group-item">Tanzania</li>
+                        <li class="list-group-item">Burundi</li>
+                        <li class="list-group-item">Ethiopia</li>
+                        <li class="list-group-item">Korea, Dem.</li>
+                        <li class="list-group-item">People's Rep.</li>
+                        <li class="list-group-item">Mozambique</li>
+                        <li class="list-group-item">Somalia</li>
+                        <li class="list-group-item">Togo</li>
+                        <li class="list-group-item">Central African Republic</li>
+                        <li class="list-group-item">Gambia, The</li>
+                        <li class="list-group-item">Liberia</li>
+                        <li class="list-group-item">Nepal</li>
+                        <li class="list-group-item">South Sudan</li>
+                        <li class="list-group-item">Uganda</li>
+                      </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        <h4>Application Fee Waiver:</h4>
+        <div class="form-check">
+            <input class="form-check-input border border-black" type="radio" name="feeWaiver" id="noWaiver" value="no">
+            <label class="form-check-label" for="noWaiver">I do not need a fee waiver</label>
+        </div>
+        <div class="form-check" style="margin-bottom: 20px">
+            <input class="form-check-input border border-black" type="radio" name="feeWaiver" id="waiver" value="yes">
+            <label class="form-check-label" for="waiver">I need a fee waiver</label>
+        </div>
+
+            <div class="form-check">
+                <input class="form-check-input border border-black" type="checkbox" value="" id="confirmAfford">
+                <label class="form-check-label" for="confirmAfford">I confirm that I cannot afford to pay the application fee and would not be able to apply to the University without an application fee waiver.</label>
+            </div>
+            <div class="form-check" style="margin-bottom: 20px">
+                <input class="form-check-input border border-black" type="checkbox" value="" id="confirmEntry">
+                <label class="form-check-label" for="confirmEntry">I confirm that I will meet the entry requirements for my course as published on the course entry requirements page.</label>
+            </div>
+
+        <p>Please note that if you are applying for a course in one of the Centres for Doctoral Training (CDT) or Doctoral Training Partnership (DTP), you will be required to pay the application fee for the first application. You may, however, submit up to two further applications for related courses from a set of permitted options without paying additional application fees. Please see the Application Basics tab of the Guide <a href="www.ox.ac.uk/admissions/graduate/applying-to-oxford/application-guide" target="_blank">www.ox.ac.uk/admissions/graduate/applying-to-oxford/application-guide</a> for further information.</p>
+    </fieldset>
+  
+    <div class="nav-btn">
+      <input class="btn btn-warning" type="reset" value="Reset">
+      <a href="jensection3.html" class="btn btn-primary">Continue to Next Section</a>
+  </div>
+  </form>
+</body>
+</html>

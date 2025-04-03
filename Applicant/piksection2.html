@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    
+    <style>
+        body {
+            max-width: 1200px;
+            margin: auto;
+            background-color: #fff;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            color: #000;
+        }
+
+        .form-section {
+            background: white;
+            padding: 15px;
+            border: 1px solid black;
+            margin-bottom: 20px;
+        }
+
+        .table-bordered td, .table-bordered th {
+            border: 1px solid #000 !important;
+            /*text-align: center;*/
+            vertical-align: middle;
+            width: 40px;
+            height: 40px;
+        }
+    
+        legend {
+            font-weight: bold;
+            font-size: 28px;
+            text-transform: uppercase;
+        }
+
+        label {
+            font-weight: bold;
+            /*text-transform: uppercase;*/
+            font-size: 15px;
+        }
+        
+        label.no-uppercase {
+            text-transform: none;
+        }
+
+        .form-control {
+            border: 1px solid black;
+        }
+
+        .logo {
+            height: 60px;
+            width: auto;
+        }
+
+        .oxford-blue-header.header {
+            background-color: #002147; /* Oxford Blue */
+            padding: 20px; /* Adds spacing inside the header */
+        }
+
+        .progressbarstyle{
+            margin: 10px;
+        }
+    
+        .buttoncolouroxford{
+          background-color: #002147;
+          border: #002147;
+          width: 80px;
+        }
+
+        .nobold{
+            font-size: 15px;
+            font-weight: normal;
+        }
+
+        .nav-btn {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: #002147 !important;
+            border-color: #002147 !important;
+        }
+
+        .input-group{
+            position: relative;
+        }
+
+        .input{
+            padding: 10px;
+            width: 100%;
+            box-sizing: border-box;
+            outline: none;
+            border: 1px solid black;
+            border-radius: 8px;
+        }
+
+        .schoolInput{
+            position: absolute;
+            top: 10px;
+            left: 8px;
+            font-size: 14px;
+            padding: 0px 5px;
+            transition: 0.3s;
+            pointer-events: none;
+        }
+
+        .input:focus + .schoolInput{
+            top: -10px;
+            background-color: #fff;
+        } 
+
+        tbody tr input{
+            display: block;
+            margin: auto;
+        }
+
+        thead tr th{
+            text-align: center;
+        }
+
+        input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+          }
+    </style>
+</head>
+
+<body>
+    <header class="oxford-blue-header header">
+        <img src="oxlogo-rect-border.svg" alt="logo" class="logo">
+    </header>
+
+    <div class="progress progressbarstyle border border-black"  role="progressbar" aria-label="Default striped example" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-bar progress-bar-striped" style="width: 90%">90%</div>
+    </div>
+
+    <form>
+        <fieldset class="form-section">
+            <legend>Section 3: Disability</legend>
+
+            <p><i>We welcome applications from disabled people. Please tell us if you have a disability, including sensory or mobility impairments, long-term mental health conditions, longstanding illnesses or health conditions, autism spectrum conditions, or specific learning difficulties such as dyslexia, dyspraxia and ADHD, so that we can tell you about what study support is available if you are offered a place here.</i></p>
+
+            <p><i>We will not take this information into account when assessing your application, which will be judged on academic merit and potential alone. Your personal information will be treated in accordance with the General Data Protection Regulation (GDPR) and related UK data protection legislation. Full details are set out in the University's Postgraduate Applicant Privacy Policy (<a href="https://compliance.admin.ox.ac.uk/postgraduate-applicant-privacy-policy" target="_blank">https://compliance.admin.ox.ac.uk/postgraduate-applicant-privacy-policy</a>).</i></p>
+
+            <p><i>If you accept a place here, we will need to share this information with key individuals in academic, administrative and support roles in order to provide effective support. This will mean sharing your information with our Disability Advisory Service so that they may work with you to put in place any necessary adjustments or provide study support.</i></p>
+
+            <p><i>You should contact the Disability Advisory Service (<a href="www.ox.ac.uk/students/welfare/disability" target="_blank">www.ox.ac.uk/students/welfare/disability</a>) as soon as possible if you wish to discuss this section, or anything to do with provision for disability-related support for your course.</i></p>
+			
+			<p><b>Please select all that apply.</b></p>
+
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="noDisability">
+                                <label class="form-check-label nobold" for="noDisability">No known disability</label>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="preferNotDisability">
+                                <label class="form-check-label nobold" for="preferNotDisability">Prefer not to say</label>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="learningDifficulty">
+                                <label class="form-check-label nobold" for="learningDifficulty">A specific learning difficulty such as dyslexia, dyspraxia or ADHD</label>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="communicationImpairment">
+                                <label class="form-check-label nobold" for="communicationImpairment">A social/communication impairment such as an autism spectrum condition or disorder</label>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="longstandingIllness">
+                                <label class="form-check-label nobold" for="longstandingIllness">A longstanding illness or health condition such as epilepsy, diabetes, Crohn's disease, or asthma</label>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="mentalHealthCondition">
+                                <label class="form-check-label nobold" for="mentalHealthCondition">A long-term mental health condition, such as bipolar disorder, obsessive compulsive disorder, an eating disorder, depression, an anxiety disorder, or schizophrenia</label>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="physicalImpairment">
+                                <label class="form-check-label nobold" for="physicalImpairment">A physical impairment or mobility issues, such as difficulty using arms or hands, or requiring use of a wheelchair, crutches or other mobility aid</label>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="hearingImpairment">
+                                <label class="form-check-label nobold" for="hearingImpairment">Deaf or a hearing impairment</label>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="visualImpairment">
+                                <label class="form-check-label nobold" for="visualImpairment">Blind or a serious visual impairment uncorrected by glasses</label>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="checkbox" value="" id="otherDisability">
+                                <label class="form-check-label nobold" for="otherDisability">A disability, impairment or medical condition that is not listed</label>
+                            </div>
+                
+                            <div class="form-group">
+                                <label for="otherDisabilityDetails">If not listed, please specify</label>
+                                <textarea class="form-control" id="otherDisabilityDetails" rows="3"></textarea>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p><b>If you have selected a disability above - Do you have any additional support needs?</b></p>
+
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="wheelchair">
+                <label class="form-check-label nobold" for="wheelchair">Require use of a wheelchair or other mobility aid</label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="livingAccommodation">
+                <label class="form-check-label nobold" for="livingAccommodation">Require living accommodation with specialist equipment (eg. hoists, height-adjustable beds, adapted bathroom facilities)</label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="stepFreeAccess">
+                <label class="form-check-label nobold" for="stepFreeAccess">Require step-free/level access or use of a lift</label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="assistanceAnimal">
+                <label class="form-check-label nobold" for="assistanceAnimal">Require use of a registered/licensed assistance animal for visual, hearing, mobility, or medical needs</label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="personalCare">
+                <label class="form-check-label nobold" for="personalCare">Require personal care assistance for daily living activities</label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="communicationAids">
+                <label class="form-check-label nobold" for="communicationAids">Require use of communication aids (eg. BSL interpreter, hearing support system)</label>
+            </div>
+		</fieldset>
+		
+        <div class="nav-btn">
+            <input class="btn btn-warning" type="reset" value="Reset">
+            <a href="piksection3.html" class="btn btn-primary">Continue to Next Section</a>
+        </div>
+    </form>
+</body>
+</html>
