@@ -5,10 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 <style>
+body{
+    background-color: #f8f9fa;
+}
 .oxford-blue-header.header {
-            background-color: #002147; 
-            padding: 20px; 
+        background-color: #002147; 
+        padding: 20px; 
         }
+.whitebox{
+    background-color: white;
+    padding:40px;
+    margin-top: 20px;
+}
+
+.radio-label {
+            font-size: 1.2rem; 
+            padding-left: 10px;
+            padding-right: 10px;
+            margin-bottom: 1px;
+        }
+ 
 </style>
 </head>
 
@@ -23,8 +39,8 @@
 
           <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
             <li>
-              <a href="#" class="nav-link text-secondary d-flex flex-column align-items-center">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-fill" viewBox="0 0 16 16">
+            <a href="reviewer_landing_page.php" class="nav-link text-secondary d-flex flex-column align-items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-house-fill" viewBox="0 0 16 16">
   <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293z"/>
   <path d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293z"/>
 </svg>                Home
@@ -98,46 +114,66 @@
     </div>
 </header>
 
-<h2> Reviewer Dashboard</h2>
 
-<ul class="nav nav-tabs" id="reviewTabs" role="tablist">
-    <li class="nav-item">
-        <a class="nav-link active" id="assigned-tab" data-bs-toggle="tab" href="reviewer_landing_page.php" role="tab">Assigned Applications</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" id="pending-tab" data-bs-toggle="tab" href="reviewer_pending.php" role="tab">Pending Reviews</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" id="completed-tab" data-bs-toggle="tab" href="reviewer_completed.php" role="tab">Completed Reviews</a>
-    </li>
-</ul>
+<div class="container whitebox">
+    <h2>Graduate Application Review</h2>
+    <div class="card p-4">
+    <h4 style="padding-bottom: 15px;">Applicant Details</h4>
+    <table>
+        <tr>
+            <td style="padding-bottom: 15px;"><strong>Name </strong> <span style="padding-left: 150px;">Michael Johnson</td></span>
+            <td>Submission Date: 15 March 2024</td>
+        </tr>
 
-<div class="tab-content mt-3">
-    <!-- Assigned Applications -->
-    <div class="tab-pane fade show active" id="assigned" role="tabpanel">
-        <h4>Assigned Applications</h4>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Applicant Name</th>
-                    <th>Program</th>
-                    <th>Submission Date</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>John Doe</td>
-                    <td>Computer Science</td>
-                    <td>March 30, 2025</td>
-                    <td><span class="badge bg-warning">Pending</span></td>
-                    <td><a href="reviewing_page1.php" class="btn btn-primary btn-sm">Review</a></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
+        <tr>
+            <td style="padding-bottom: 15px;"><strong>Program Applied For </strong> <span style="padding-left: 33px;"></span> M.Sc. Computer Science</td></span>
+        </tr>
+        <tr>
+        <td style="padding-bottom: 15px;"><strong>Application ID </strong> <span style="padding-left: 85px;"></span> 2345678</td></span>
+        </tr>
+    </table>
+            
+            
+            <h5>Documents</h5>
+            <p><a href="#">Personal Statement</a></p>
+            <p><a href="#">Transcript.pdf</a></p>
+            <p><a href="#">Recommendation Letter.pdf</a></p>
+            
+            <h5>Evaluation Form</h5>
+            <form>
+                <div class="mb-3">
+                    <label class="form-label"><strong>Academic Qualifications</strong></label>
+                    <input type="radio" name="academic" id="excellent" value="Excellent"> <label class="radio-label" for="excellent">Excellent</label>
+                    <input type="radio" name="academic" id="good" value="Good"> <label class="radio-label" for="good">Good</label>
+                    <input type="radio" name="academic" id="satisfactory" value="Satisfactory"> <label class="radio-label" for="satisfactory">Satisfactory</label>
+                    <input type="radio" name="academic" id="poor" value="Poor"> <label class="radio-label" for="poor">Poor</label>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label"><strong>Research Potential</strong></label>
+                    <input type="radio" name="research" id="r-excellent" value="Excellent"> <label class="radio-label" for="r-excellent">Excellent</label>
+                    <input type="radio" name="research" id="r-good" value="Good"> <label class="radio-label" for="r-good">Good</label>
+                    <input type="radio" name="research" id="r-satisfactory" value="Satisfactory"> <label class="radio-label" for="r-satisfactory">Satisfactory</label>
+                    <input type="radio" name="research" id="r-poor" value="Poor"> <label class="radio-label" for="r-poor">Poor</label>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label"><strong>Recommendation</strong></label>
+                    <input type="radio" name="recommendation" id="accept" value="Accept"> <label class="radio-label" for="accept">Accept</label>
+                    <input type="radio" name="recommendation" id="reject" value="Reject"> <label class="radio-label" for="reject">Reject</label>
+                    <input type="radio" name="recommendation" id="hold" value="Hold"> <label class="radio-label" for="hold">Hold</label>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label"><strong>Comments</strong></label>
+                    <textarea class="form-control" rows="3"></textarea>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Approve</button>
+                <button type="submit" class="btn btn-danger">Reject</button>
+                <button type="submit" class="btn btn-secondary">Request Additional Documents</button>
+            </form>
+        </div>
 </div>
 </body>
 

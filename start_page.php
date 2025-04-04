@@ -14,7 +14,7 @@
 <br><br>
 
 <div class="nav-btn">
-        <a href="Applicant/index.html" class="btn btn-primary">Student</a>
+        <a href="Applicant/index.php" class="btn btn-primary">Student</a>
 </div>
 
 <div class="nav-btn">

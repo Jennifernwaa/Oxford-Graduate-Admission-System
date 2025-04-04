@@ -6,8 +6,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 <style>
 .oxford-blue-header.header {
-            background-color: #002147; 
-            padding: 20px; 
+            background-color: #002147; /* Oxford Blue */
+            padding: 20px; /* Adds spacing inside the header */
         }
 </style>
 </head>
@@ -23,7 +23,7 @@
 
           <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
             <li>
-              <a href="#" class="nav-link text-secondary d-flex flex-column align-items-center">
+            <a href="#" class="nav-link text-secondary d-flex flex-column align-items-center">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-fill" viewBox="0 0 16 16">
   <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293z"/>
   <path d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293z"/>
@@ -102,20 +102,20 @@
 
 <ul class="nav nav-tabs" id="reviewTabs" role="tablist">
     <li class="nav-item">
-        <a class="nav-link active" id="assigned-tab" data-bs-toggle="tab" href="reviewer_landing_page.php" role="tab">Assigned Applications</a>
+        <a class="nav-link" id="assigned-tab" data-bs-toggle="tab" href="reviewer_landing_page.php" role="tab">Assigned Applications</a>
     </li>
     <li class="nav-item">
         <a class="nav-link" id="pending-tab" data-bs-toggle="tab" href="reviewer_pending.php" role="tab">Pending Reviews</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" id="completed-tab" data-bs-toggle="tab" href="reviewer_completed.php" role="tab">Completed Reviews</a>
+        <a class="nav-link active" id="completed-tab" data-bs-toggle="tab" href="reviewer_completed.php" role="tab">Completed Reviews</a>
     </li>
 </ul>
 
 <div class="tab-content mt-3">
-    <!-- Assigned Applications -->
-    <div class="tab-pane fade show active" id="assigned" role="tabpanel">
-        <h4>Assigned Applications</h4>
+        <!-- Completed Reviews -->
+    <div class="tab-pane fade show active" id="completed" role="tabpanel">
+        <h4>Completed Reviews</h4>
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -123,16 +123,16 @@
                     <th>Program</th>
                     <th>Submission Date</th>
                     <th>Status</th>
-                    <th>Action</th>
+                    <th>Reviewed On</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>John Doe</td>
-                    <td>Computer Science</td>
-                    <td>March 30, 2025</td>
-                    <td><span class="badge bg-warning">Pending</span></td>
-                    <td><a href="reviewing_page1.php" class="btn btn-primary btn-sm">Review</a></td>
+                    <td>Michael Brown</td>
+                    <td>Physics</td>
+                    <td>March 28, 2025</td>
+                    <td><span class="badge bg-success">Approved</span></td>
+                    <td>April 1, 2025</td>
                 </tr>
             </tbody>
         </table>
