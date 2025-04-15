@@ -65,7 +65,7 @@
 </head>
 <body>
     <header class="oxford-blue-header header">
-        <img src="oxlogo-rect-border.svg" alt="logo" class="logo">
+        <img src="../icons/oxlogo-rect-border.svg" alt="logo" class="logo">
     </header>
 
     <div class="progress progressbarstyle border border-black"  role="progressbar" aria-label="Default striped example" aria-valuenow="5" aria-valuemin="0" aria-valuemax="100">
