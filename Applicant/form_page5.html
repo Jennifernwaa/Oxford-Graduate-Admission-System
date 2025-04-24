@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script type="module" src="form_page5.js"></script>
 </head>
     <style>
         body {
@@ -68,7 +69,7 @@
 </head>
 <body>
     <header class="oxford-blue-header header">
-        <img src="oxlogo-rect-border.svg" alt="logo" class="logo">
+        <img src="../icons/oxlogo-rect-border.svg" alt="logo" class="logo">
     </header>
     <div class="progress progressbarstyle border border-black"  role="progressbar" aria-label="Default striped example" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100">
         <div class="progress-bar progress-bar-striped" style="width: 50%">50%</div>
@@ -100,93 +101,94 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><textarea class="form-control" rows="3"></textarea></td>
+                    <td><textarea id="fundingSource1" class="form-control" rows="3"></textarea></td>
                     <td><div class="input-group mb-3">
                         <span class="input-group-text">£</span>
-                        <input type="number" class="form-control" aria-label="Amount (to the nearest pound)" min="0">
+                        <input type="number" id="fundingAmountPerYear1" class="form-control" aria-label="Amount (to the nearest pound)" min="0">
                       </div>
                     </td>
-                    <td><input type="text" class="form-control"></td>
+                    <td><input type="text" id="fundingPeriodCovered1" class="form-control"></td>
                     <td>
                         <div class="form-check">
-                            <input class="form-check-input border border-black" type="radio" value="" id="status1_1">
-                            <label class="form-check-label no-uppercase" for="status1_1">Intend to apply</label>
+                            <input class="form-check-input border border-black" type="radio" value="" id="intendToApply_1">
+                            <label class="form-check-label no-uppercase" for="intendToApply_1">Intend to apply</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input border border-black" type="radio" value="" id="status1_2">
-                            <label class="form-check-label no-uppercase" for="status1_2">Applied for</label>
+                            <input class="form-check-input border border-black" type="radio" value="" id="appliedFor_1">
+                            <label class="form-check-label no-uppercase" for="appliedFor_1">Applied for</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input border border-black" type="radio" value="" id="status1_3">
-                            <label class="form-check-label no-uppercase" for="status1_3">Firmly secured</label>
+                            <input class="form-check-input border border-black" type="radio" value="" id="firmlySecured_1">
+                            <label class="form-check-label no-uppercase" for="firmlySecured_1">Firmly secured</label>
                         </div>
                     </td>
                 </tr>
                 <tr>
-                    <td><textarea class="form-control" rows="3"></textarea></td>
+                    <td><textarea id="fundingSource2" class="form-control" rows="3"></textarea></td>
                     <td><div class="input-group mb-3">
                         <span class="input-group-text">£</span>
-                        <input type="number" class="form-control" aria-label="Amount (to the nearest pound)" min="0">
+                        <input type="number" id="fundingAmountPerYear2" class="form-control" aria-label="Amount (to the nearest pound)" min="0">
                       </div>
                     </td>
-                    <td><input type="text" class="form-control"></td>
+                    <td><input type="text" id="fundingPeriodCovered2" class="form-control"></td>
                     <td>
                         <div class="form-check">
-                            <input class="form-check-input border border-black" type="radio" value="" id="status2_1">
-                            <label class="form-check-label no-uppercase" for="status2_1">Intend to apply</label>
+                            <input class="form-check-input border border-black" type="radio" value="" id="intendToApply_2">
+                            <label class="form-check-label no-uppercase" for="intendToApply_2">Intend to apply</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input border border-black" type="radio" value="" id="status2_2">
-                            <label class="form-check-label no-uppercase" for="status2_2">Applied for</label>
+                            <input class="form-check-input border border-black" type="radio" value="" id="appliedFor_2">
+                            <label class="form-check-label no-uppercase" for="appliedFor_2">Applied for</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input border border-black" type="radio" value="" id="status2_3">
-                            <label class="form-check-label no-uppercase" for="status2_3">Firmly secured</label>
+                            <input class="form-check-input border border-black" type="radio" value="" id="firmlySecured_2">
+                            <label class="form-check-label no-uppercase" for="firmlySecured_2">Firmly secured</label>
                         </div>
                     </td>
                 </tr>
                 <tr>
-                    <td><textarea class="form-control" rows="3"></textarea></td>
+                    <td><textarea id="fundingSource3" class="form-control" rows="3"></textarea></td>
                     <td><div class="input-group mb-3">
                         <span class="input-group-text">£</span>
-                        <input type="number" class="form-control" aria-label="Amount (to the nearest pound)" min="0">
+                        <input type="number" id="fundingAmountPerYear3" class="form-control" aria-label="Amount (to the nearest pound)" min="0">
                       </div>
                     </td>
-                    <td><input type="text" class="form-control"></td>
+                    <td><input type="text" id="fundingPeriodCovered3" class="form-control"></td>
                     <td>
                         <div class="form-check">
-                            <input class="form-check-input border border-black" type="radio" value="" id="status3_1">
-                            <label class="form-check-label no-uppercase" for="status3_1">Intend to apply</label>
+                            <input class="form-check-input border border-black" type="radio" value="" id="intendToApply_3">
+                            <label class="form-check-label no-uppercase" for="intendToApply_3">Intend to apply</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input border border-black" type="radio" value="" id="status3_2">
-                            <label class="form-check-label no-uppercase" for="status3_2">Applied for</label>
+                            <input class="form-check-input border border-black" type="radio" value="" id="appliedFor_3">
+                            <label class="form-check-label no-uppercase" for="appliedFor_3">Applied for</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input border border-black" type="radio" value="" id="status3_3">
-                            <label class="form-check-label no-uppercase" for="status3_3">Firmly secured</label>
+                            <input class="form-check-input border border-black" type="radio" value="" id="firmlySecured_3">
+                            <label class="form-check-label no-uppercase" for="firmlySecured_3">Firmly secured</label>
                         </div>
                     </td>
                 </tr>
                 <tr>
-                    <td><textarea class="form-control" rows="3"></textarea></td>
+                    <td><textarea id="fundingSource4" class="form-control" rows="3"></textarea></td>
                     <td><div class="input-group mb-3">
                         <span class="input-group-text">£</span>
-                        <input type="number" class="form-control" aria-label="Amount (to the nearest pound)" min="0">
-                      </div></td>
-                    <td><input type="text" class="form-control"></td>
+                        <input type="number" id="fundingAmountPerYear4" class="form-control" aria-label="Amount (to the nearest pound)" min="0">
+                      </div>
+                    </td>
+                    <td><input type="text" id="fundingPeriodCovered4" class="form-control"></td>
                     <td>
                         <div class="form-check">
-                            <input class="form-check-input border border-black" type="radio" value="" id="status4_1">
-                            <label class="form-check-label no-uppercase" for="status4_1">Intend to apply</label>
+                            <input class="form-check-input border border-black" type="radio" value="" id="intendToApply_4">
+                            <label class="form-check-label no-uppercase" for="intendToApply_4">Intend to apply</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input border border-black" type="radio" value="" id="status4_2">
-                            <label class="form-check-label no-uppercase" for="status4_2">Applied for</label>
+                            <input class="form-check-input border border-black" type="radio" value="" id="appliedFor_4">
+                            <label class="form-check-label no-uppercase" for="appliedFor_4">Applied for</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input border border-black" type="radio" value="" id="status4_3">
-                            <label class="form-check-label no-uppercase" for="status4_3">Firmly secured</label>
+                            <input class="form-check-input border border-black" type="radio" value="" id="firmlySecured_4">
+                            <label class="form-check-label no-uppercase" for="firmlySecured_4">Firmly secured</label>
                         </div>
                     </td>
                 </tr>
@@ -238,8 +240,8 @@
         </div>
     </fieldset>
     <div class="nav-btn">
-        <input class="btn btn-warning" type="reset" value="Reset">
-        <a href="jensection2.html" class="btn btn-primary">Continue to Next Section</a>
+        <button class="btn btn-warning" id="back" type="button" href="form_page2.html">Back</button>
+        <button type="button" class="btn btn-primary" id="continue">Continue to Next Section</button>
     </div>
 </form>
     
