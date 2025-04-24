@@ -19,7 +19,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-const auth = getAuth();
+const auth = getAuth(app);
 const db = getDatabase(app);
 
 // Register handler
@@ -38,17 +38,19 @@ document.getElementById('submit').addEventListener("click", function (event) {
     .then((userCredential) => {
       const user = userCredential.user;
 
-      // Store applicant data using uid as the key
-      set(ref(db, `students/${user.uid}`), {
-        email: email,
-        uid: user.uid
+      // Save user data to Realtime Database
+      return set(ref(db, `users/${user.uid}`), {
+        username: email,
+        password: password,
+        role: "Applicant"
       });
-
-      alert("Account created! Redirecting to form...");
+    })
+    .then(() => {
+      alert("Account created and saved to database! Redirecting to form...");
       window.location.href = "../Applicant/form_page1.html";
     })
     .catch((error) => {
-      console.error("Registration error:", error);
+      console.error("Error:", error);
       alert("Error: " + error.message);
     });
 });

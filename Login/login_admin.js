@@ -34,29 +34,32 @@ submit.addEventListener("click", function(event) {
   signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user;
-      const userEmailKey = user.email.replace(/\./g, '_');
+      const uid = user.uid;  // Get the UID of the signed-in user
 
       const dbRef = ref(db);
-      get(child(dbRef, `roles/${userEmailKey}`))
+      // Lookup the user in the 'users' node by UID
+      get(child(dbRef, `users/${uid}`))
         .then((snapshot) => {
           if (snapshot.exists()) {
-            const role = snapshot.val();
-            console.log(`Role for ${user.email} is ${role}`);
+            const userData = snapshot.val();
+            const role = userData.role;
+            console.log(`Role for UID ${uid}:`, role);  // Log role for debugging
 
-            if (role === "admin") {
+            if (role === "Administrator") {
               // Redirect to admin dashboard
               window.location.href = '../Admin/admin_dashboard.html';
             } else {
-              alert("Access denied. You are not an admin.");
+              alert("Access denied. You are not an Administrator.");
               auth.signOut();
             }
           } else {
-            alert("No role assigned. Access denied.");
+            console.log("No user found with UID:", uid); // Log if user not found
+            alert("No user found. Access denied.");
             auth.signOut();
           }
         })
         .catch((error) => {
-          console.error("Error getting role:", error);
+          console.error("Error fetching user data:", error);
           alert("Error checking user role.");
         });
     })
