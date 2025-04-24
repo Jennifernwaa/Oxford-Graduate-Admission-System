@@ -1,7 +1,7 @@
 // Import Firebase modules (ensure consistent versions)
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
-import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+import { getFirestore, doc, setDoc, addDoc, collection } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
 // Firebase config
 const firebaseConfig = {
@@ -18,6 +18,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app); // Ensure Auth is initialized after the app
 const db = getFirestore(app); // Initialize Firestore
+
 
 // Function to handle form submission
 async function submitForm(user) {
@@ -36,15 +37,13 @@ async function submitForm(user) {
       familyName: document.getElementById('familyName').value,
       titleName: document.getElementById('titleName').value,
       gender: document.querySelector('input[name="gender"]:checked')?.value || '',
-      dob: document.getElementById('dob').value
+      dob: document.getElementById('dob').value,
+      submittedAt: new Date().toISOString() // Add a timestamp for tracking
   };
 
   try {
-      // Reference to the user's document in Firestore
-      const userDocRef = doc(db, "users", user.uid, "forms", "form_page1");
-
-      // Save data to Firestore
-      await setDoc(userDocRef, formData);
+      const formsCollectionRef = collection(db, "users", user.uid, "forms");
+      await addDoc(formsCollectionRef, formData);
       alert("Form data saved!");
       window.location.href = "form_page2.html";
   } catch (error) {
@@ -57,13 +56,12 @@ async function submitForm(user) {
 document.addEventListener('DOMContentLoaded', () => {
   const submitButton = document.getElementById('submit');
   submitButton.addEventListener('click', async function (event) {
-      event.preventDefault(); // Prevent default form submission
-      // Check if user is authenticated
+      event.preventDefault();
       if (auth.currentUser) {
-          await submitForm(auth.currentUser); // Submit the form if user is authenticated
+          await submitForm(auth.currentUser);
       } else {
           alert("You are not logged in!");
-          window.location.href = "login_applicant_page.html"; // Redirect if not logged in
+          window.location.href = "login_applicant_page.html";
       }
   });
 });
