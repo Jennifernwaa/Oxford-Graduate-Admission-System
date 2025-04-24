@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script type="module" src="form_page2.js"></script>
 </head>
     <style>
         body {
@@ -62,81 +63,96 @@
     </style>
 <body>
     <header class="oxford-blue-header header">
-        <img src="oxlogo-rect-border.svg" alt="logo" class="logo">
+        <img src="../icons/oxlogo-rect-border.svg" alt="logo" class="logo">
     </header>
     <div class="progress progressbarstyle border border-black"  role="progressbar" aria-label="Default striped example" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
         <div class="progress-bar progress-bar-striped" style="width: 20%">20%</div>
     </div>
-    <form>
+    <form id="applicationForm">
         <fieldset class="form-section">
             <legend>Section D: Contact Information</legend>
         
-            <label>Home Address:</label>
-            <textarea class="form-control"></textarea>
+            <label for="homeAddress">Home Address:</label>
+            <textarea class="form-control" id="homeAddress"></textarea>
             <br>
-            <label>City:</label>
-            <input type="text" class="form-control">
+        
+            <label for="city">City:</label>
+            <input type="text" id="city" class="form-control">
             <br>
-            <label>Postcode/Zip Code:</label>
-            <input type="text" class="form-control">
+        
+            <label for="PostCode">Postcode/Zip Code:</label>
+            <input type="text" id="PostCode" class="form-control">
             <br>
-            <label>State:</label>
-            <input type="text" class="form-control">
+        
+            <label for="State">State:</label>
+            <input type="text" id="State" class="form-control">
             <br>
-            <label>Country:</label>
-            <input type="text" class="form-control">
+        
+            <label for="Country">Country:</label>
+            <input type="text" id="Country" class="form-control">
             <br>
-            <label>Correspondence Address:</label>
-            <textarea class="form-control"></textarea>
+        
+            <label for="correspondenceAddress">Correspondence Address:</label>
+            <textarea class="form-control" id="correspondenceAddress"></textarea>
             <br>
-            <label>City:</label>
-            <input type="text" class="form-control">
+        
+            <label for="correspondenceCity">City:</label>
+            <input type="text" id="correspondenceCity" class="form-control">
             <br>
-            <label>Postcode/Zip Code:</label>
-            <input type="text" class="form-control">
+        
+            <label for="correspondencePostCode">Postcode/Zip Code:</label>
+            <input type="text" id="correspondencePostCode" class="form-control">
             <br>
-            <label>State:</label>
-            <input type="text" class="form-control">
+        
+            <label for="correspondenceState">State:</label>
+            <input type="text" id="correspondenceState" class="form-control">
             <br>
-            <label>Country:</label>
-            <input type="text" class="form-control">
+        
+            <label for="correspondenceCountry">Country:</label>
+            <input type="text" id="correspondenceCountry" class="form-control">
             <br>
-            <label>Effective Dates (dd/mm/yy)</label>
+        
+            <label for="effectiveFrom">Effective Dates (dd/mm/yy)</label>
             <br>
-            <label>From:</label>
-            <input type="text" class="form-control">
+        
+            <label for="fromDate">From:</label>
+            <input type="text" id="fromDate" class="form-control">
             <br>
-            <label>To:</label>
-            <input type="text" class="form-control">
+        
+            <label for="toDate">To:</label>
+            <input type="text" id="toDate" class="form-control">
             <br>
-            <label>Telephone:</label>
+        
+            <label for="telephone">Telephone:</label>
             <div class="row">
                 <div class="col">
-                    <label>Country Code (if outside UK):</label>
-                    <input type="text" class="form-control">
+                    <label for="countryCode">Country Code (if outside UK):</label>
+                    <input type="text" id="countryCode" class="form-control">
                     <br>
                 </div>
                 <div class="col">
-                    <label>Area Code (if applicable):</label>
-                    <input type="text" class="form-control">
+                    <label for="areaCode">Area Code (if applicable):</label>
+                    <input type="text" id="areaCode" class="form-control">
                     <br>
                 </div>
                 <div class="col">
-                    <label>Number:</label>
-                    <input type="text" class="form-control">
+                    <label for="phoneNumber">Number:</label>
+                    <input type="text" id="phoneNumber" class="form-control">
                     <br>
                 </div>
             </div>
-            <label>Alternative Phone Number:</label>
-            <input type="text" class="form-control">
+        
+            <label for="alternativePhone">Alternative Phone Number:</label>
+            <input type="text" id="alternativePhone" class="form-control">
             <br>
-            <label>Email Address:</label>
-            <input type="email" class="form-control">
+        
+            <label for="email">Email Address:</label>
+            <input type="email" id="email" class="form-control">
             <br>
-            <label>Alternative Email Address:</label>
-            <input type="email" class="form-control">
+        
+            <label for="alternativeEmail">Alternative Email Address:</label>
+            <input type="email" id="alternativeEmail" class="form-control">
             <br>
-        </div>
         </fieldset>
         
         <fieldset class="form-section">
@@ -146,90 +162,95 @@
             <input type="radio" id="thirdPartyYes" name="nominatedThirdParty" value="Yes"> <label for="thirdPartyYes">Yes</label>
             <input type="radio" id="thirdPartyNo" name="nominatedThirdParty" value="No"> <label for="thirdPartyNo">No</label>
             <br><br>
+        
             <label for="thirdPartyName">Name of nominated third party:</label>
             <input type="text" id="thirdPartyName" class="form-control">
             <br>
+        
             <label for="thirdPartyEmail">Email address of nominated third party:</label>
             <input type="email" id="thirdPartyEmail" class="form-control">
             <br>
+        
             <label for="thirdPartyDOB">Date of birth of nominated third party:</label>
             <input type="text" id="thirdPartyDOB" class="form-control">
         </fieldset>
         
-    <fieldset class="form-section">
-    <legend>Section F: Nationality</legend>
-    <p><em>The details you provide on this page will be used to determine your fee status and eligibility for many scholarships. The details
-        you give below should reflect your current situation, at the date you submit your application form.</em></p>
-            <label for="countryOfBirth">Country of Birth:</label>
-    <input type="text" id="countryOfBirth" class="form-control">
-    <br>
-    <label for="nationality">Country of Nationality/Citizenship:</label>
-    <p><em>In this section, give details of the countries of which you have nationality and the start date(s). If you have been a national of a
-        country since birth, use your birth date as the ‘From:’ date under ‘start date of nationality’. Please only include nationalities that
-        you currently hold.</em></p>
-    <p>Provide details of the countries of which you have nationality and the start date(s).</p>
-    <p>Do you expect to require a visa to enter the UK for your study?</p>
-    <input type="radio" id="visaYes" name="visaRequirement" value="Yes"> <label for="visaYes">Yes</label>
-    <input type="radio" id="visaNo" name="visaRequirement" value="No"> <label for="visaNo">No</label>
-    <input type="radio" id="visaUncertain" name="visaRequirement" value="Uncertain"> <label for="visaUncertain">Uncertain</label>
-    <p><strong>If you expect to require a visa to enter the UK for your study, please provide details of the passport that you intend to use.</strong></p>
-    <table class="table table-bordered">
-        <thead class="table-dark">
-            <tr>
-                <th>Nationality</th>
-                <th>Start Date of Nationality From (dd/mm/yyyy)</th>
-                <th>Passport Number</th>
-                <th>Country of Issue</th>
-                <th>Passport Expiry Date (dd/mm/yyyy)</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><input type="text" class="form-control"></td>
-                <td><input type="date" class="form-control"></td>
-                <td><input type="text" class="form-control"></td>
-                <td><input type="text" class="form-control"></td>
-                <td><input type="date" class="form-control"></td>
-            </tr>
-        </tbody>
-    </table>
-    
-    <label>If dual national:</label>
-    <input type="text" class="form-control">
-    <br>
-    <label>Current Country of Ordinary Residence:</label>
-    <input type="text" class="form-control">
-    <br>
-    <label>From (dd/mm/yyyy):</label>
-    <input type="date" class="form-control">
-    <br>
-    <label>To (dd/mm/yyyy):</label>
-    <input type="date" class="form-control">
-    <br>
-    <p>I am an EU national resident in the UK for the main purpose of full-time education:</p>
-    <input type="radio" id="euYes" name="euResident" value="Yes"> <label for="euYes">Yes</label>
-    <input type="radio" id="euNo" name="euResident" value="No"> <label for="euNo">No</label>
-    <br><br>
-    <label>If you have been ordinarily resident in a different country during the last six years, please enter details:</label>
-    
-    <label>Previous Country of Residence:</label>
-    <input type="text" class="form-control">
-    <br>
-    <label>From (dd/mm/yyyy):</label>
-    <input type="date" class="form-control">
-    <br>
-    <label>To (dd/mm/yyyy):</label>
-    <input type="date" class="form-control">
-</fieldset>
+        <fieldset class="form-section">
+            <legend>Section F: Nationality</legend>
+            <p><em>The details you provide on this page will be used to determine your fee status and eligibility for many scholarships. The details you give below should reflect your current situation, at the date you submit your application form.</em></p>
         
-       
-    
-    <div class="nav-btn">
-      <input class="btn btn-warning" type="reset" value="Reset">
-        <a href="daisysection3.html" class="btn btn-primary">Continue to Next Section</a>
-    </div>
-</form>
-</body>
-</html>
-
-
+            <label for="countryOfBirth">Country of Birth:</label>
+            <input type="text" id="countryOfBirth" class="form-control">
+            <br>
+        
+            <label for="nationality">Country of Nationality/Citizenship:</label>
+            <p><em>In this section, give details of the countries of which you have nationality and the start date(s). If you have been a national of a country since birth, use your birth date as the ‘From:’ date under ‘start date of nationality’. Please only include nationalities that you currently hold.</em></p>
+        
+            <p>Provide details of the countries of which you have nationality and the start date(s).</p>
+            <p>Do you expect to require a visa to enter the UK for your study?</p>
+            <input type="radio" id="visaYes" name="visaRequirement" value="Yes"> <label for="visaYes">Yes</label>
+            <input type="radio" id="visaNo" name="visaRequirement" value="No"> <label for="visaNo">No</label>
+            <input type="radio" id="visaUncertain" name="visaRequirement" value="Uncertain"> <label for="visaUncertain">Uncertain</label>
+            <p><strong>If you expect to require a visa to enter the UK for your study, please provide details of the passport that you intend to use.</strong></p>
+            <table class="table table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Nationality</th>
+                        <th>Start Date of Nationality From (dd/mm/yyyy)</th>
+                        <th>Passport Number</th>
+                        <th>Country of Issue</th>
+                        <th>Passport Expiry Date (dd/mm/yyyy)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" id="passportNationality" class="form-control"></td>
+                        <td><input type="date" id="passportStartDate" class="form-control"></td>
+                        <td><input type="text" id="passportNumber" class="form-control"></td>
+                        <td><input type="text" id="passportCountry" class="form-control"></td>
+                        <td><input type="date" id="passportExpiry" class="form-control"></td>
+                    </tr>
+                </tbody>
+            </table>
+        
+            <label for="dualNationality">If dual national:</label>
+            <input type="text" id="dualNationality" class="form-control">
+            <br>
+        
+            <label for="currentCountry">Current Country of Ordinary Residence:</label>
+            <input type="text" id="currentCountry" class="form-control">
+            <br>
+        
+            <label for="residenceFrom">From (dd/mm/yyyy):</label>
+            <input type="date" id="residenceFrom" class="form-control">
+            <br>
+        
+            <label for="residenceTo">To (dd/mm/yyyy):</label>
+            <input type="date" id="residenceTo" class="form-control">
+            <br>
+        
+            <p>I am an EU national resident in the UK for the main purpose of full-time education:</p>
+            <input type="radio" id="euYes" name="euResident" value="Yes"> <label for="euYes">Yes</label>
+            <input type="radio" id="euNo" name="euResident" value="No"> <label for="euNo">No</label>
+            <br><br>
+        
+            <label for="previousCountry">If you have been ordinarily resident in a different country during the last six years, please enter details:</label>
+            <label for="previousCountryOfResidence">Previous Country of Residence:</label>
+            <input type="text" id="previousCountryOfResidence" class="form-control">
+            <br>
+        
+            <label for="previousFrom">From (dd/mm/yyyy):</label>
+            <input type="date" id="previousFrom" class="form-control">
+            <br>
+        
+            <label for="previousTo">To (dd/mm/yyyy):</label>
+            <input type="date" id="previousTo" class="form-control">
+        </fieldset>
+        
+        <div class="nav-btn">
+            <input class="btn btn-warning" type="reset" value="Reset">
+            <button type="submit" class="btn btn-primary" id="submit">Continue to Next Section</button>
+        </div>
+        </form>
+        </body>
+</html>        
