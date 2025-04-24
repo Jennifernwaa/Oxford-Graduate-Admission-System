@@ -62,10 +62,21 @@
             border: none; /* Remove the border */
             background-color: transparent; /* Ensure the background is transparent */
         }
-		.btn-outline-light:hover {
+		    .btn-outline-light:hover {
             background-color: transparent; /* Disable hover effect */
             color: inherit; /* Keep the same color when hovered */
         }
+        input[type="radio"] {
+          width: 18px;
+          height: 18px;
+          transform: scale(1); /* optional: increases the visual size */
+          margin-right: 5px;
+          margin-left: 5px;
+          accent-color: #002147; /* optional: changes the dot color */
+          cursor: pointer;
+        }
+
+
     </style>
 </head>
 
@@ -115,130 +126,67 @@
             </nav>
 
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 content">
-                <div id="roles">
-                    <h2>Assigned Applications</h2>
-                    <div class="card">
-                        <div class="card-header">
-                            List of Assigned Applications
-                        </div>
-                        <div class="card-body">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Applicant Name</th>
-                                        <th>Program</th>
-                                        <th>Submission Date</th>
-                                        <th>Status</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Daisy Christina Gunawan</td>
-                                        <td>Computer Science</td>
-                                        <td>June 15th 2025</td>
-                                        <td>Pending</td>
-                                        <td><a class="btn btn-sm btn-outline-secondary" href="review_applicant_page.html">Review</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Jessica Sungeriwan</td>
-                                        <td>Industrial Engineering</td>
-                                        <td>April 15th 2025</td>
-                                        <td>Completed</td>
-                                        <td><button class="btn btn-sm btn-outline-secondary">View</button></td>
-                                    </tr>
-                                    </tbody>
-                            </table>
-                        </div>
+              <div class="container whitebox">
+                <h2>Graduate Application Review</h2>
+                <div class="card p-4">
+                <h4 style="padding-bottom: 15px;">Applicant Details</h4>
+                <table>
+                    <tr>
+                        <td style="padding-bottom: 15px;"><strong>Name </strong> <span style="padding-left: 150px;">Michael Johnson</td></span>
+                        <td>Submission Date: 15 March 2024</td>
+                    </tr>
+            
+                    <tr>
+                        <td style="padding-bottom: 15px;"><strong>Program Applied For </strong> <span style="padding-left: 33px;"></span> M.Sc. Computer Science</td></span>
+                    </tr>
+                    <tr>
+                    <td style="padding-bottom: 15px;"><strong>Application ID </strong> <span style="padding-left: 85px;"></span> 2345678</td></span>
+                    </tr>
+                </table>
+                        
+                        
+                        <h5>Documents</h5>
+                        <p><a href="#">Personal Statement</a></p>
+                        <p><a href="#">Transcript.pdf</a></p>
+                        <p><a href="#">Recommendation Letter.pdf</a></p>
+                        
+                        <h5>Evaluation Form</h5>
+                        <form>
+                            <div class="mb-3">
+                                <label class="form-label"><strong>Academic Qualifications</strong>&nbsp;&nbsp;&nbsp;</label>
+                                <input type="radio" name="academic" id="excellent" value="Excellent"> <label class="radio-label" for="excellent">Excellent</label>
+                                <input type="radio" name="academic" id="good" value="Good"> <label class="radio-label" for="good">Good</label>
+                                <input type="radio" name="academic" id="satisfactory" value="Satisfactory"> <label class="radio-label" for="satisfactory">Satisfactory</label>
+                                <input type="radio" name="academic" id="poor" value="Poor"> <label class="radio-label" for="poor">Poor</label>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label"><strong>Research Potential</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                <input type="radio" name="research" id="r-excellent" value="Excellent"> <label class="radio-label" for="r-excellent">Excellent</label>
+                                <input type="radio" name="research" id="r-good" value="Good"> <label class="radio-label" for="r-good">Good</label>
+                                <input type="radio" name="research" id="r-satisfactory" value="Satisfactory"> <label class="radio-label" for="r-satisfactory">Satisfactory</label>
+                                <input type="radio" name="research" id="r-poor" value="Poor"> <label class="radio-label" for="r-poor">Poor</label>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label"><strong>Recommendation</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                <input type="radio" name="recommendation" id="accept" value="Accept"> <label class="radio-label" for="accept">Accept</label>
+                                <input type="radio" name="recommendation" id="reject" value="Reject"> <label class="radio-label" for="reject">Reject</label>
+                                <input type="radio" name="recommendation" id="hold" value="Hold"> <label class="radio-label" for="hold">Hold</label>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label"><strong>Comments</strong></label>
+                                <textarea class="form-control" rows="3"></textarea>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary">Approve</button>
+                            <button type="submit" class="btn btn-danger">Reject</button>
+                            <button type="submit" class="btn btn-secondary">Request Additional Documents</button>
+                        </form>
                     </div>
-                </div>
-
-                <div id="assign-reviewer" style="display: none;">
-                    <h2>Completed Reviews</h2>
-                    <div class="card">
-                        <div class="card-header">
-                            List of Completed Applications
-                        </div>
-                        <div class="card-body">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Applicant Name</th>
-                                        <th>Program</th>
-                                        <th>Submission Date</th>
-                                        <th>Status</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Daisy Christina Gunawan</td>
-                                        <td>Computer Science</td>
-                                        <td>June 15th 2025</td>
-                                        <td>Pending</td>
-                                        <td><button class="btn btn-sm btn-outline-secondary">Review</button></td>
-                                    </tr>
-                                    </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="statistics" style="display: none;">
-                    <h2>Pending Reviews</h2>
-                    <div class="card">
-                        <div class="card-header">
-                            List of Pending Applications
-                        </div>
-                        <div class="card-body">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Applicant Name</th>
-                                        <th>Program</th>
-                                        <th>Submission Date</th>
-                                        <th>Status</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Jessica Sungeriwan</td>
-                                        <td>Industrial Engineering</td>
-                                        <td>April 15th 2025</td>
-                                        <td>Completed</td>
-                                        <td><button class="btn btn-sm btn-outline-secondary">View</button></td>
-                                    </tr>
-                                    </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="reports" style="display: none;">
-                    <h2>Generate Reports</h2>
-                    <div class="card">
-                        <div class="card-header">
-                            Report Generation Options
-                        </div>
-                        <div class="card-body">
-                            <form>
-                                <div class="mb-3">
-                                    <label for="reportType" class="form-label">Select Report Type:</label>
-                                    <select class="form-select" id="reportType">
-                                        <option value="applications">All Applications</option>
-                                        <option value="reviewProgress">Review Progress</option>
-                                        <option value="reviewerLoad">Reviewer Load</option>
-                                        </select>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Generate Report</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+            </div>
             </main>
-        </div>
-    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script>
@@ -284,3 +232,4 @@
     </script>
 </body>
 </html>
+
