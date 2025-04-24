@@ -30,7 +30,9 @@ async function submitForm(user) {
       supervisorName: document.getElementById('supervisorName').value,
       interviewDates: document.getElementById('interviewDates').value,
       researchDegree: document.querySelector('input[name="researchDegree"]:checked')?.value || '',
-      collegePref: document.getElementById('collegePref').value,
+      collegePreference: document.querySelector('input[name="collegePreference"]:checked')?.value === "No preference"
+      ? "No preference"
+      : document.getElementById("collegePref").value.trim(),
       givenName: document.getElementById('givenName').value,
       preferredName: document.getElementById('preferredName').value,
       middleName: document.getElementById('middledName').value,
@@ -76,3 +78,10 @@ onAuthStateChanged(auth, (user) => {
 
   console.log("User authenticated, UID:", user.uid);
 });
+
+const userData = {
+  // other fields...
+  collegePreference: document.querySelector('input[name="collegePreference"]:checked')?.value === "No preference"
+    ? "No preference"
+    : document.getElementById("collegePref").value.trim()
+};
