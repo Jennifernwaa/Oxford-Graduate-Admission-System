@@ -22,37 +22,26 @@ const db = getFirestore(app);
 // Function to get form data from the DOM
 function getFormData() {
     return {
-        fundingInfo: document.querySelector('input[name="fundingInfo"]:checked')?.value || "",
+        // Section P: Final checklist
+        filledAllSections: document.getElementById('filledAllSections').checked,
+        gatheredMaterials: document.getElementById('gatheredMaterials').checked,
+        requestedReferences: document.getElementById('requestedReferences').checked,
+        paidFee: document.getElementById('paidFee').checked,
 
-        fundingSource1: document.getElementById('fundingSource1').value,
-        fundingAmountPerYear1: document.getElementById('fundingAmountPerYear1').value,
-        fundingPeriodCovered1: document.getElementById('fundingPeriodCovered1').value,
-        status1: document.querySelector('input[name="status1"]:checked')?.value || "",
-    
-        fundingSource2: document.getElementById('fundingSource2').value,
-        fundingAmountPerYear2: document.getElementById('fundingAmountPerYear2').value,
-        fundingPeriodCovered2: document.getElementById('fundingPeriodCovered2').value,
-        status2: document.querySelector('input[name="status2"]:checked')?.value || "",
-    
-        fundingSource3: document.getElementById('fundingSource3').value,
-        fundingAmountPerYear3: document.getElementById('fundingAmountPerYear3').value,
-        fundingPeriodCovered3: document.getElementById('fundingPeriodCovered3').value,
-        status3: document.querySelector('input[name="status3"]:checked')?.value || "",
-    
-        fundingSource4: document.getElementById('fundingSource4')?.value || "",
-        fundingAmountPerYear4: document.getElementById('fundingAmountPerYear4')?.value || "",
-        fundingPeriodCovered4: document.getElementById('fundingPeriodCovered4')?.value || "",
-        status4: document.querySelector('input[name="status4"]:checked')?.value || "",
+        // Section 1: Ethnicity & Diversity
+        ethnicity: Array.from(document.querySelectorAll('input[name="ethnicity"]:checked')).map(el => el.id),
 
-        studentshipApply: document.querySelector('input[name="studentshipApply"]:checked')?.value || "",
-        referenceCode: document.getElementById('referenceCode').value,
+        // Religion or belief
+        religion: document.querySelector('input[name="religion"]:checked')?.id || null,
 
-        hillFoundation: document.getElementById('hillFoundation').checked,
-        ertegun: document.getElementById('ertegun').checked,
-        ocis: document.getElementById('ocis').checked,
-        weidenfeld: document.getElementById('weidenfeld').checked,
-        oocdtp: document.getElementById('oocdtp').checked,
-        granduniondtp: document.getElementById('granduniondtp').checked
+        // Sexual orientation
+        sexualOrientation: document.querySelector('input[name="sexualOrientation"]:checked')?.id || null,
+
+        // Gender
+        gender: document.querySelector('input[name="gender"]:checked')?.id || null,
+
+        // Caring responsibilities
+        caringResponsibilities: Array.from(document.querySelectorAll('input[id$="Care"]:checked')).map(el => el.id)
     };
 }
 
@@ -60,8 +49,8 @@ function getFormData() {
 async function saveFormDataToFirestore(user) {
     const formData = getFormData();
         try {
-            const docRef = doc(db, "users", user.uid, "forms", "form5");
-            await setDoc(docRef, { formPage5Data: formData }, { merge: true });
+            const docRef = doc(db, "users", user.uid, "forms", "form7");
+            await setDoc(docRef, { formPage7Data: formData }, { merge: true });
             console.log("Form data saved to Firestore.");
         } catch (error) {
             console.error("Error saving form data to Firestore:", error);
@@ -71,10 +60,10 @@ async function saveFormDataToFirestore(user) {
 // Function to load form data from Firestore
 async function loadFormDataFromFirestore(user) {
     try {
-            const docRef = doc(db, "users", user.uid, "forms", "form5");
+            const docRef = doc(db, "users", user.uid, "forms", "form7");
             const docSnap = await getDoc(docRef);
             if (docSnap.exists()) {
-                const formData = docSnap.data().formPage5Data || {};
+                const formData = docSnap.data().formPage7Data || {};
                 populateFormFields(formData);
             } else {
                 console.log("No form data found for this user.");
@@ -152,14 +141,14 @@ document.addEventListener('DOMContentLoaded', () => {
     backButton.addEventListener('click', async (event) => {
         event.preventDefault();
         await saveFormDataToFirestore(user);
-        window.location.href = "form_page4.html";
+        window.location.href = "form_page6.html";
     });
 
     // Handle continue button click
     continueButton.addEventListener('click', async (event) => {
         event.preventDefault();
         await saveFormDataToFirestore(user);
-        window.location.href = "form_page6.html";
+        window.location.href = "form_page8.html";
     });
     });
 });

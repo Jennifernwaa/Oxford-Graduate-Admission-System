@@ -24,6 +24,7 @@ async function saveFormDataToFirestore(user, formData) {
   try {
     const formDocRef = doc(db, "users", user.uid, "forms", "form1");
     await setDoc(formDocRef, formData);
+
   } catch (error) {
     console.error("Save error:", error);
     alert("Error: " + error.message);

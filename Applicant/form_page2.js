@@ -24,45 +24,43 @@ function getFormData() {
     return {
         homeAddress: document.getElementById('homeAddress').value,
         city: document.getElementById('city').value,
-        postcode: document.getElementById('PostCode').value,
-        state: document.getElementById('State').value,
-        country: document.getElementById('Country').value,
+        PostCode: document.getElementById('PostCode').value,
+        State: document.getElementById('State').value,
+        Country: document.getElementById('Country').value,
         correspondenceAddress: document.getElementById('correspondenceAddress').value,
         correspondenceCity: document.getElementById('correspondenceCity').value,
-        correspondencePostcode: document.getElementById('correspondencePostCode').value,
+        correspondencePostCode: document.getElementById('correspondencePostCode').value,
         correspondenceState: document.getElementById('correspondenceState').value,
         correspondenceCountry: document.getElementById('correspondenceCountry').value,
-        effectiveFrom: document.getElementById('fromDate').value,
-        effectiveTo: document.getElementById('toDate').value,
-        telephoneCountryCode: document.getElementById('countryCode').value,
-        telephoneAreaCode: document.getElementById('areaCode').value,
-        telephoneNumber: document.getElementById('phoneNumber').value,
-        alternativePhoneNumber: document.getElementById('alternativePhone').value,
-        emailAddress: document.getElementById('email').value,
-        alternativeEmailAddress: document.getElementById('alternativeEmail').value,
-        thirdPartyYes: document.getElementById('thirdPartyYes').checked,
-        thirdPartyNo: document.getElementById('thirdPartyNo').checked,
+        effectiveFrom: document.getElementById('effectiveFrom').value,
+        effectiveTo: document.getElementById('effectiveTo').value,
+        telephoneCountryCode: document.getElementById('telephoneCountryCode').value,
+        telephoneAreaCode: document.getElementById('telephoneAreaCode').value,
+        telephoneNumber: document.getElementById('telephoneNumber').value,
+        alternativePhone: document.getElementById('alternativePhone').value,
+        email: document.getElementById('email').value,
+        alternativeEmail: document.getElementById('alternativeEmail').value,
         thirdPartyName: document.getElementById('thirdPartyName').value,
         thirdPartyEmail: document.getElementById('thirdPartyEmail').value,
         thirdPartyDOB: document.getElementById('thirdPartyDOB').value,
         countryOfBirth: document.getElementById('countryOfBirth').value,
-        visaYes: document.getElementById('visaYes').checked,
-        visaNo: document.getElementById('visaNo').checked,
-        visaUncertain: document.getElementById('visaUncertain').checked,
         passportNationality: document.getElementById('passportNationality').value,
         passportStartDate: document.getElementById('passportStartDate').value,
         passportNumber: document.getElementById('passportNumber').value,
         passportCountry: document.getElementById('passportCountry').value,
-        passportExpiryDate: document.getElementById('passportExpiry').value,
+        passportExpiryDate: document.getElementById('passportExpiryDate').value,
         dualNationality: document.getElementById('dualNationality').value,
-        currentCountryOfResidence: document.getElementById('currentCountry').value,
+        currentCountryOfResidence: document.getElementById('currentCountryOfResidence').value,
         residenceFrom: document.getElementById('residenceFrom').value,
         residenceTo: document.getElementById('residenceTo').value,
-        euYes: document.getElementById('euYes').checked,
-        euNo: document.getElementById('euNo').checked,
         previousCountryOfResidence: document.getElementById('previousCountryOfResidence').value,
-        previousResidenceFrom: document.getElementById('previousFrom').value,
-        previousResidenceTo: document.getElementById('previousTo').value,
+        previousResidenceFrom: document.getElementById('previousResidenceFrom').value,
+        previousResidenceTo: document.getElementById('previousResidenceTo').value,
+
+        // Radio Buttons
+        nominatedThirdParty: document.querySelector('input[name="nominatedThirdParty"]:checked')?.value || '',
+        visaRequirement: document.querySelector('input[name="visaRequirement"]:checked')?.value || '',
+        euResident: document.querySelector('input[name="euResident"]:checked')?.value || '',
     };
 }
 
@@ -181,3 +179,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+
+
+
+
+
+
+

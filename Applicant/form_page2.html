@@ -116,28 +116,28 @@
             <br>
         
             <label for="fromDate">From:</label>
-            <input type="text" id="fromDate" class="form-control">
+            <input type="text" id="effectiveFrom" class="form-control">
             <br>
         
             <label for="toDate">To:</label>
-            <input type="text" id="toDate" class="form-control">
+            <input type="text" id="effectiveTo" class="form-control">
             <br>
         
             <label for="telephone">Telephone:</label>
             <div class="row">
                 <div class="col">
                     <label for="countryCode">Country Code (if outside UK):</label>
-                    <input type="text" id="countryCode" class="form-control">
+                    <input type="text" id="telephoneCountryCode" class="form-control">
                     <br>
                 </div>
                 <div class="col">
                     <label for="areaCode">Area Code (if applicable):</label>
-                    <input type="text" id="areaCode" class="form-control">
+                    <input type="text" id="telephoneAreaCode" class="form-control">
                     <br>
                 </div>
                 <div class="col">
                     <label for="phoneNumber">Number:</label>
-                    <input type="text" id="phoneNumber" class="form-control">
+                    <input type="text" id="telephoneNumber" class="form-control">
                     <br>
                 </div>
             </div>
@@ -208,7 +208,7 @@
                         <td><input type="date" id="passportStartDate" class="form-control"></td>
                         <td><input type="text" id="passportNumber" class="form-control"></td>
                         <td><input type="text" id="passportCountry" class="form-control"></td>
-                        <td><input type="date" id="passportExpiry" class="form-control"></td>
+                        <td><input type="date" id="passportExpiryDate" class="form-control"></td>
                     </tr>
                 </tbody>
             </table>
@@ -218,7 +218,7 @@
             <br>
         
             <label for="currentCountry">Current Country of Ordinary Residence:</label>
-            <input type="text" id="currentCountry" class="form-control">
+            <input type="text" id="currentCountryOfResidence" class="form-control">
             <br>
         
             <label for="residenceFrom">From (dd/mm/yyyy):</label>
@@ -240,11 +240,11 @@
             <br>
         
             <label for="previousFrom">From (dd/mm/yyyy):</label>
-            <input type="date" id="previousFrom" class="form-control">
+            <input type="date" id="previousResidenceFrom" class="form-control">
             <br>
         
             <label for="previousTo">To (dd/mm/yyyy):</label>
-            <input type="date" id="previousTo" class="form-control">
+            <input type="date" id="previousResidenceTo" class="form-control">
         </fieldset>
         
         <div class="nav-btn">

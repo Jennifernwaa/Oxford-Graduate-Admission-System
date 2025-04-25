@@ -22,37 +22,32 @@ const db = getFirestore(app);
 // Function to get form data from the DOM
 function getFormData() {
     return {
-        fundingInfo: document.querySelector('input[name="fundingInfo"]:checked')?.value || "",
-
-        fundingSource1: document.getElementById('fundingSource1').value,
-        fundingAmountPerYear1: document.getElementById('fundingAmountPerYear1').value,
-        fundingPeriodCovered1: document.getElementById('fundingPeriodCovered1').value,
-        status1: document.querySelector('input[name="status1"]:checked')?.value || "",
-    
-        fundingSource2: document.getElementById('fundingSource2').value,
-        fundingAmountPerYear2: document.getElementById('fundingAmountPerYear2').value,
-        fundingPeriodCovered2: document.getElementById('fundingPeriodCovered2').value,
-        status2: document.querySelector('input[name="status2"]:checked')?.value || "",
-    
-        fundingSource3: document.getElementById('fundingSource3').value,
-        fundingAmountPerYear3: document.getElementById('fundingAmountPerYear3').value,
-        fundingPeriodCovered3: document.getElementById('fundingPeriodCovered3').value,
-        status3: document.querySelector('input[name="status3"]:checked')?.value || "",
-    
-        fundingSource4: document.getElementById('fundingSource4')?.value || "",
-        fundingAmountPerYear4: document.getElementById('fundingAmountPerYear4')?.value || "",
-        fundingPeriodCovered4: document.getElementById('fundingPeriodCovered4')?.value || "",
-        status4: document.querySelector('input[name="status4"]:checked')?.value || "",
-
-        studentshipApply: document.querySelector('input[name="studentshipApply"]:checked')?.value || "",
-        referenceCode: document.getElementById('referenceCode').value,
-
-        hillFoundation: document.getElementById('hillFoundation').checked,
-        ertegun: document.getElementById('ertegun').checked,
-        ocis: document.getElementById('ocis').checked,
-        weidenfeld: document.getElementById('weidenfeld').checked,
-        oocdtp: document.getElementById('oocdtp').checked,
-        granduniondtp: document.getElementById('granduniondtp').checked
+        // Section 2: Socio-economic background
+        ukEducation: document.querySelector('input[name="ukEducation"]:checked')?.id || null,
+        gcseSchoolName: document.getElementById('floatingInput')?.value || '',
+        gcseSchoolPostcode: document.getElementById('floatingInput')?.value || '',
+        gcseSchoolType: document.querySelector('input[name="gcseSchoolType"]:checked')?.id || null,
+        aLevelSchoolName: document.getElementById('floatingInput')?.value || '',
+        aLevelSchoolPostcode: document.getElementById('floatingInput')?.value || '',
+        aLevelSchoolType: document.querySelector('input[name="aLevelSchoolType"]:checked')?.id || null,
+        homePostcode: document.getElementById('homePostcode')?.value || '',
+        freeSchoolMeals: document.querySelector('input[name="freeSchoolMeals"]:checked')?.id || null,
+        parentsUndergradDegree: document.querySelector('input[name="parentsUndergradDegree"]:checked')?.id || null,
+        parent1Job: Array.from(document.querySelectorAll('input[name="parent1Job"]:checked')).map(el => el.value),
+        parent2Job: Array.from(document.querySelectorAll('input[name="parent2Job"]:checked')).map(el => el.value),
+        undergradUK: document.querySelector('input[name="undergradUK"]:checked')?.id || null,
+        fundingSources: {
+            govLoan: document.getElementById('govLoan')?.checked || false,
+            parentFinancial: document.getElementById('parentFinancial')?.checked || false,
+            preferNotFunding: document.getElementById('preferNotFunding')?.checked || false,
+            termTimeWork: document.getElementById('termTimeWork')?.checked || false,
+            scholarship: document.getElementById('scholarship')?.checked || false,
+            otherFunding: document.getElementById('otherFunding')?.checked || false,
+            personalSavings: document.getElementById('personalSavings')?.checked || false,
+            uniBursary: document.getElementById('uniBursary')?.checked || false,
+            otherFundingDetails: document.getElementById('otherFundingDetails')?.value || ''
+        },
+        stateCare: document.querySelector('input[name="stateCare"]:checked')?.id || null
     };
 }
 
@@ -60,8 +55,8 @@ function getFormData() {
 async function saveFormDataToFirestore(user) {
     const formData = getFormData();
         try {
-            const docRef = doc(db, "users", user.uid, "forms", "form5");
-            await setDoc(docRef, { formPage5Data: formData }, { merge: true });
+            const docRef = doc(db, "users", user.uid, "forms", "form8");
+            await setDoc(docRef, { formPage8Data: formData }, { merge: true });
             console.log("Form data saved to Firestore.");
         } catch (error) {
             console.error("Error saving form data to Firestore:", error);
@@ -71,10 +66,10 @@ async function saveFormDataToFirestore(user) {
 // Function to load form data from Firestore
 async function loadFormDataFromFirestore(user) {
     try {
-            const docRef = doc(db, "users", user.uid, "forms", "form5");
+            const docRef = doc(db, "users", user.uid, "forms", "form8");
             const docSnap = await getDoc(docRef);
             if (docSnap.exists()) {
-                const formData = docSnap.data().formPage5Data || {};
+                const formData = docSnap.data().formPage8Data || {};
                 populateFormFields(formData);
             } else {
                 console.log("No form data found for this user.");
@@ -152,14 +147,14 @@ document.addEventListener('DOMContentLoaded', () => {
     backButton.addEventListener('click', async (event) => {
         event.preventDefault();
         await saveFormDataToFirestore(user);
-        window.location.href = "form_page4.html";
+        window.location.href = "form_page7.html";
     });
 
     // Handle continue button click
     continueButton.addEventListener('click', async (event) => {
         event.preventDefault();
         await saveFormDataToFirestore(user);
-        window.location.href = "form_page6.html";
+        window.location.href = "form_page9.html";
     });
     });
 });
