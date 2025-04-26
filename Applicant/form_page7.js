@@ -41,8 +41,10 @@ function getFormData() {
         gender: document.querySelector('input[name="gender"]:checked')?.id || null,
 
         // Caring responsibilities
-        caringResponsibilities: Array.from(document.querySelectorAll('input[id$="Care"]:checked')).map(el => el.id)
-    };
+        careResponsibilities: Array.from(document.querySelectorAll('input[type="checkbox"][id^="child"], input[type="checkbox"][id^="disabledAdult"], input[type="checkbox"][id^="olderAdult"], input[type="checkbox"][id^="otherCare"], input[type="checkbox"][id^="noCare"], input[type="checkbox"][id^="preferNotCare"]'))
+        .filter(checkbox => checkbox.checked)
+        .map(checkbox => checkbox.value)
+        };
 }
 
 // Function to save form data to Firestore
@@ -76,16 +78,38 @@ async function loadFormDataFromFirestore(user) {
 // Function to populate form fields
 function populateFormFields(formData) {
     Object.keys(formData).forEach(key => {
+        const value = formData[key];
+
+        // Handle radio buttons
+        const radioGroup = document.querySelectorAll(`input[name="${key}"]`);
+        if (radioGroup.length > 0 && radioGroup[0].type === "radio") {
+            radioGroup.forEach(radio => {
+                radio.checked = radio.value === value;
+            });
+            return;
+        }
+
+        // Handle checkbox groups (arrays of values)
+        if (Array.isArray(value)) {
+            value.forEach(val => {
+                const checkbox = document.querySelector(`input[type="checkbox"][value="${val}"]`);
+                if (checkbox) checkbox.checked = true;
+            });
+            return;
+        }
+
+        // Handle individual checkboxes and text inputs
         const element = document.getElementById(key);
         if (element) {
             if (element.type === 'checkbox') {
-                element.checked = formData[key] || false;
+                element.checked = value || false;
             } else {
-                element.value = formData[key] || '';
+                element.value = value || '';
             }
         }
     });
 }
+
 
 // Add event listener to the "Continue" button
 document.addEventListener('DOMContentLoaded', () => {

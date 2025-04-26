@@ -22,7 +22,7 @@ const db = getFirestore(app);
 // Function to get form data from the DOM
 function getFormData() {
     return {
-        accommodationYes: document.getElementById('accommodationYes').checked,
+        accommodation: document.querySelector('input[name="accommodation"]:checked')?.value || "",
         accompanyingChildren: document.getElementById('accompanyingChildren').value,
         accompanyingAdult: document.getElementById('accompanyingAdult').value,
         referee1Name: document.getElementById('referee1Name').value,
@@ -35,10 +35,14 @@ function getFormData() {
         education1Qualification: document.getElementById('education1Qualification').value,
         education1Subject: document.getElementById('education1Subject').value,
         education1Result: document.getElementById('education1Result').value,
-        studyStatus: document.querySelector('input[name="Yes"]:checked')?.id === 'studyYes' ? 'Yes' : 'No',
-        studyDetails: document.querySelector('textarea.form-control')?.value || '',
-        stateStudyStatus: document.querySelector('input[name="Yes"]:checked')?.id === 'stateStudyYes' ? 'Yes' : 'No',
-        stateStudyDetails: document.querySelectorAll('textarea.form-control')[1]?.value || ''
+        studyStatus: document.querySelector('input[name="studyStatus"]:checked')?.value || "",
+        studyDetails: document.querySelector('input[name="studyStatus"]:checked')?.value === "Yes"
+            ? document.getElementById('studyDetails').value.trim() || ""
+            : "",
+        stateStudyStatus: document.querySelector('input[name="stateStudyStatus"]:checked')?.value || "",
+        stateStudyDetails: document.querySelector('input[name="stateStudyStatus"]:checked')?.value === "Yes"
+            ? document.getElementById('stateStudyDetails').value.trim() || ""
+            : ""
     };
 }
 
@@ -73,16 +77,28 @@ async function loadFormDataFromFirestore(user) {
 // Function to populate form fields
 function populateFormFields(formData) {
     Object.keys(formData).forEach(key => {
-        const element = document.getElementById(key);
-        if (element) {
-            if (element.type === 'checkbox') {
-                element.checked = formData[key] || false;
-            } else {
-                element.value = formData[key] || '';
-            }
+      const value = formData[key];
+  
+      // Handle radio buttons
+      const radioGroup = document.querySelectorAll(`input[name="${key}"]`);
+      if (radioGroup.length > 0) {
+        radioGroup.forEach(radio => {
+          radio.checked = (radio.value === value);
+        });
+        return;
+      }
+  
+      const element = document.getElementById(key);
+      if (element) {
+        if (element.type === 'checkbox') {
+          element.checked = value || false;
+        } else {
+          element.value = value || '';
         }
+      }
     });
-}
+  }
+
 
 // Add event listener to the "Continue" button
 document.addEventListener('DOMContentLoaded', () => {

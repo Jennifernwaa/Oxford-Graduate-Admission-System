@@ -38,9 +38,9 @@ function getFormData() {
 
         // Section O: Application fee payment
         orderNumber: document.getElementById('orderNumber').value,
-        waiverOption: document.querySelector('input[name="waiverOption"]:checked')?.value || null,
+        feeWaiver: document.querySelector('input[name="feeWaiver"]:checked')?.value || "", // Captures the selected fee waiver option (yes/no)
         confirmAfford: document.getElementById('confirmAfford').checked,
-        confirmEntry: document.getElementById('confirmEntry').checked,
+        confirmEntry: document.getElementById('confirmEntry').checked
     };
 }
 
@@ -59,20 +59,29 @@ async function saveFormDataToFirestore(user) {
 // Function to populate form fields
 function populateFormFields(formData) {
     Object.keys(formData).forEach(key => {
+        const value = formData[key];
+
+        // Handle radio buttons
+        const radioGroup = document.querySelectorAll(`input[name="${key}"]`);
+        if (radioGroup.length > 0 && radioGroup[0].type === "radio") {
+            radioGroup.forEach(radio => {
+                radio.checked = radio.value === value;
+            });
+            return; // Skip the rest of the logic for radio buttons
+        }
+
+        // Handle checkboxes and text inputs
         const element = document.getElementById(key);
         if (element) {
             if (element.type === 'checkbox') {
-                console.log(`Populating checkbox: ${key}, value: ${formData[key]}`); // Debugging log
-                element.checked = formData[key] || false;
-            } else if (element.type === 'number' || element.type === 'text') {
-                console.log(`Populating input: ${key}, value: ${formData[key]}`); // Debugging log
-                element.value = formData[key] || '';
+                element.checked = value || false;
+            } else {
+                element.value = value || '';
             }
-        } else {
-            console.warn(`Element with id "${key}" not found in the DOM.`); // Debugging log
         }
     });
 }
+
 
 // Function to load form data from Firestore
 async function loadFormDataFromFirestore(user) {

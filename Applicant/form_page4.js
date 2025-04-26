@@ -83,16 +83,28 @@ async function loadFormDataFromFirestore(user) {
 // Function to populate form fields
 function populateFormFields(formData) {
     Object.keys(formData).forEach(key => {
-        const element = document.getElementById(key);
-        if (element) {
-            if (element.type === 'checkbox') {
-                element.checked = formData[key] || false;
-            } else {
-                element.value = formData[key] || '';
-            }
+      const value = formData[key];
+  
+      // Handle radio buttons
+      const radioGroup = document.querySelectorAll(`input[name="${key}"]`);
+      if (radioGroup.length > 0) {
+        radioGroup.forEach(radio => {
+          radio.checked = (radio.value === value);
+        });
+        return;
+      }
+  
+      const element = document.getElementById(key);
+      if (element) {
+        if (element.type === 'checkbox') {
+          element.checked = value || false;
+        } else {
+          element.value = value || '';
         }
+      }
     });
-}
+  }
+  
 
 // Add event listener to the "Continue" button
 document.addEventListener('DOMContentLoaded', () => {

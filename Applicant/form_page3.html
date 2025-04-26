@@ -143,19 +143,23 @@
             </table>
             <p><em>Have you undertaken degree-level study at any institution, which you have not completed, excluding any qualification you are
                 currently working towards?</em></p>
-                <input type="radio" id="studyYes" name="Yes" value="Yes"> <label for="studyYes">Yes</label>
-                <input type="radio" id="studyNo" name="No" value="No"> <label for="studyNo">No</label>
+                <input type="radio" id="studyYes" name="studyStatus" value="Yes">
+                <label for="studyYes">Yes</label>
+                <input type="radio" id="studyNo" name="studyStatus" value="No">
+                <label for="studyNo">No</label>
                 <br></br>
             <p><em>If “Yes”, please state the course(s) and the institution(s) and the reason(s) the qualification was not completed.</em></p>
-            <textarea class="form-control"></textarea>
+            <textarea id="studyDetails" class="form-control"></textarea>
             <p><em>Are you planning to begin, or to continue studying for, a degree at any institution, at the same time as you would also be studying
                 at Oxford for the course for which you are now applying?</em></p>
-                <input type="radio" id="stateStudyYes" name="Yes" value="Yes"> <label for="stateStudyYes">Yes</label>
-                <input type="radio" id="stateStudyNo" name="No" value="No"> <label for="stateStudyNo">No</label>
+                <input type="radio" id="stateStudyYes" name="stateStudyStatus" value="Yes">
+                <label for="stateStudyYes">Yes</label>
+                <input type="radio" id="stateStudyNo" name="stateStudyStatus" value="No">
+                <label for="stateStudyNo">No</label>
                 <br></br>
             <p><em>If “Yes”, please provide details of the course and the institution and how you believe it will be possible to pursue both courses at
                 the same time.</em></p>
-                <textarea class="form-control"></textarea>
+                <textarea id="stateStudyDetails" class="form-control"></textarea>
 
         </div>
 

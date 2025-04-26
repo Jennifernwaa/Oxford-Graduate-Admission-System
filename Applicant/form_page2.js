@@ -71,12 +71,24 @@ function populateFormData(formData) {
         if (element) {
             if (element.type === 'checkbox') {
                 element.checked = formData[key] || false;
+            } else if (element.type === 'radio') {
+                const radioGroup = document.querySelectorAll(`input[name="${key}"]`);
+                radioGroup.forEach(radio => {
+                    radio.checked = (radio.value === formData[key]);
+                });
             } else {
                 element.value = formData[key] || '';
             }
+        } else {
+            // Handle radio groups (they won't be found by id)
+            const radioGroup = document.querySelectorAll(`input[name="${key}"]`);
+            radioGroup.forEach(radio => {
+                radio.checked = (radio.value === formData[key]);
+            });
         }
     });
 }
+
 
 // Function to save form data to Firestore
 async function saveFormDataToFirestore(user) {
