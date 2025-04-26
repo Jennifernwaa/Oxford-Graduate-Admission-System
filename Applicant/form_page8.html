@@ -172,12 +172,12 @@
                     </td>
                     <td>
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="Name of School">
+                            <input type="text" class="form-control" id="gcseSchoolName" placeholder="Name of School">
                             <label for="floatingInput">Name of School</label>
                         </div>
 
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="Postcode of School">
+                            <input type="text" class="form-control" id="gcseSchoolPostcode" placeholder="Postcode of School">
                             <label for="floatingInput">Postcode of School</label>
                         </div>
                     </td>
@@ -217,12 +217,12 @@
                     </td>
                     <td>
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="Name of School">
+                            <input type="text" class="form-control" id="aLevelSchoolName" placeholder="Name of School">
                             <label for="floatingInput">Name of School</label>
                         </div>
 
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="Postcode of School">
+                            <input type="text" class="form-control" id="aLevelSchoolPostcode" placeholder="Postcode of School">
                             <label for="floatingInput">Postcode of School</label>
                         </div>
                     </td>
@@ -343,45 +343,45 @@
                 <tbody>
                     <tr>
                         <td>Higher managerial, administrative and professional occupations</td>
-                        <td><input type="checkbox" name="parent1Job" value="higherManagerial" style="display: block; margin: auto"></td>
-                        <td><input type="checkbox" name="parent2Job" value="higherManagerial"></td>
+                        <td><input type="checkbox" id="parent1_higherManagerial" value="higherManagerial" name="parent1Job" style="display: block; margin: auto"></td>
+                        <td><input type="checkbox" id="parent2_higherManagerial" value="higherManagerial" name="parent2Job"></td>
                     </tr>
                     <tr>
                         <td>Lower managerial, administrative and professional occupations</td>
-                        <td><input type="checkbox" name="parent1Job" value="lowerManagerial"></td>
-                        <td><input type="checkbox" name="parent2Job" value="lowerManagerial"></td>
+                        <td><input type="checkbox" id="parent1_lowerManagerial" value="lowerManagerial" name="parent1Job"></td>
+                        <td><input type="checkbox" id="parent2_lowerManagerial" value="lowerManagerial" name="parent2Job"></td>
                     </tr>
                     <tr>
                         <td>Intermediate occupations</td>
-                        <td><input type="checkbox" name="parent1Job" value="intermediate"></td>
-                        <td><input type="checkbox" name="parent2Job" value="intermediate"></td>
+                        <td><input type="checkbox" id="parent1_intermediate" value="intermediate" name="parent1Job"></td>
+                        <td><input type="checkbox" id="parent2_intermediate" value="intermediate" name="parent2Job"></td>
                     </tr>
                     <tr>
                         <td>Small employers and own account workers</td>
-                        <td><input type="checkbox" name="parent1Job" value="smallEmployers"></td>
-                        <td><input type="checkbox" name="parent2Job" value="smallEmployers"></td>
+                        <td><input type="checkbox" id="parent1_smallEmployers" value="smallEmployers" name="parent1Job"></td>
+                        <td><input type="checkbox" id="parent2_smallEmployers" value="smallEmployers" name="parent2Job"></td>
                     </tr>
                     <tr>
                         <td>Lower supervisory and technical occupations</td>
-                        <td><input type="checkbox" name="parent1Job" value="lowerSupervisory"></td>
-                        <td><input type="checkbox" name="parent2Job" value="lowerSupervisory"></td>
+                        <td><input type="checkbox" id="parent1_lowerSupervisory" value="lowerSupervisory" name="parent1Job"></td>
+                        <td><input type="checkbox" id="parent2_lowerSupervisory" value="lowerSupervisory" name="parent2Job"></td>
                     </tr>
                     <tr>
                         <td>Routine occupations</td>
-                        <td><input type="checkbox" name="parent1Job" value="routine"></td>
-                        <td><input type="checkbox" name="parent2Job" value="routine"></td>
+                        <td><input type="checkbox" id="parent1_routine" value="routine" name="parent1Job"></td>
+                        <td><input type="checkbox" id="parent2_routine" value="routine" name="parent2Job"></td>
                     </tr>
                     <tr>
                         <td>Never worked and long-term unemployed</td>
-                        <td><input type="checkbox" name="parent1Job" value="neverWorked"></td>
-                        <td><input type="checkbox" name="parent2Job" value="neverWorked"></td>
+                        <td><input type="checkbox" id="parent1_neverWorked" value="neverWorked" name="parent1Job"></td>
+                        <td><input type="checkbox" id="parent2_neverWorked" value="neverWorked" name="parent2Job"></td>
                     </tr>
                     <tr>
                         <td>Prefer not to say</td>
-                        <td><input type="checkbox" name="parent1Job" value="preferNot"></td>
-                        <td><input type="checkbox" name="parent2Job" value="preferNot"></td>
+                        <td><input type="checkbox" id="parent1_preferNot" value="preferNot" name="parent1Job"></td>
+                        <td><input type="checkbox" id="parent2_preferNot" value="preferNot" name="parent2Job"></td>
                     </tr>
-                </tbody>
+                </tbody>                
             </table>
 
             <table class="table table-bordered mx-auto p-2">
@@ -413,17 +413,17 @@
                     </td>
                     <td>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="undergradUK" id="undergradUKYes" value="yes">
-                            <label class="form-check-label nobold" for="undergradUKYes">Yes</label>
+                            <input class="form-check-input" type="radio" name="studentLoan" id="studentLoanYes" value="yes">
+                            <label class="form-check-label nobold" for="studentLoanYes">Yes</label>
                         </div>
 
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="undergradUK" id="undergradUKNo" value="no">
-                            <label class="form-check-label nobold" for="undergradUKNo">No</label>
+                            <input class="form-check-input" type="radio" name="studentLoan" id="studentLoanNo" value="no">
+                            <label class="form-check-label nobold" for="studentLoanNo">No</label>
                         </div>
                         
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="undergradUK" id="undergradUKPreferNot" value="preferNot">
+                            <input class="form-check-input" type="radio" name="studentLoan" id="studentLoanPreferNot" value="preferNot">
                             <label class="form-check-label nobold" for="undergradUKPreferNot">Prefer not to say</label>
                         </div>
                     </td>
@@ -436,18 +436,18 @@
                     </td>
                     <td>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="undergradUK" id="undergradUKYes" value="yes">
-                            <label class="form-check-label nobold" for="undergradUKYes">Yes</label>
+                            <input class="form-check-input" type="radio" name="incomeAssess" id="incomeAssessYes" value="yes">
+                            <label class="form-check-label nobold" for="incomeAssessYes">Yes</label>
                         </div>
 
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="undergradUK" id="undergradUKNo" value="no">
-                            <label class="form-check-label nobold" for="undergradUKNo">No</label>
+                            <input class="form-check-input" type="radio" name="incomeAssess" id="incomeAssessNo" value="no">
+                            <label class="form-check-label nobold" for="incomeAssessNo">No</label>
                         </div>
                         
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="undergradUK" id="undergradUKPreferNot" value="preferNot">
-                            <label class="form-check-label nobold" for="undergradUKPreferNot">Prefer not to say</label>
+                            <input class="form-check-input" type="radio" name="incomeAssess" id="incomeAssessPreferNot" value="preferNot">
+                            <label class="form-check-label nobold" for="incomeAssessPreferNot">Prefer not to say</label>
                         </div>
                     </td>
                 </tr>
@@ -465,19 +465,19 @@
                     <tr>
                         <td>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="govLoan">
+                                <input class="form-check-input" type="checkbox" name="fundingSources" value="govLoan" id="govLoan">
                                 <label class="form-check-label" for="govLoan">Government grant/loan</label>
                             </div>
                         </td>
                         <td>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="parentFinancial">
+                                <input class="form-check-input" type="checkbox" name="fundingSources" value="parentFinancial" id="parentFinancial">
                                 <label class="form-check-label" for="parentFinancial">Parent/guardian financial assistance</label>
                             </div>
                         </td>
                         <td>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="preferNotFunding">
+                                <input class="form-check-input" type="checkbox" name="fundingSources" value="preferNotFunding" id="preferNotFunding">
                                 <label class="form-check-label" for="preferNotFunding">Prefer not to say</label>
                             </div>
                         </td>
@@ -486,19 +486,19 @@
                     <tr>
                         <td>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="termTimeWork">
+                                <input class="form-check-input" type="checkbox" name="fundingSources" value="termTimeWork" id="termTimeWork">
                                 <label class="form-check-label" for="termTimeWork">Term-time working</label>
                             </div>
                         </td>
                         <td>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="scholarship">
+                                <input class="form-check-input" type="checkbox" name="fundingSources" value="scholarship" id="scholarship">
                                 <label class="form-check-label" for="scholarship">Scholarship</label>
                             </div>
                         </td>
                         <td>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="otherFunding">
+                                <input class="form-check-input" type="checkbox" name="fundingSources" value="otherFunding" id="otherFunding">
                                 <label class="form-check-label" for="otherFunding">Other - specify below</label>
                             </div>
                         </td>
@@ -507,13 +507,13 @@
                     <tr>
                         <td>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="personalSavings">
+                                <input class="form-check-input" type="checkbox" name="fundingSources" value="personalSavings" id="personalSavings">
                                 <label class="form-check-label" for="personalSavings">Personal savings</label>
                             </div>
                         </td>
                         <td>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="uniBursary">
+                                <input class="form-check-input" type="checkbox" name="fundingSources" value="uniBursary" id="uniBursary">
                                 <label class="form-check-label" for="uniBursary">Needs-based University bursary</label>
                             </div>
                         </td>

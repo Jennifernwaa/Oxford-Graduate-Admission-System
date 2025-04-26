@@ -22,37 +22,22 @@ const db = getFirestore(app);
 // Function to get form data from the DOM
 function getFormData() {
     return {
-        ukEducation: document.querySelector('input[name="ukEducation"]:checked')?.value || null,
-        gcseSchoolName: document.getElementById('gcseSchoolName').value,
-        gcseSchoolPostcode: document.getElementById('gcseSchoolPostcode').value,
-        gcseSchoolType: document.querySelector('input[name="gcseSchoolType"]:checked')?.value || null,
-        aLevelSchoolName: document.getElementById('aLevelSchoolName').value,
-        aLevelSchoolPostcode: document.getElementById('aLevelSchoolPostcode').value,
-        aLevelSchoolType: document.querySelector('input[name="aLevelSchoolType"]:checked')?.value || null,
-        homePostcode: document.getElementById('homePostcode').value,
-        freeSchoolMeals: document.querySelector('input[name="freeSchoolMeals"]:checked')?.value || null,
-        parentsUndergradDegree: document.querySelector('input[name="parentsUndergradDegree"]:checked')?.value || null,
-        parent1Job: Array.from(document.querySelectorAll('input[type="checkbox"][id^="parent1_"]'))
-            .filter(checkbox => checkbox.checked)
-            .map(checkbox => checkbox.value),
-        parent2Job: Array.from(document.querySelectorAll('input[type="checkbox"][id^="parent2_"]'))
-            .filter(checkbox => checkbox.checked)
-            .map(checkbox => checkbox.value),
-        undergradUK: document.querySelector('input[name="undergradUK"]:checked')?.value || null,
-        studentLoan: document.querySelector('input[name="studentLoan"]:checked')?.value || null,
-        incomeAssess: document.querySelector('input[name="incomeAssess"]:checked')?.value || null,
-        fundingSources: Array.from(document.querySelectorAll('input[name="fundingSources"]:checked')).map(el => el.id),
-        otherFundingDetails: document.getElementById('otherFundingDetails').value.trim(),
-        stateCare: document.querySelector('input[name="stateCare"]:checked')?.value || null
-        };
+        disability: Array.from(document.querySelectorAll('#noDisability, #preferNotDisability, #learningDifficulty, #communicationImpairment, #longstandingIllness, #mentalHealthCondition, #physicalImpairment, #hearingImpairment, #visualImpairment, #otherDisability'))
+        .filter(checkbox => checkbox.checked)
+        .map(checkbox => checkbox.value),
+        otherDisabilityDetails: document.getElementById('otherDisabilityDetails')?.value || '',
+        supportNeeds: Array.from(document.querySelectorAll('#wheelchair, #livingAccommodation, #stepFreeAccess, #assistanceAnimal, #personalCare, #communicationAids'))
+        .filter(checkbox => checkbox.checked)
+        .map(checkbox => checkbox.value)
+    }
 }
 
 // Function to save form data to Firestore
 async function saveFormDataToFirestore(user) {
     const formData = getFormData();
         try {
-            const docRef = doc(db, "users", user.uid, "forms", "form7");
-            await setDoc(docRef, { formPage7Data: formData }, { merge: true });
+            const docRef = doc(db, "users", user.uid, "forms", "form9");
+            await setDoc(docRef, { formPage9Data: formData }, { merge: true });
             console.log("Form data saved to Firestore.");
         } catch (error) {
             console.error("Error saving form data to Firestore:", error);
@@ -62,10 +47,10 @@ async function saveFormDataToFirestore(user) {
 // Function to load form data from Firestore
 async function loadFormDataFromFirestore(user) {
     try {
-            const docRef = doc(db, "users", user.uid, "forms", "form7");
+            const docRef = doc(db, "users", user.uid, "forms", "form9");
             const docSnap = await getDoc(docRef);
             if (docSnap.exists()) {
-                const formData = docSnap.data().formPage7Data || {};
+                const formData = docSnap.data().formPage9Data || {};
                 populateFormFields(formData);
             } else {
                 console.log("No form data found for this user.");
@@ -165,14 +150,14 @@ document.addEventListener('DOMContentLoaded', () => {
     backButton.addEventListener('click', async (event) => {
         event.preventDefault();
         await saveFormDataToFirestore(user);
-        window.location.href = "form_page7.html";
+        window.location.href = "form_page8.html";
     });
 
     // Handle continue button click
     continueButton.addEventListener('click', async (event) => {
         event.preventDefault();
         await saveFormDataToFirestore(user);
-        window.location.href = "form_page9.html";
+        window.location.href = "form_page10.html";
     });
     });
 });
