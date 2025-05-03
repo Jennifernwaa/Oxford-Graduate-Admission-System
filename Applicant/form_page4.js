@@ -48,7 +48,9 @@ function getFormData() {
     languageReading: document.getElementById("languageReading").value,
     languageWriting: document.getElementById("languageWriting").value,
     languageSpeaking: document.getElementById("languageSpeaking").value,
-    languageUnderstanding: document.getElementById("languageUnderstanding").value
+    languageUnderstanding: document.getElementById("languageUnderstanding").value,
+
+    languageTest: document.getElementById("languageTest").value
     };
 }
 

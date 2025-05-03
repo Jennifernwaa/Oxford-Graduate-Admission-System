@@ -40,7 +40,9 @@ function getFormData() {
         orderNumber: document.getElementById('orderNumber').value,
         feeWaiver: document.querySelector('input[name="feeWaiver"]:checked')?.value || "", // Captures the selected fee waiver option (yes/no)
         confirmAfford: document.getElementById('confirmAfford').checked,
-        confirmEntry: document.getElementById('confirmEntry').checked
+        confirmEntry: document.getElementById('confirmEntry').checked,
+
+        supportingDocuments: document.getElementById('supportingDocuments').value,
     };
 }
 
