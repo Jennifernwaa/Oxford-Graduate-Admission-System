@@ -34,7 +34,7 @@ submit.addEventListener("click", function(event) {
       const user = userCredential.user;
 
       // Redirect to the Applicant form page
-      window.location.href = '../Applicant/form_page1.html';
+      window.location.href = '../Applicant/applicant_dashboard.php';
     })
     .catch((error) => {
       console.error("Login failed:", error);

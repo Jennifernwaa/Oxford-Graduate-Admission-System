@@ -22,21 +22,22 @@ const db = getFirestore(app);
 // Function to get form data from the DOM
 function getFormData() {
     return {
-        confirmTrue: document.getElementById('confirmTrue').checked,
-        confirmOriginal: document.getElementById('confirmOriginal').checked,
-        confirmTerms: document.getElementById('confirmTerms').checked,
-        date: document.getElementById('date').value,
-        printName: document.getElementById('printName').value,
-        signature: document.getElementById('signFile').value,
-    };
+        disability: Array.from(document.querySelectorAll('#noDisability, #preferNotDisability, #learningDifficulty, #communicationImpairment, #longstandingIllness, #mentalHealthCondition, #physicalImpairment, #hearingImpairment, #visualImpairment, #otherDisability'))
+        .filter(checkbox => checkbox.checked)
+        .map(checkbox => checkbox.value),
+        otherDisabilityDetails: document.getElementById('otherDisabilityDetails')?.value || '',
+        supportNeeds: Array.from(document.querySelectorAll('#wheelchair, #livingAccommodation, #stepFreeAccess, #assistanceAnimal, #personalCare, #communicationAids'))
+        .filter(checkbox => checkbox.checked)
+        .map(checkbox => checkbox.value)
+    }
 }
 
 // Function to save form data to Firestore
 async function saveFormDataToFirestore(user) {
     const formData = getFormData();
         try {
-            const docRef = doc(db, "users", user.uid, "forms", "form11");
-            await setDoc(docRef, { formPage11Data: formData }, { merge: true });
+            const docRef = doc(db, "users", user.uid, "forms", "form10");
+            await setDoc(docRef, { formPage10Data: formData }, { merge: true });
             console.log("Form data saved to Firestore.");
         } catch (error) {
             console.error("Error saving form data to Firestore:", error);
@@ -46,10 +47,10 @@ async function saveFormDataToFirestore(user) {
 // Function to load form data from Firestore
 async function loadFormDataFromFirestore(user) {
     try {
-            const docRef = doc(db, "users", user.uid, "forms", "form11");
+            const docRef = doc(db, "users", user.uid, "forms", "form10");
             const docSnap = await getDoc(docRef);
             if (docSnap.exists()) {
-                const formData = docSnap.data().formPage11Data || {};
+                const formData = docSnap.data().formPage10Data || {};
                 populateFormFields(formData);
             } else {
                 console.log("No form data found for this user.");
@@ -70,10 +71,19 @@ function populateFormFields(formData) {
             radioGroup.forEach(radio => {
                 radio.checked = radio.value === value;
             });
-            return; // Skip the rest of the logic for radio buttons
+            return;
         }
 
-        // Handle checkboxes and text inputs
+        // Handle checkbox groups (arrays of values)
+        if (Array.isArray(value)) {
+            value.forEach(val => {
+                const checkbox = document.querySelector(`input[type="checkbox"][value="${val}"]`);
+                if (checkbox) checkbox.checked = true;
+            });
+            return;
+        }
+
+        // Handle individual checkboxes and text inputs
         const element = document.getElementById(key);
         if (element) {
             if (element.type === 'checkbox') {
@@ -140,18 +150,14 @@ document.addEventListener('DOMContentLoaded', () => {
     backButton.addEventListener('click', async (event) => {
         event.preventDefault();
         await saveFormDataToFirestore(user);
-        window.location.href = "form_page10.html";
+        window.location.href = "form_page9.html";
     });
 
+    // Handle continue button click
     continueButton.addEventListener('click', async (event) => {
         event.preventDefault();
         await saveFormDataToFirestore(user);
-    
-        // Show success modal
-        const modal = document.getElementById('successModal');
-        if (modal) {
-            modal.style.display = 'block';
-        }
-    });    
+        window.location.href = "form_page11.html";
+    });
     });
 });
