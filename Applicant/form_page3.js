@@ -168,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
     backButton.addEventListener('click', async (event) => {
         event.preventDefault();
         await saveFormDataToFirestore(user);
-        window.location.href = "form_page2.html";
+        window.location.href = "form_page2.php";
     });
 
     // Handle continue button click
