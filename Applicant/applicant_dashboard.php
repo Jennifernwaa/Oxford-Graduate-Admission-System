@@ -124,12 +124,12 @@
                         <p>Status: <span class="application-status <?= $application['status'] === 'In Progress' ? 'in-progress' : '' ?>">
                             <?= htmlspecialchars($application['status']) ?>
                         </span></p>
-                        <a href="form_page1.html" class="details-link">
+                        <a href="form_page1.php" class="details-link">
                             <?= $application['status'] === 'In Progress' ? 'Continue Application' : 'View Application' ?>
                         </a>
                     </div>
                 <?php else: ?>
-                    <p>No application found. <a href="form_page1.html">Start your application here</a>.</p>
+                    <p>No application found. <a href="form_page1.php">Start your application here</a>.</p>
                 <?php endif; ?>
             </section>
 
