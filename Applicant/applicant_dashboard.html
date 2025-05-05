@@ -104,33 +104,12 @@
         <div class="dashboard-content">
             <section class="applications-overview">
                 <h2>Your Application</h2>
-
-                <?php
-                    // Replace with actual user session logic
-                    $user_id = 123; 
-
-                    // Dummy data: Replace with your DB query result
-                    $application = [
-                        'id' => 'OXF001',
-                        'program' => 'Master of Science in Computer Science',
-                        'status' => 'In Progress'
-                    ];
-
-                    if ($application):
-                ?>
-                    <div class="application-card">
-                        <h3>Application #<?= htmlspecialchars($application['id']) ?></h3>
-                        <p>Program: <?= htmlspecialchars($application['program']) ?></p>
-                        <p>Status: <span class="application-status <?= $application['status'] === 'In Progress' ? 'in-progress' : '' ?>">
-                            <?= htmlspecialchars($application['status']) ?>
-                        </span></p>
-                        <a href="form_page1.html" class="details-link">
-                            <?= $application['status'] === 'In Progress' ? 'Continue Application' : 'View Application' ?>
-                        </a>
-                    </div>
-                <?php else: ?>
-                    <p>No application found. <a href="form_page1.html">Start your application here</a>.</p>
-                <?php endif; ?>
+                <div class="application-card">
+                    <h3>Application #OXF001</h3>
+                    <p>Program: Master of Science in Computer Science</p>
+                    <p>Status: <span class="application-status in-progress">In Progress</span></p>
+                    <a href="form_page1.html" class="details-link">Continue Application</a>
+                </div>
             </section>
 
             <section class="important-dates">

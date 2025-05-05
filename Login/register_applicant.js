@@ -47,7 +47,7 @@ document.getElementById('submit').addEventListener("click", function (event) {
     })
     .then(() => {
       alert("Account created and saved to database! Redirecting to form...");
-      window.location.href = "../Applicant/applicant_dashboard.php";
+      window.location.href = "../Applicant/applicant_dashboard.html";
     })
     .catch((error) => {
       console.error("Error:", error);
