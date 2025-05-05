@@ -1,7 +1,9 @@
 // Import Firebase modules
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
-import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+import { getFirestore, doc, setDoc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+import { handleStatus } from './statusHandler.js';
+
 
 // Firebase config
 const firebaseConfig = {
@@ -34,29 +36,29 @@ function getFormData() {
 // Function to save form data to Firestore
 async function saveFormDataToFirestore(user) {
     const formData = getFormData();
-        try {
-            const docRef = doc(db, "users", user.uid, "forms", "form11");
-            await setDoc(docRef, { formPage11Data: formData }, { merge: true });
-            console.log("Form data saved to Firestore.");
-        } catch (error) {
-            console.error("Error saving form data to Firestore:", error);
-        }
+    try {
+        const docRef = doc(db, "users", user.uid, "forms", "form11");
+        await setDoc(docRef, { formPage11Data: formData }, { merge: true });
+        console.log("Form data saved to Firestore.");
+    } catch (error) {
+        console.error("Error saving form data to Firestore:", error);
+    }
 }
 
 // Function to load form data from Firestore
 async function loadFormDataFromFirestore(user) {
     try {
-            const docRef = doc(db, "users", user.uid, "forms", "form11");
-            const docSnap = await getDoc(docRef);
-            if (docSnap.exists()) {
-                const formData = docSnap.data().formPage11Data || {};
-                populateFormFields(formData);
-            } else {
-                console.log("No form data found for this user.");
-            }
-        } catch (error) {
-            console.error("Error loading form data from Firestore:", error);
+        const docRef = doc(db, "users", user.uid, "forms", "form11");
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+            const formData = docSnap.data().formPage11Data || {};
+            populateFormFields(formData);
+        } else {
+            console.log("No form data found for this user.");
         }
+    } catch (error) {
+        console.error("Error loading form data from Firestore:", error);
+    }
 }
 
 // Function to populate form fields
@@ -85,7 +87,6 @@ function populateFormFields(formData) {
     });
 }
 
-
 // Add event listener to the "Continue" button
 document.addEventListener('DOMContentLoaded', () => {
   const continueButton = document.getElementById('continue');
@@ -102,12 +103,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Load form data from Firestore and populate fields
     await loadFormDataFromFirestore(user);
-    // Get form data from the DOM
-    const formData = getFormData();
-    // Populate form fields with data
-    populateFormFields(formData);
 
-    // Add event listeners to form fields to save data on change
+    // Add event listeners to form fields to save data on change, input, blur, and focus
     const formFields = document.querySelectorAll('input, select, textarea');
     formFields.forEach(field => {
         field.addEventListener('change', async () => {
@@ -115,21 +112,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Add event listeners to form fields to save data on input
     formFields.forEach(field => {
         field.addEventListener('input', async () => {
             await saveFormDataToFirestore(user);
         });
     });
 
-    // Add event listeners to form fields to save data on blur
     formFields.forEach(field => {
         field.addEventListener('blur', async () => {
             await saveFormDataToFirestore(user);
         });
     });
 
-    // Add event listeners to form fields to save data on focus
     formFields.forEach(field => {
         field.addEventListener('focus', async () => {
             await saveFormDataToFirestore(user);
@@ -143,15 +137,33 @@ document.addEventListener('DOMContentLoaded', () => {
         window.location.href = "form_page10.html";
     });
 
+    //Handle success modal
+    document.getElementById('toDashboard').addEventListener('click', () => {
+        // Handle status to "Submitted"
+        handleStatus('Submitted');  // This will call the function with the status 'Submitted'
+    
+        // Redirect to the dashboard
+        window.location.href = "applicant_dashboard.html";
+    });
+
+    // Handle "Continue" button click
     continueButton.addEventListener('click', async (event) => {
         event.preventDefault();
+        
+        // Save the form data to Firestore
         await saveFormDataToFirestore(user);
     
+        // Update the status to "submitted"
+        const formDocRef = doc(db, "users", user.uid, "forms", "form11");
+        await updateDoc(formDocRef, {
+            status: "Submitted"  // This updates the form status to "submitted"
+        })
+
         // Show success modal
         const modal = document.getElementById('successModal');
         if (modal) {
             modal.style.display = 'block';
         }
-    });    
     });
+  });
 });
