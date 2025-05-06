@@ -1,6 +1,7 @@
 // Import Firebase SDK modules
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js';
-import { getDatabase, ref, get, remove } from 'https://www.gstatic.com/firebasejs/9.1.0/firebase-database.js';
+import { getDatabase, ref, get, set, remove } from 'https://www.gstatic.com/firebasejs/9.1.0/firebase-database.js';
+
 
 
 // Firebase configuration
@@ -34,7 +35,6 @@ function fetchUsers() {
     });
 }
 
-// Function to display users in the table
 function displayUsers(users) {
     const userTableBody = document.querySelector('tbody');
     userTableBody.innerHTML = '';
@@ -48,13 +48,14 @@ function displayUsers(users) {
         <td>${user.password}</td>
         <td>${user.role}</td>
         <td>
-            <button class="btn btn-sm btn-outline-secondary">Edit</button>
+            <button class="btn btn-sm btn-outline-secondary" onclick='openEditModal("${userId}", ${JSON.stringify(user).replace(/'/g, "\\'")})'>Edit</button>
             <button class="btn btn-sm btn-outline-danger" onclick="confirmDelete('${userId}')">Delete</button>
         </td>
         `;
         userTableBody.appendChild(row);
     }
 }
+
 
 // Function triggered by the Delete button
 window.confirmDelete = function(userId) {
@@ -74,6 +75,39 @@ window.confirmDelete = function(userId) {
             });
     }
 }
+
+window.openEditModal = function(userId, userData) {
+    document.getElementById('editUserId').value = userId;
+    document.getElementById('editUsername').value = userData.username;
+    document.getElementById('editPassword').value = userData.password;
+    document.getElementById('editRole').value = userData.role;
+    document.getElementById('editUserModal').style.display = 'block';
+};
+
+window.closeEditModal = function() {
+    document.getElementById('editUserModal').style.display = 'none';
+};
+
+window.saveUserChanges = function() {
+    const userId = document.getElementById('editUserId').value;
+    const username = document.getElementById('editUsername').value;
+    const password = document.getElementById('editPassword').value;
+    const role = document.getElementById('editRole').value;
+
+    const userRef = ref(database, 'users/' + userId);
+    set(userRef, {
+        username,
+        password,
+        role
+    }).then(() => {
+        alert("User updated successfully!");
+        closeEditModal();
+        fetchUsers();
+    }).catch((error) => {
+        console.error("Error updating user:", error);
+        alert("Failed to update user.");
+    });
+};
 
 
 // Fetch users on load
