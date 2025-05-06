@@ -19,12 +19,12 @@ const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
 // Function to fetch users from Firebase
-function fetchUsers() {
+function fetchReviewer() {
     const usersRef = ref(database, 'users'); // Path to your 'users' node in the Realtime Database
     get(usersRef).then((snapshot) => {
         if (snapshot.exists()) {
             const users = snapshot.val();
-            displayUsers(users);
+            displayReviewer(users);
         } else {
             console.log("No users found.");
         }
@@ -33,48 +33,74 @@ function fetchUsers() {
     });
 }
 
-// Function to display users in the table
-function displayUsers(users) {
-  const reviewerSelect = document.getElementById('reviewer');
-  reviewerSelect.innerHTML = ''; // Clear existing options
+// Function to display reviewers in the dropdown
+function displayReviewer(users) {
+    const reviewerSelect = document.getElementById('reviewer');
+    reviewerSelect.innerHTML = ''; // Clear existing options
 
-  let hasReviewer = false;
+    let hasReviewer = false;
 
-  for (const userId in users) {
-      const user = users[userId];
+    for (const userId in users) {
+        const user = users[userId];
 
-      if (user.role === "Reviewer") {
-          hasReviewer = true;
+        if (user.role === "Reviewer") {
+            hasReviewer = true;
 
-          const option = document.createElement('option');
-          option.value = userId; // or user.username or email depending on your use case
-          option.textContent = user.username || "Unnamed Reviewer";
+            const option = document.createElement('option');
+            option.value = userId; // Use userId as the value
+            option.textContent = user.username || "Unnamed Reviewer"; // Display username or "Unnamed Reviewer"
 
-          reviewerSelect.appendChild(option);
-      }
-  }
+            reviewerSelect.appendChild(option);
+        }
+    }
 
-  if (!hasReviewer) {
-      const option = document.createElement('option');
-      option.disabled = true;
-      option.textContent = 'No reviewers found';
-      reviewerSelect.appendChild(option);
-  }
+    if (!hasReviewer) {
+        const option = document.createElement('option');
+        option.disabled = true;
+        option.textContent = 'No reviewers found';
+        reviewerSelect.appendChild(option);
+    }
 }
 
-document.querySelector('.btn-warning').addEventListener('click', function(event) {
-  event.preventDefault(); // Prevent form submission if this button is in a form
+// Delegate click event for Assign Reviewer buttons
+document.querySelector("#assign-reviewer").addEventListener("click", function (e) {
+    if (e.target.matches(".btn-outline-secondary")) {
+        const uid = e.target.getAttribute("data-uid");
 
-  const selectedReviewerId = document.getElementById('reviewer').value;
+        // Set the UID in the hidden input field
+        const uidInput = document.getElementById("assign-uid");
+        uidInput.value = uid;
 
-  // You can optionally store the reviewer assignment here, e.g., in Firebase
-  // For now, just redirect
-  console.log("Assigned reviewer ID:", selectedReviewerId); // Debug log
+        // Fetch and display reviewers when the modal is triggered
+        fetchReviewer();
 
-  // Redirect to admin dashboard
-  window.location.href = 'admin_dashboard.html';
+        // Show the modal
+        const modal = new bootstrap.Modal(document.getElementById("assignReviewerModal"));
+        modal.show();
+    }
 });
 
+// Delegate form submit event for Assign Reviewer form
+document.getElementById("assignReviewerForm").addEventListener("submit", function (e) {
+    e.preventDefault();  // Prevent the default form submission behavior
 
-// Call fetchUsers when the page loads
-document.addEventListener('DOMContentLoaded', fetchUsers);
+    // Get the selected reviewer ID and applicant UID from form elements
+    const selectedReviewerId = document.getElementById("reviewer").value;
+    const assignedUid = document.getElementById("assign-uid").value;
+
+    // Debug log for assigned reviewer and applicant UID
+    console.log("Assigned Reviewer ID:", selectedReviewerId, "to UID:", assignedUid);
+
+    // Optional: Save the reviewer assignment in Firebase (e.g., Realtime DB or Firestore)
+    // You can add this logic to save the assignment
+
+    // Hide the modal after assignment
+    const modal = bootstrap.Modal.getInstance(document.getElementById("assignReviewerModal"));
+    modal.hide();
+
+    // Optionally redirect or update UI
+    window.location.href = 'admin_dashboard.html';
+});
+
+// Call fetchReviewer when the page loads
+document.addEventListener('DOMContentLoaded', fetchReviewer);

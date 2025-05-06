@@ -7,6 +7,8 @@
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <script type="module" src="admin_dashboard.js" defer></script>
     <script type="module" src="admin_assign_reviewer.js" defer></script>
+    <script type="module" src="assign_reviewer.js" defer></script>
+    
 
     <style>
         .oxford-blue {
@@ -53,9 +55,17 @@
         .form-control {
             margin-bottom: 10px;
         }
+        .btn-warning {
+            background-color: #002147;
+            border-color: #002147;
+        }
         .btn-primary {
             background-color: #002147;
             border-color: #002147;
+        }
+        .btn-warning:hover {
+            background-color: #001836;
+            border-color: #001836;
         }
         .btn-primary:hover {
             background-color: #001836;
@@ -273,6 +283,32 @@
         <button onclick="closeEditModal()" class="btn btn-secondary btn-sm">Cancel</button>
         </div>
     </div>
+
+    <!-- Modal HTML -->
+    <div class="modal fade" id="assignReviewerModal" tabindex="-1" aria-labelledby="assignReviewerModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content login-form">
+            <div class="modal-header oxford-blue-header">
+            <h5 class="modal-title" id="assignReviewerModalLabel">Assign Reviewer</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <form id="reviewerAssignForm">
+                <div class="mb-3">
+                <label for="reviewer" class="form-label">Select Reviewer:</label>
+                <select class="form-select" id="reviewer">
+                    <option value="101">Reviewer X</option>
+                    <option value="102">Reviewer Y</option>
+                </select>
+                </div>
+                <input type="hidden" id="assign-uid" />
+                <button type="submit" class="btn btn-warning text-white w-100">Assign Reviewer</button>
+            </form>
+            </div>
+        </div>
+        </div>
+    </div>
+  
   
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

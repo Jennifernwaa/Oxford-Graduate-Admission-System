@@ -1,6 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
 import { getFirestore, collectionGroup, getDocs } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
+
 const firebaseConfig = {
   apiKey: "AIzaSyCbSqQtKpBtfu6EqTCyk5uTNkFiEc7jejU",
   authDomain: "oxford-graduate-admission.firebaseapp.com",
@@ -33,25 +34,45 @@ async function fetchApplicants() {
         const courseCode = data.courseCode || 'N/A';
         const courseTitle = (data.courseTitle || 'N/A').toUpperCase();
         const program = `${courseCode} - ${courseTitle}`;
-        const status = data.status || 'N/A';
+        const status = 'Waitlist'; // default to Waitlist
 
         const row = document.createElement("tr");
+
         row.innerHTML = `
           <td>${uid}</td>
           <td>${fullName || 'N/A'}</td>
           <td>${program}</td>
-          <td>${status}</td>
-          <td><button class="btn btn-sm btn-outline-secondary">Assign Reviewer</button></td>
+          <td>
+            <select class="form-select form-select-sm status-select" data-uid="${uid}">
+              <option value="Approve" ${status === "Approve" ? "selected" : ""}>Approve</option>
+              <option value="Reject" ${status === "Reject" ? "selected" : ""}>Reject</option>
+              <option value="Waitlist" ${status === "Waitlist" ? "selected" : ""}>Waitlist</option>
+            </select>
+          </td>
+          <td class="assign-column">
+            ${status === "Approve" ? `<button class="btn btn-sm btn-outline-secondary" data-uid="${uid}">Assign Reviewer</button>` : ""}
+          </td>
         `;
+
         tableBody.appendChild(row);
       }
     });
 
-    const assignButtons = document.querySelectorAll('.btn-outline-secondary');
-    assignButtons.forEach(button => {
-      button.addEventListener('click', function () {
-        const uid = this.getAttribute('data-uid'); // Get the UID of the user
-        window.location.href = `assign_reviewer.html?uid=${uid}`; // Redirect to assign_reviewer.html with UID as query parameter
+    // Add event listeners for dropdown changes
+    document.querySelectorAll(".status-select").forEach((select) => {
+      select.addEventListener("change", function () {
+        const newStatus = this.value;
+        const row = this.closest("tr");
+        const uid = this.getAttribute("data-uid");
+        const assignColumn = row.querySelector(".assign-column");
+
+        if (newStatus === "Approve") {
+          assignColumn.innerHTML = `<button class="btn btn-sm btn-outline-secondary" data-uid="${uid}">Assign Reviewer</button>`;
+        } else {
+          assignColumn.innerHTML = "";
+        }
+
+        // Optionally: update Firestore with the new status here
       });
     });
 
