@@ -1,6 +1,7 @@
 // Import Firebase SDK modules
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js';
-import { getDatabase, ref, get } from 'https://www.gstatic.com/firebasejs/9.1.0/firebase-database.js';
+import { getDatabase, ref, get, remove } from 'https://www.gstatic.com/firebasejs/9.1.0/firebase-database.js';
+
 
 // Firebase configuration
 const firebaseConfig = {
@@ -20,7 +21,7 @@ const database = getDatabase(app);
 
 // Function to fetch users from Firebase
 function fetchUsers() {
-    const usersRef = ref(database, 'users'); // Path to your 'users' node in the Realtime Database
+    const usersRef = ref(database, 'users');
     get(usersRef).then((snapshot) => {
         if (snapshot.exists()) {
             const users = snapshot.val();
@@ -36,7 +37,7 @@ function fetchUsers() {
 // Function to display users in the table
 function displayUsers(users) {
     const userTableBody = document.querySelector('tbody');
-    userTableBody.innerHTML = ''; // Clear existing rows
+    userTableBody.innerHTML = '';
 
     for (const userId in users) {
         const user = users[userId];
@@ -55,24 +56,26 @@ function displayUsers(users) {
     }
 }
 
-// Function to ask for confirmation before deleting a user
-function confirmDelete(userId) {
+// Function triggered by the Delete button
+window.confirmDelete = function(userId) {
     if (confirm("Are you sure you want to delete this user? This action cannot be undone.")) {
-        window.location.href = `delete_user.html?uid=${userId}`;
+        // Reference to the user's data in the 'users' node
+        const userRef = ref(database, 'users/' + userId);
+
+        // Remove the user data from Firebase
+        remove(userRef)
+            .then(() => {
+                alert("User deleted successfully!");
+                fetchUsers();  // Refresh the list of users
+            })
+            .catch((error) => {
+                console.error("Error deleting user:", error);
+                alert("Failed to delete user.");
+            });
     }
 }
 
-// Function to delete a user from Firebase using their UID
-function deleteUser(userId) {
-    const userRef = ref(database, 'users/' + userId);  // Using UID as the reference to delete the specific user
-    remove(userRef).then(() => {
-        alert("User deleted successfully.");
-        fetchUsers();  // Refresh the user list
-    }).catch((error) => {
-        console.error("Error deleting user: ", error);
-        alert("Error deleting user.");
-    });
-}
 
-// Call fetchUsers when the page loads
+// Fetch users on load
 document.addEventListener('DOMContentLoaded', fetchUsers);
+

@@ -2,6 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-analytics.js";
 import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -19,6 +20,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth();
+const db = getDatabase(app);
 
 // Submit button
 const submit = document.getElementById('submit');
@@ -32,9 +34,34 @@ submit.addEventListener("click", function(event) {
   signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user;
+      const uid = user.uid;  // Get the UID of the signed-in user
 
-      // Redirect to the Applicant form page
-      window.location.href = '../Applicant/applicant_dashboard.html';
+      const dbRef = ref(db);
+      // Lookup the user in the 'users' node by UID
+      get(child(dbRef, `users/${uid}`))
+        .then((snapshot) => {
+          if (snapshot.exists()) {
+            const userData = snapshot.val();
+            const role = userData.role;
+            console.log(`Role for UID ${uid}:`, role);  // Log role for debugging
+
+            if (role === "Applicant") {
+              // Redirect to admin dashboard
+              window.location.href = '../Applicant/applicant_dashboard.html';
+            } else {
+              alert("Access denied. You are not an Applicant.");
+              auth.signOut();
+            }
+          } else {
+            console.log("No user found with UID:", uid); // Log if user not found
+            alert("No user found. Access denied.");
+            auth.signOut();
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching user data:", error);
+          alert("Error checking user role.");
+        });
     })
     .catch((error) => {
       console.error("Login failed:", error);
