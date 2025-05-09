@@ -1,6 +1,12 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-import { getFirestore, collectionGroup, getDocs } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
-
+import {
+  getFirestore,
+  collectionGroup,
+  getDocs,
+  doc,
+  updateDoc,
+  setDoc
+} from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCbSqQtKpBtfu6EqTCyk5uTNkFiEc7jejU",
@@ -15,6 +21,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+let selectedUid = null;
+
 async function fetchApplicants() {
   try {
     const formsSnapshot = await getDocs(collectionGroup(db, "forms"));
@@ -24,60 +32,98 @@ async function fetchApplicants() {
     const seenUIDs = new Set();
 
     formsSnapshot.forEach((formDoc) => {
-      const uid = formDoc.ref.parent.parent.id;
+      const data = formDoc.data();
+      const status = data.status || "Waitlist";
 
-      if (!seenUIDs.has(uid)) {
-        seenUIDs.add(uid);
+      if (formDoc.id === "form11" && ["Submitted", "Approve", "Reject", "Waitlist"].includes(status)) {
+        const uid = formDoc.ref.parent.parent.id;
 
-        const data = formDoc.data();
-        const fullName = `${(data.givenName || '').toUpperCase()} ${(data.familyName || '').toUpperCase()}`.trim();
-        const courseCode = data.courseCode || 'N/A';
-        const courseTitle = (data.courseTitle || 'N/A').toUpperCase();
-        const program = `${courseCode} - ${courseTitle}`;
-        const status = 'Waitlist'; // default to Waitlist
+        if (!seenUIDs.has(uid)) {
+          seenUIDs.add(uid);
 
-        const row = document.createElement("tr");
-
-        row.innerHTML = `
-          <td>${uid}</td>
-          <td>${fullName || 'N/A'}</td>
-          <td>${program}</td>
-          <td>
-            <select class="form-select form-select-sm status-select" data-uid="${uid}">
-              <option value="Approve" ${status === "Approve" ? "selected" : ""}>Approve</option>
-              <option value="Reject" ${status === "Reject" ? "selected" : ""}>Reject</option>
-              <option value="Waitlist" ${status === "Waitlist" ? "selected" : ""}>Waitlist</option>
-            </select>
-          </td>
-          <td class="assign-column">
-            ${status === "Approve" ? `<button class="btn btn-sm btn-outline-secondary" data-uid="${uid}">Assign Reviewer</button>` : ""}
-          </td>
-        `;
-
-        tableBody.appendChild(row);
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${uid}</td>
+            <td>
+              <select class="form-select form-select-sm status-select" data-uid="${uid}">
+                <option value="Waitlist" ${status === "Waitlist" ? "selected" : ""}>Waitlist</option>
+                <option value="Approve" ${status === "Approve" ? "selected" : ""}>Approve</option>
+                <option value="Reject" ${status === "Reject" ? "selected" : ""}>Reject</option>
+              </select>
+            </td>
+            <td class="assign-column">
+              ${status === "Approve" ? `<button class="btn btn-sm btn-outline-secondary assign-btn" data-uid="${uid}">Assign Reviewer</button>` : ""}
+            </td>
+          `;
+          tableBody.appendChild(row);
+        }
       }
     });
 
-    // Add event listeners for dropdown changes
+    // Handle dropdown status change
     document.querySelectorAll(".status-select").forEach((select) => {
-      select.addEventListener("change", function () {
+      select.addEventListener("change", async function () {
+        const uid = this.getAttribute("data-uid");
+        selectedUid = uid;
         const newStatus = this.value;
         const row = this.closest("tr");
-        const uid = this.getAttribute("data-uid");
         const assignColumn = row.querySelector(".assign-column");
 
         if (newStatus === "Approve") {
-          assignColumn.innerHTML = `<button class="btn btn-sm btn-outline-secondary" data-uid="${uid}">Assign Reviewer</button>`;
+          assignColumn.innerHTML = `<button class="btn btn-sm btn-outline-secondary assign-btn" data-uid="${uid}">Assign Reviewer</button>`;
         } else {
           assignColumn.innerHTML = "";
         }
 
-        // Optionally: update Firestore with the new status here
+        try {
+          const formDocRef = doc(db, "users", uid, "forms", "form11");
+          await updateDoc(formDocRef, { status: newStatus });
+          console.log(`Status for UID ${uid} updated to ${newStatus}`);
+        } catch (error) {
+          console.error("Error updating status:", error);
+        }
       });
     });
 
+    // Handle "Assign Reviewer" button
+    document.addEventListener("click", async (e) => {
+      if (e.target && e.target.classList.contains("assign-btn")) {
+        const uid = e.target.getAttribute("data-uid");
+        selectedUid = uid;
+        await saveFormDataToFirestore(uid);
+      }
+    });
+
+    // Handle global "Continue" button
+    const continueBtn = document.getElementById("continue");
+    if (continueBtn) {
+      continueBtn.addEventListener("click", async (e) => {
+        e.preventDefault();
+        if (selectedUid) {
+          await saveFormDataToFirestore(selectedUid);
+        } else {
+          console.warn("No applicant selected.");
+        }
+      });
+    }
+
+    async function saveFormDataToFirestore(uid) {
+      const select = document.querySelector(`.status-select[data-uid="${uid}"]`);
+      if (!select) return;
+
+      const status = select.value;
+
+      try {
+        const docRef = doc(db, "users", uid, "forms", "form11");
+        await setDoc(docRef, { status: status }, { merge: true });
+        console.log(`Saved status "${status}" for UID ${uid}`);
+      } catch (error) {
+        console.error(`Error saving form data for UID ${uid}:`, error);
+      }
+    }
+
   } catch (err) {
-    console.error("Error fetching applicants: ", err);
+    console.error("Error fetching applicants:", err);
   }
 }
 
