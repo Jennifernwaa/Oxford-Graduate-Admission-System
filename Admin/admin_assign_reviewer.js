@@ -1,15 +1,10 @@
+// Import Firebase modules (ensure consistent versions)
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-import {
-  getFirestore,
-  collectionGroup,
-  getDocs,
-  doc,
-  updateDoc,
-  setDoc,
-  getDoc
-} from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
-import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+import { getFirestore, collectionGroup, collection, doc, getDoc, getDocs, query, where, updateDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js";
 
+// Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyCbSqQtKpBtfu6EqTCyk5uTNkFiEc7jejU",
   authDomain: "oxford-graduate-admission.firebaseapp.com",
@@ -19,7 +14,6 @@ const firebaseConfig = {
   appId: "1:992593803011:web:4c853113afb814b9c7db36",
   measurementId: "G-Y3YHM86E5Z"
 };
-
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const database = getDatabase(app);

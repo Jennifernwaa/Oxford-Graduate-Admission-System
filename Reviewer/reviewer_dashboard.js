@@ -2,6 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
 import { getFirestore, collectionGroup, collection, doc, getDoc, getDocs, query, where } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js";
 
 // Firebase config
 const firebaseConfig = {
@@ -18,15 +19,16 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+const database = getDatabase(app);
 
 // Function to format the date
 function formatDate(timestamp) {
     if (!timestamp) return 'N/A';
-    
-    const date = timestamp instanceof Date ? timestamp : 
-                 timestamp.toDate ? timestamp.toDate() : 
+
+    const date = timestamp instanceof Date ? timestamp :
+                 timestamp.toDate ? timestamp.toDate() :
                  new Date(timestamp);
-                 
+
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
     return date.toLocaleDateString(undefined, options); // Format as "April 25 2025"
 }
@@ -34,70 +36,92 @@ function formatDate(timestamp) {
 // Function to fetch all applications from Firestore
 async function fetchApplications() {
     try {
-        // Ensure the user is authenticated
-        onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                // Query all "forms" subcollections across all users
-                const formsQuery = query(collectionGroup(db, "forms"));
-                const formsSnap = await getDocs(formsQuery);
-                
-                const applications = {
-                    assigned: [],
-                    pending: [],
-                    completed: []
-                };
+      onAuthStateChanged(auth, async (user) => {
+        if (user) {
+          const reviewerUid = user.uid;
+          console.log("Logged in reviewer UID:", reviewerUid);
 
-                formsSnap.forEach((formDoc) => {
-                    if (formDoc.exists()) {
-                        const formData = formDoc.data();
-                        const userId = formDoc.ref.parent.parent.id; // Get the user ID from the parent document
-                        
-                        const application = {
-                            givenName: formData.givenName || '',
-                            familyName: formData.familyName || '',
-                            courseCode: formData.courseCode || '',
-                            courseTitle: formData.courseTitle || '',
-                            userId: userId,
-                            formId: formDoc.id,
-                            submittedAt: formData.submittedAt ? formatDate(formData.submittedAt) : 'N/A',
-                            status: formData.status || 'Pending',
-                        };
 
-                        // Skip empty records
-                        if (!application.givenName && !application.familyName) {
-                            return; // Skip further processing for this application
-                        }
+          
+          // Step 1: Fetch all assigned applicants for the logged-in reviewer
+          const assignedUsersRef = collection(db, "assignedUsers");
+          const assignedSnapshot = await getDocs(query(assignedUsersRef, where("reviewerID", "==", reviewerUid)));
 
-                        // Categorize the applications
-                        if (formData.reviewedAt) {
-                            applications.completed.push(application);
-                        } else if (formData.status === 'Pending' || formData.status === 'Additional Documents Requested') {
-                            applications.pending.push(application);
-                        } else {
-                            applications.assigned.push(application);
-                        }
-                    }
-                });
+          if (assignedSnapshot.empty) {
+            console.log("No applicants assigned to this reviewer.");
+            displayApplications("assignedApplications", []);
+            displayApplications("pendingReviews", []);
+            displayApplications("completedReviews", []);
+            return;
+          }
 
-                // Display applications in their respective tables
-                displayApplications('assignedApplications', applications.assigned);
-                displayApplications('pendingReviews', applications.pending);
-                displayApplications('completedReviews', applications.completed);
-                
-            } else {
-                console.error("User is not authenticated.");
+          // Step 2: Extract all assigned applicant IDs
+          const assignedApplicantUids = [];
+          assignedSnapshot.forEach(docSnap => {
+            const data = docSnap.data();
+            if (data.applicantID) {
+              assignedApplicantUids.push(data.applicantID); // Correct UID
             }
-        });
+          });
+
+
+          // Step 3: Fetch all forms and filter by assigned applicant UIDs
+          const formsQuery = query(collectionGroup(db, "forms"));
+          const formsSnap = await getDocs(formsQuery);
+          const applications = {
+            assigned: [],
+            pending: [],
+            completed: []
+          };
+
+          formsSnap.forEach((formDoc) => {
+            const formData = formDoc.data();
+            const userId = formDoc.ref.parent.parent.id;
+
+            if (!assignedApplicantUids.includes(userId)) return; // skip unassigned applicants
+
+            const application = {
+              givenName: formData.givenName || '',
+              familyName: formData.familyName || '',
+              courseCode: formData.courseCode || '',
+              courseTitle: formData.courseTitle || '',
+              userId: userId,
+              formId: formDoc.id,
+              submittedAt: formData.submittedAt ? formatDate(formData.submittedAt) : 'N/A',
+              status: formData.status || 'Pending',
+            };
+
+            if (!application.givenName && !application.familyName) return;
+
+            if (formData.reviewedAt) {
+              applications.completed.push(application);
+            } else if (formData.status === 'Pending' || formData.status === 'Additional Documents Requested') {
+              applications.pending.push(application);
+            } else {
+              applications.assigned.push(application);
+            }
+          });
+
+          // Step 4: Display filtered applications
+          displayApplications('assignedApplications', applications.assigned);
+          displayApplications('pendingReviews', applications.pending);
+          displayApplications('completedReviews', applications.completed);
+
+        } else {
+          console.error("User is not authenticated.");
+        }
+      });
     } catch (error) {
-        console.error("Error fetching applications: ", error);
+      console.error("Error fetching applications: ", error);
     }
-}
+  }
+
 
 // Function to display applications in the tables
 function displayApplications(tableId, applications) {
     const tableBody = document.querySelector(`#${tableId} tbody`);
     tableBody.innerHTML = ''; // Clear existing rows
-    
+
     if (applications.length === 0) {
         const row = document.createElement('tr');
         row.innerHTML = `<td colspan="6" class="text-center">No applications found</td>`;
@@ -114,7 +138,7 @@ function displayApplications(tableId, applications) {
             <td>${app.submittedAt}</td>
             <td><span class="badge ${getBadgeClass(app.status)}">${app.status}</span></td>
             <td>
-                <a href="review_applicant_page.html?uid=${app.userId}&formId=${app.formId}" 
+                <a href="review_applicant_page.html?uid=${app.userId}&formId=${app.formId}"
                    class="btn btn-sm btn-outline-secondary">
                    ${app.status === 'Completed' ? 'View' : 'Review'}
                 </a>
