@@ -70,7 +70,14 @@ async function fetchApplicants() {
         const assignColumn = row.querySelector(".assign-column");
 
         if (newStatus === "Approve") {
-          assignColumn.innerHTML = `<button class="btn btn-sm btn-outline-secondary assign-btn" data-uid="${uid}">Assign Reviewer</button>`;
+          assignColumn.innerHTML = `
+          <button 
+            class="btn btn-sm btn-outline-secondary assign-btn" 
+            data-bs-toggle="modal" 
+            data-bs-target="#assignReviewerModal" 
+            data-uid="${uid}">
+            Assign Reviewer
+          </button>`;
         } else {
           assignColumn.innerHTML = "";
         }
