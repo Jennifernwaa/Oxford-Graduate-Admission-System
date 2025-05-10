@@ -5,8 +5,10 @@ import {
   getDocs,
   doc,
   updateDoc,
-  setDoc
+  setDoc,
+  getDoc
 } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCbSqQtKpBtfu6EqTCyk5uTNkFiEc7jejU",
@@ -20,8 +22,47 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const database = getDatabase(app);
 
 let selectedUid = null;
+
+// Fetch reviewers from Realtime Database
+function fetchReviewer() {
+  const usersRef = ref(database, "users");
+  get(usersRef).then((snapshot) => {
+    const reviewerSelect = document.getElementById('reviewer');
+    reviewerSelect.innerHTML = '';
+
+    let hasReviewer = false;
+
+    if (snapshot.exists()) {
+      const users = snapshot.val();
+
+      for (const userId in users) {
+        const user = users[userId];
+        if (user.role === "Reviewer") {
+          hasReviewer = true;
+          const option = document.createElement('option');
+          option.value = userId;
+          option.textContent = user.email || user.username || "Unnamed Reviewer";
+          reviewerSelect.appendChild(option);
+        }
+      }
+
+      // If no reviewers are found, show the "Assign Reviewer" button
+      if (!hasReviewer) {
+        const assignButton = document.getElementById("assignReviewerButton");
+        if (assignButton) {
+          assignButton.style.display = 'block'; // Show the button
+        }
+      }
+    } else {
+      console.log("No users found.");
+    }
+  }).catch((error) => {
+    console.error("Error fetching data: ", error);
+  });
+}
 
 async function fetchApplicants() {
   try {
@@ -31,15 +72,40 @@ async function fetchApplicants() {
 
     const seenUIDs = new Set();
 
-    formsSnapshot.forEach((formDoc) => {
+    for (const formDoc of formsSnapshot.docs) {
       const data = formDoc.data();
       const status = data.status || "Waitlist";
 
-      if (formDoc.id === "form11" && ["Submitted", "Approve", "Reject", "Waitlist"].includes(status)) {
+      if (
+        formDoc.id === "form11" &&
+        ["Submitted", "Approve", "Reject", "Waitlist"].includes(status)
+      ) {
         const uid = formDoc.ref.parent.parent.id;
 
         if (!seenUIDs.has(uid)) {
           seenUIDs.add(uid);
+
+          let assignButtonHTML = "";
+          if (status === "Approve") {
+          // 🔄 Check if reviewer already assigned
+          try {
+            const userDoc = await getDoc(doc(db, "users", uid));
+            const userData = userDoc.exists() ? userDoc.data() : {};
+            const reviewerName = userData.assignedReviewerName;
+
+            if (reviewerName) {
+              assignButtonHTML = `<span class="text">Reviewer: ${reviewerName}</span>`;
+            } else {
+              assignButtonHTML = `
+                <button class="btn btn-sm btn-outline-secondary assign-btn" data-bs-toggle="modal" data-bs-target="#assignReviewerModal" data-uid="${uid}">
+                  Assign Reviewer
+                </button>`;
+            }
+          } catch (err) {
+            console.error("Error fetching reviewer info:", err);
+          }
+        }
+
 
           const row = document.createElement("tr");
           row.innerHTML = `
@@ -51,14 +117,12 @@ async function fetchApplicants() {
                 <option value="Reject" ${status === "Reject" ? "selected" : ""}>Reject</option>
               </select>
             </td>
-            <td class="assign-column">
-              ${status === "Approve" ? `<button class="btn btn-sm btn-outline-secondary assign-btn" data-uid="${uid}">Assign Reviewer</button>` : ""}
-            </td>
+            <td class="assign-column">${assignButtonHTML}</td>
           `;
           tableBody.appendChild(row);
         }
       }
-    });
+    }
 
     // Handle dropdown status change
     document.querySelectorAll(".status-select").forEach((select) => {
@@ -70,14 +134,14 @@ async function fetchApplicants() {
         const assignColumn = row.querySelector(".assign-column");
 
         if (newStatus === "Approve") {
-          assignColumn.innerHTML = `
-          <button 
-            class="btn btn-sm btn-outline-secondary assign-btn" 
-            data-bs-toggle="modal" 
-            data-bs-target="#assignReviewerModal" 
-            data-uid="${uid}">
-            Assign Reviewer
-          </button>`;
+          assignColumn.innerHTML = `  
+            <button 
+              class="btn btn-sm btn-outline-secondary assign-btn" 
+              data-bs-toggle="modal" 
+              data-bs-target="#assignReviewerModal" 
+              data-uid="${uid}">
+              Assign Reviewer
+            </button>`;
         } else {
           assignColumn.innerHTML = "";
         }
@@ -128,6 +192,9 @@ async function fetchApplicants() {
         console.error(`Error saving form data for UID ${uid}:`, error);
       }
     }
+
+    // Fetch reviewers on page load
+    fetchReviewer();
 
   } catch (err) {
     console.error("Error fetching applicants:", err);

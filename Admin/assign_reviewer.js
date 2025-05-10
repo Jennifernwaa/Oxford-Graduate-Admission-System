@@ -5,6 +5,7 @@ import {
     getFirestore,
     doc,
     setDoc,
+    getDoc,
 } from 'https://www.gstatic.com/firebasejs/9.1.0/firebase-firestore.js';
 
 // Firebase configuration
@@ -65,18 +66,30 @@ function displayReviewer(users) {
         option.disabled = true;
         option.textContent = 'No reviewers found';
         reviewerSelect.appendChild(option);
+
+        // Show "Assign Reviewer" button if no reviewers are found
+        const assignButton = document.getElementById("assignReviewerButton");
+        if (assignButton) {
+            assignButton.style.display = 'block'; // Show the button
+        }
+    } else {
+        // Hide "Assign Reviewer" button if reviewers exist
+        const assignButton = document.getElementById("assignReviewerButton");
+        if (assignButton) {
+            assignButton.style.display = 'none'; // Hide the button
+        }
     }
 }
 
 // Wait for the DOM to be fully loaded before running any script
 document.addEventListener("DOMContentLoaded", () => {
+    // Fetch reviewers immediately when the page loads
+    fetchReviewer();
 
     // Delegate click event to the document for dynamically added buttons
     document.addEventListener("click", function (e) {
-
         // Check if the clicked element is the Assign Reviewer button
         if (e.target.matches(".assign-btn")) {
-
             const uid = e.target.getAttribute("data-uid");
 
             document.getElementById("assign-uid").value = uid;
@@ -86,6 +99,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const modal = new bootstrap.Modal(document.getElementById("assignReviewerModal"));
             modal.show(); // Open the modal
+
+            // Toggle the button text based on reviewer assignment
+            toggleAssignReviewerButton(uid);
         }
     });
 
@@ -96,56 +112,70 @@ document.addEventListener("DOMContentLoaded", () => {
             e.preventDefault();
 
             if (selectedUid) {
-                await saveFormDataToFirestore(selectedUid); // Call save function
+                await saveFormDataToFirestore(selectedUid); // Save function
                 const modal = bootstrap.Modal.getInstance(document.getElementById("assignReviewerModal"));
                 modal.hide(); // Hide the modal after successful assignment
                 selectedUid = null; // Reset selectedUid
                 document.getElementById('reviewer').value = ''; // Clear the reviewer selection
             } else {
-                alert("No applicant selected.");
+                console.error("No applicant selected.");
             }
         });
     }
 
-    // Detect reviewer selection change
-    const reviewerSelect = document.getElementById("reviewer");
-    if (reviewerSelect) {
-        reviewerSelect.addEventListener("change", function () {
-            const selectedOption = reviewerSelect.options[reviewerSelect.selectedIndex];
-            const reviewerName = selectedOption.textContent;
+    // Function to fetch the reviewer and toggle button text
+    function toggleAssignReviewerButton(uid) {
+        const docRef = doc(firestore, "users", uid);
+        getDoc(docRef).then(docSnap => {
+            if (docSnap.exists()) {
+                const userData = docSnap.data();
+                const assignedReviewerName = userData.assignedReviewerName;
+
+                const assignButton = document.querySelector(`.assign-btn[data-uid="${uid}"]`);
+                if (assignedReviewerName) {
+                    assignButton.textContent = `Reviewer: ${assignedReviewerName}`; // Update button with reviewer name
+                } else {
+                    assignButton.textContent = "Assign Reviewer"; // Default text if no reviewer is assigned
+                }
+            } else {
+                console.error("No such document!");
+            }
+        }).catch(error => {
+            console.error("Error fetching document: ", error);
         });
     }
 
     // Function to save the form data to Firestore (saving reviewer name)
-async function saveFormDataToFirestore(uid) {
-    const reviewerSelect = document.getElementById("reviewer");
-    let assignedReviewerName = null;
+    async function saveFormDataToFirestore(uid) {
+        const reviewerSelect = document.getElementById("reviewer");
+        let assignedReviewerName = null;
 
-    // Get the selected reviewer's name
-    if (reviewerSelect && reviewerSelect.value) {
-        const selectedOption = reviewerSelect.options[reviewerSelect.selectedIndex];
-        assignedReviewerName = selectedOption.textContent; // Save the reviewer name
+        // Get the selected reviewer's name
+        if (reviewerSelect && reviewerSelect.value) {
+            const selectedOption = reviewerSelect.options[reviewerSelect.selectedIndex];
+            assignedReviewerName = selectedOption.textContent; // Save the reviewer name
+        }
+
+        if (!assignedReviewerName) {
+            console.error("No reviewer selected.");
+            return;
+        }
+
+        try {
+            // Ensure the Firestore document path is correct
+            const docRef = doc(firestore, "users", uid);
+
+            await setDoc(docRef, {
+                assignedReviewerName, // Save the reviewer's name here
+            }, { merge: true });
+
+            console.log("✅ Reviewer assigned successfully!");
+            toggleAssignReviewerButton(uid); // Update button text after assignment
+        } catch (error) {
+            console.error("❌ Error saving reviewer assignment: " + error);
+        }
+
+        // Fetch reviewers on initial load
+        fetchReviewer();
     }
-
-    if (!assignedReviewerName) {
-        alert("No reviewer selected.");
-        return;
-    }
-
-    try {
-        
-        // Ensure the Firestore document path is correct
-        const docRef = doc(firestore, "users", uid);
-
-        await setDoc(docRef, {
-            assignedReviewerName, // Save the reviewer's name here
-        }, { merge: true });
-
-        alert("✅ Reviewer assigned successfully!");
-    } catch (error) {
-        alert("❌ Error saving reviewer assignment: " + error);
-    }
-
-    // Fetch reviewers on initial load
-    fetchReviewer()}
-    })
+});
