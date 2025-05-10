@@ -25,16 +25,14 @@
             height: 70px;
             margin-right: 20px;
         }
-        .applications-overview,
-        .important-dates {
+        .applications-overview, .important-dates {
             background-color: #fff;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
         }
-        .applications-overview h2,
-        .important-dates h2 {
+        .applications-overview h2, .important-dates h2 {
             margin-bottom: 20px;
             color: #002147;
             font-size: 1.8em;
@@ -53,10 +51,32 @@
         .application-card p {
             color: #555;
         }
-        .application-status {
-            font-weight: bold;
-            color: #28a745;
+
+        /* Define specific colors for each status */
+        .application-status.submitted {
+        color: #00796b;
         }
+
+        .application-status.reviewed {
+        color: #5e35b1;
+        }
+
+        .application-status.additional-documents-requested {
+        color: #ef6c00;
+        }
+
+        .application-status.reject {
+        color: #c62828;
+        }
+
+        .application-status.approve {
+        color: #2e7d32;
+        }
+
+        .application-status.waitlist {
+        color: #f9a825;
+        }
+
         .application-status.in-progress {
             color: #17a2b8;
         }
@@ -85,8 +105,8 @@
             border-bottom: 1px dashed #ddd;
             padding-bottom: 10px;
         }
-
     </style>
+    
 </head>
 <body>
     <header class="oxford-blue header">
