@@ -150,14 +150,28 @@ function displayApplications(tableId, applications) {
 
 // Helper function to get appropriate badge class based on status
 function getBadgeClass(status) {
-    switch(status) {
-        case 'Approved': return 'bg-success';
-        case 'Rejected': return 'bg-danger';
-        case 'Additional Documents Requested': return 'bg-warning text-dark';
-        case 'Completed': return 'bg-info text-dark';
-        default: return 'bg-secondary'; // Pending or any other status
-    }
+  switch (status) {
+      case 'Not Started':
+          return 'bg-secondary'; // Gray
+      case 'In Progress':
+          return 'bg-primary'; // Blue
+      case 'Submitted':
+          return 'bg-info text-dark'; // Light blue
+      case 'Pending':
+          return 'bg-warning text-dark'; // Yellow
+      case 'Accepted':
+          return 'bg-success'; // Green
+      case 'Rejected':
+          return 'bg-danger'; // Red
+      case 'Additional Documents Requested':
+          return 'bg-warning text-dark'; // Yellow
+      case 'Completed':
+          return 'bg-info text-dark'; // Light blue
+      default:
+          return 'bg-light text-dark'; // Fallback
+  }
 }
+
 
 // Call fetchApplications when the page loads
 document.addEventListener('DOMContentLoaded', fetchApplications);
