@@ -138,7 +138,7 @@ function displayApplications(tableId, applications) {
             <td>${app.submittedAt}</td>
             <td><span class="badge ${getBadgeClass(app.status)}">${app.status}</span></td>
             <td>
-                <a href="review_applicant_page.html?uid=${app.userId}&formId=${app.formId}"
+                <a href="review_applicant_page.php?uid=${app.userId}&formId=${app.formId}"
                    class="btn btn-sm btn-outline-secondary">
                    ${app.status === 'Completed' ? 'View' : 'Review'}
                 </a>

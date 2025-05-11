@@ -1,3 +1,40 @@
+<?php
+require("../PHPMailer/script.php");?>
+
+<?php
+if (isset($_POST['submit'])) {
+    $email = trim($_POST['email'] ?? '');
+    $name = trim($_POST['name'] ?? '');
+    $status = trim($_POST['status'] ?? '');
+
+
+    $subject = "Application Status Update";
+    $messageBody = "";
+
+    
+    if ($status === "Accepted") {
+        $subject = "Your Oxford Application Status: Accepted";
+        $messageBody = "Dear " . htmlspecialchars($name) . ",<br><br>";
+        $messageBody .= "We are delighted to inform you that your application to the University of Oxford has been <strong>Accepted</strong>.<br><br>";
+        $messageBody .= "This is a significant achievement, and we congratulate you on your success.<br><br>";
+        $messageBody .= "Further information regarding the next steps, including offer conditions (if any) and enrollment details, will be communicated to you shortly.<br><br>";
+        $messageBody .= "Once again, congratulations!<br><br>";
+        $messageBody .= "Sincerely,<br>The Admissions Team<br>University of Oxford";
+    } else {
+        $messageBody = "Dear " . htmlspecialchars($name) . ",<br><br>";
+        $messageBody .= "We regret to inform you that your application to the University of Oxford has been <strong>Rejected</strong>.<br><br>";
+        $messageBody .= "We appreciate your interest in our program and thank you for the time and effort you invested in your application.<br><br>";
+        $messageBody .= "If you have any questions or would like feedback on your application, please feel free to reach out.<br><br>";
+        $messageBody .= "Best regards,<br>The Admissions Team<br>University of Oxford";
+    }
+
+    $result = sendMail($email, $subject, $messageBody);
+
+}
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -107,12 +144,11 @@
                     <img src="../icons/oxlogo-rect-border.svg" alt="University of Oxford Logo" class="logo">
                     <h2>Application Review</h2>
                 </div>
-                <form class="d-flex" role="search">
+                <!-- <form class="d-flex" role="search">
                     <input class="form-control me-2" type="search" placeholder="Search..." aria-label="Search" style="margin-top: 4px;">
-                    <button class="btn btn-outline-light" type="submit">
                         <i class="bi bi-search" style="position: relative; top: 0px;"></i>
                     </button>
-                </form>
+                </form> -->
             </div>
         </div>
     </header>
@@ -168,7 +204,7 @@
                         </div>
                         
                         <h5 id="evaluation-form" class="mt-5 mb-3">Evaluation Form</h5>
-                        <form id="reviewForm">
+                        <form id="reviewForm" method="POST" action="review_applicant_page.php">
                             <div class="mb-3">
                                 <label class="form-label"><strong>Academic Qualifications</strong>&nbsp;&nbsp;&nbsp;</label>
                                 <input type="radio" name="academic" id="excellent" value="Excellent"> <label class="radio-label" for="excellent">Excellent</label>
@@ -214,11 +250,18 @@
                                 <label class="form-label"><strong>Comments</strong></label>
                                 <textarea class="form-control" rows="5" placeholder="Enter your review comments here..."></textarea>
                             </div>
-                            
+                        
+
+                            <!-- Hidden inputs -->
+                            <input type="hidden" name="applicantEmail" id="applicantEmail" value="">
+                            <input type="hidden" name="applicantName" id="applicantName" value="">
+                            <input type="hidden" name="statusField" id="statusField" value="">
+
+
                             <div class="d-flex gap-2">
-                                <button type="submit" class="btn btn-primary">Accept</button>
-                                <button type="submit" class="btn btn-danger">Reject</button>
-                                <button type="submit" class="btn btn-secondary">Request Additional Documents</button>
+                            <button type="submit" id="acceptButton" class="btn btn-primary">Accept</button>
+                        <button type="submit" id="rejectButton" class="btn btn-danger">Reject</button>
+                        <button type="submit" id="requestDocsButton" class="btn btn-secondary">Request Additional Documents</button>
                             </div>
                         </form>
                     </div>
@@ -227,6 +270,18 @@
         </div>
     </div>
 
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
+
+
+<script>
+function setStatus(status) {
+    document.getElementById('statusField').value = status;
+    console.log("Status set to:", status); // Debugging line
+    console.log("Email:", document.getElementById('applicantEmail').value); // Debugging line
+    console.log("Name:", document.getElementById('applicantName').value);   // Debugging line
+}
+
+</script>
