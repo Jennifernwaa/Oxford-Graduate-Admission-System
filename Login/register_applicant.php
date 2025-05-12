@@ -164,7 +164,10 @@
                       }
                   }
               } catch (Exception $e) {
-                  echo "<div class='error-message'>Server error: " . $e->getMessage() . "</div>";
+                  echo "<script>
+                  alert('{$authData['error']['message']}');
+                  window.location.href = '../Login/login_applicant_page.html';
+                  </script>";
               }
           }
       }
