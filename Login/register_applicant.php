@@ -37,33 +37,6 @@
       transform: translateY(-150px);
     }
 
-    .form-group {
-      margin-bottom: 20px;
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: 5px;
-      font-weight: bold;
-    }
-
-    .form-group input[type="email"],
-    .form-group input[type="password"] {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      box-sizing: border-box;
-    }
-
-    .btn-warning {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
     .error-message {
       color: red;
       margin-top: 10px;
@@ -103,7 +76,6 @@
   <div class="login-container">
     <div class="login-form">
       <?php
-      session_start(); // Start the session to store the token
       if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           $email = trim($_POST['email'] ?? '');
           $password = $_POST['password'] ?? '';
@@ -115,9 +87,8 @@
                       'apiKey' => 'AIzaSyCbSqQtKpBtfu6EqTCyk5uTNkFiEc7jejU',
                       'databaseURL' => 'https://oxford-graduate-admission-default-rtdb.asia-southeast1.firebasedatabase.app/'
                   ];
-                  // Register user
                   $authUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' . $firebaseConfig['apiKey'];
-                  $authResponse = file_get_contents($authUrl, false, stream_context_create([ 
+                  $authResponse = file_get_contents($authUrl, false, stream_context_create([
                       'http' => [
                           'method' => 'POST',
                           'header' => 'Content-Type: application/json',
@@ -129,45 +100,19 @@
                       echo "<div class='error-message'>{$authData['error']['message']}</div>";
                   } else {
                       $uid = $authData['localId'];
-
-                      // Store user data in Firebase Realtime Database
                       $dbUrl = $firebaseConfig['databaseURL'] . 'users/' . $uid . '.json';
-                      file_get_contents($dbUrl, false, stream_context_create([ 
+                      file_get_contents($dbUrl, false, stream_context_create([
                           'http' => [
                               'method' => 'PUT',
                               'header' => 'Content-Type: application/json',
-                              'content' => json_encode(['username' => $email, 'password' => $password, 'role' => 'Applicant'])
+                              'content' => json_encode(['username' => $email, 'role' => 'Applicant'])
                           ]
                       ]));
-
-                      // Now, log the user in by using the Firebase authentication API (signIn)
-                      $signInUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' . $firebaseConfig['apiKey'];
-                      $signInResponse = file_get_contents($signInUrl, false, stream_context_create([ 
-                          'http' => [
-                              'method' => 'POST',
-                              'header' => 'Content-Type: application/json',
-                              'content' => json_encode(['email' => $email, 'password' => $password, 'returnSecureToken' => true])
-                          ]
-                      ]));
-                      $signInData = json_decode($signInResponse, true);
-
-                      // Check if sign-in is successful
-                      if (isset($signInData['error'])) {
-                          echo "<div class='error-message'>{$signInData['error']['message']}</div>";
-                      } else {
-                          // Store the ID token in a session
-                          $_SESSION['idToken'] = $signInData['idToken'];
-
-                          // Redirect to the dashboard after successful login
-                          header('Location: ../Applicant/applicant_dashboard.html');
-                          exit;
-                      }
+                      header('Location: ../Applicant/applicant_dashboard.html');
+                      exit;
                   }
               } catch (Exception $e) {
-                  echo "<script>
-                  alert('{$authData['error']['message']}');
-                  window.location.href = '../Login/login_applicant_page.html';
-                  </script>";
+                  echo "<div class='error-message'>Server error: " . $e->getMessage() . "</div>";
               }
           }
       }

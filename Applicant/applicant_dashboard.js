@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-import { getAuth, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
 import { getFirestore, collection, getDocs, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 import { handleStatus } from './statusHandler.js';
 
@@ -19,26 +19,10 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// Check Firebase Auth State
+// Wait for DOM to load
 document.addEventListener('DOMContentLoaded', () => {
   onAuthStateChanged(auth, async (user) => {
-    if (!user) {
-      // If user is not logged in, check for Firebase ID token in localStorage or sessionStorage
-      const token = localStorage.getItem("firebaseIdToken");
-      if (token) {
-        // Use the Firebase token to authenticate the user
-        try {
-          await signInWithCustomToken(auth, token);
-          window.location.reload(); // Reload to reflect authenticated state
-        } catch (error) {
-          console.error("Error signing in with token: ", error);
-          window.location.href = "login_applicant_page.html"; // Redirect to login if token is invalid
-        }
-      } else {
-        window.location.href = "login_applicant_page.html"; // Redirect if no token found
-      }
-    } else {
-      // User is authenticated, fetch data
+    if (user) {
       const userFormsRef = collection(db, `users/${user.uid}/forms`);
       const formsSnap = await getDocs(userFormsRef);
 
@@ -84,8 +68,8 @@ document.addEventListener('DOMContentLoaded', () => {
           <a href="form_page1.html" class="details-link">Start Application</a>
         `;
       }
-    // } else {
-    //   window.location.href = "login_applicant_page.html"; // Redirect to login if not authenticated
+    } else {
+      window.location.href = "login_applicant_page.html"; // Redirect to login if not authenticated
     }
   });
 });
