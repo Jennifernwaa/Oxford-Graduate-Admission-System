@@ -22,56 +22,8 @@ const db = getFirestore(app);
 
 let selectedUid = null; // For cross-function access
 
-// Fetch reviewers from Realtime Database
-function fetchReviewer() {
-  const usersRef = ref(database, 'users');
-  get(usersRef).then((snapshot) => {
-    if (snapshot.exists()) {
-      const users = snapshot.val();
-      displayReviewer(users);
-    } else {
-      console.log("No users found.");
-    }
-  }).catch((error) => {
-    console.error("Error fetching data: ", error);
-  });
-}
-
-// Display reviewers in dropdown
-function displayReviewer(users) {
-  const reviewerSelect = document.getElementById('reviewer');
-  reviewerSelect.innerHTML = '';
-
-  let hasReviewer = false;
-
-  for (const userId in users) {
-    const user = users[userId];
-    if (user.role === "Reviewer") {
-      hasReviewer = true;
-      const option = document.createElement('option');
-      option.value = userId;
-      option.textContent = user.email || user.username || "Unnamed Reviewer";
-      reviewerSelect.appendChild(option);
-    }
-  }
-
-  const assignButton = document.getElementById("assignReviewerButton");
-  if (assignButton) {
-    assignButton.style.display = hasReviewer ? 'none' : 'block';
-  }
-
-  if (!hasReviewer) {
-    const option = document.createElement('option');
-    option.disabled = true;
-    option.textContent = 'No reviewers found';
-    reviewerSelect.appendChild(option);
-  }
-}
-
 // Wait for DOM content to load
 document.addEventListener("DOMContentLoaded", () => {
-  fetchReviewer();
-
   // Delegate Assign Reviewer button click
   document.addEventListener("click", function (e) {
     if (e.target.matches(".assign-btn")) {
@@ -197,6 +149,11 @@ document.addEventListener("DOMContentLoaded", () => {
         assignedReviewerName,
         assignedAt: new Date().toISOString()
       });
+
+      const formDocRef = doc(db, "users", uid);
+      await setDoc(formDocRef, {
+        assignedReviewerName: assignedReviewerName
+      }, { merge: true });
 
       console.log("✅ Reviewer assigned successfully!");
       toggleAssignReviewerButton(uid); // Update button text

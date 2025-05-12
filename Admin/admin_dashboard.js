@@ -2,8 +2,6 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js';
 import { getDatabase, ref, get, set, remove } from 'https://www.gstatic.com/firebasejs/9.1.0/firebase-database.js';
 
-
-
 // Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyCbSqQtKpBtfu6EqTCyk5uTNkFiEc7jejU",
@@ -55,7 +53,6 @@ function displayUsers(users) {
         userTableBody.appendChild(row);
     }
 }
-
 
 // Function triggered by the Delete button
 window.confirmDelete = function(userId) {
