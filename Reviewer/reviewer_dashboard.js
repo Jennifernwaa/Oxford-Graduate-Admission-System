@@ -35,37 +35,34 @@ function formatDate(timestamp) {
 
 // Function to fetch all applications from Firestore
 async function fetchApplications() {
-    try {
-      onAuthStateChanged(auth, async (user) => {
-        if (user) {
-          const reviewerUid = user.uid;
-          console.log("Logged in reviewer UID:", reviewerUid);
+  try {
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const reviewerUid = user.uid;
+        console.log("Logged in reviewer UID:", reviewerUid);
 
+        // Step 1: Fetch all assigned applicants for the logged-in reviewer
+        const assignedUsersRef = collection(db, "assignedUsers");
+        const assignedSnapshot = await getDocs(query(assignedUsersRef, where("reviewerID", "==", reviewerUid)));
 
-          
-          // Step 1: Fetch all assigned applicants for the logged-in reviewer
-          const assignedUsersRef = collection(db, "assignedUsers");
-          const assignedSnapshot = await getDocs(query(assignedUsersRef, where("reviewerID", "==", reviewerUid)));
+        if (assignedSnapshot.empty) {
+          console.log("No applicants assigned to this reviewer.");
+          displayApplications("assignedApplications", []);
+          displayApplications("pendingReviews", []);
+          displayApplications("completedReviews", []);
+          return;
+        }
 
-          if (assignedSnapshot.empty) {
-            console.log("No applicants assigned to this reviewer.");
-            displayApplications("assignedApplications", []);
-            displayApplications("pendingReviews", []);
-            displayApplications("completedReviews", []);
-            return;
+        // Step 2: Build a map of assigned applicants and their status
+        const assignedApplicantUids = [];
+        assignedSnapshot.forEach(docSnap => {
+          const data = docSnap.data();
+          if (data.applicantID) {
+            assignedApplicantUids.push(data.applicantID); // Correct UID
           }
+        });
 
-          // Step 2: Extract all assigned applicant IDs
-          const assignedApplicantUids = [];
-          assignedSnapshot.forEach(docSnap => {
-            const data = docSnap.data();
-            if (data.applicantID) {
-              assignedApplicantUids.push(data.applicantID); // Correct UID
-            }
-          });
-
-
-          // Step 3: Fetch all forms and filter by assigned applicant UIDs
+        // Step 3: Fetch all forms and filter by assigned applicant UIDs
           const formsQuery = query(collectionGroup(db, "forms"));
           const formsSnap = await getDocs(formsQuery);
           const applications = {
@@ -79,7 +76,7 @@ async function fetchApplications() {
             const userId = formDoc.ref.parent.parent.id;
 
             if (!assignedApplicantUids.includes(userId)) return; // skip unassigned applicants
-
+            
             const application = {
               givenName: formData.givenName || '',
               familyName: formData.familyName || '',
@@ -93,28 +90,31 @@ async function fetchApplications() {
 
             if (!application.givenName && !application.familyName) return;
 
-            if (formData.reviewedAt) {
-              applications.completed.push(application);
-            } else if (formData.status === 'Pending' || formData.status === 'Additional Documents Requested') {
+
+            if (formData.status == 'Additional Documents Requested') {
               applications.pending.push(application);
-            } else {
+            } else if (formData.status == 'Accepted' || formData.status == 'Rejected'){
+              applications.completed.push(application);
+            }
+            else {
               applications.assigned.push(application);
             }
           });
 
-          // Step 4: Display filtered applications
-          displayApplications('assignedApplications', applications.assigned);
-          displayApplications('pendingReviews', applications.pending);
-          displayApplications('completedReviews', applications.completed);
 
-        } else {
-          console.error("User is not authenticated.");
-        }
-      });
-    } catch (error) {
-      console.error("Error fetching applications: ", error);
-    }
+        // Step 4: Display filtered applications
+        displayApplications('assignedApplications', applications.assigned);
+        displayApplications('pendingReviews', applications.pending);
+        displayApplications('completedReviews', applications.completed);
+
+      } else {
+        console.error("User is not authenticated.");
+      }
+    });
+  } catch (error) {
+    console.error("Error fetching applications: ", error);
   }
+}
 
 
 // Function to display applications in the tables

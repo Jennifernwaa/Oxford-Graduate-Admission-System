@@ -1,39 +1,47 @@
 <?php
-require("../PHPMailer/script.php");?>
-
+require "script.php";?>
 <?php
-if (isset($_POST['submit'])) {
-    $email = trim($_POST['email'] ?? '');
-    $name = trim($_POST['name'] ?? '');
-    $status = trim($_POST['status'] ?? '');
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Retrieve form data
+    $email = filter_var($_POST['applicantEmail'], FILTER_VALIDATE_EMAIL);
+    $full_name = htmlspecialchars($_POST['applicantName']);
+    $status = htmlspecialchars($_POST['statusField']);
 
-    $subject = "Application Status Update";
-    $messageBody = "";
-
-    
-    if ($status === "Accepted") {
-        $subject = "Your Oxford Application Status: Accepted";
-        $messageBody = "Dear " . htmlspecialchars($name) . ",<br><br>";
-        $messageBody .= "We are delighted to inform you that your application to the University of Oxford has been <strong>Accepted</strong>.<br><br>";
-        $messageBody .= "This is a significant achievement, and we congratulate you on your success.<br><br>";
-        $messageBody .= "Further information regarding the next steps, including offer conditions (if any) and enrollment details, will be communicated to you shortly.<br><br>";
-        $messageBody .= "Once again, congratulations!<br><br>";
-        $messageBody .= "Sincerely,<br>The Admissions Team<br>University of Oxford";
-    } else {
-        $messageBody = "Dear " . htmlspecialchars($name) . ",<br><br>";
-        $messageBody .= "We regret to inform you that your application to the University of Oxford has been <strong>Rejected</strong>.<br><br>";
-        $messageBody .= "We appreciate your interest in our program and thank you for the time and effort you invested in your application.<br><br>";
-        $messageBody .= "If you have any questions or would like feedback on your application, please feel free to reach out.<br><br>";
-        $messageBody .= "Best regards,<br>The Admissions Team<br>University of Oxford";
+    // Validate input
+    if (!$email || !$full_name || !$status) {
+        echo json_encode(["status" => "error", "message" => "Invalid input data."]);
+        exit;
     }
 
-    $result = sendMail($email, $subject, $messageBody);
+    // Prepare email subject and message
+    $subject = "Application Status Update";
+    $message = "Dear $full_name,<br><br>";
 
+    if ($status === "Accepted") {
+        $message .= "We are delighted to inform you that your application has been <strong>Accepted</strong>.<br><br>";
+        $message .= "Congratulations on this achievement! Further details will be communicated to you shortly.<br><br>";
+    } elseif ($status === "Rejected") {
+        $message .= "We regret to inform you that your application has been <strong>Rejected</strong>.<br><br>";
+        $message .= "We appreciate your interest in our program and thank you for your effort.<br><br>";
+    } elseif ($status === "Request Additional Documents") {
+        $message .= "We require additional documents to proceed with your application.<br><br>";
+        $message .= "Please check your application portal for further instructions.<br><br>";
+    }
+
+    $message .= "Best regards,<br>The Admissions Team<br>University of Oxford";
+
+    // Send the email
+    $result = sendMail($email, $subject, $message);
+
+    if ($result === "success") {
+        echo json_encode(["status" => "success", "message" => "Email sent successfully."]);
+    } else {
+        echo json_encode(["status" => "error", "message" => "Failed to send email. Error: $result"]);
+    }
+    exit;
 }
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -204,65 +212,60 @@ if (isset($_POST['submit'])) {
                         </div>
                         
                         <h5 id="evaluation-form" class="mt-5 mb-3">Evaluation Form</h5>
-                        <form id="reviewForm" method="POST" action="review_applicant_page.php">
-                            <div class="mb-3">
-                                <label class="form-label"><strong>Academic Qualifications</strong>&nbsp;&nbsp;&nbsp;</label>
-                                <input type="radio" name="academic" id="excellent" value="Excellent"> <label class="radio-label" for="excellent">Excellent</label>
-                                <input type="radio" name="academic" id="good" value="Good"> <label class="radio-label" for="good">Good</label>
-                                <input type="radio" name="academic" id="satisfactory" value="Satisfactory"> <label class="radio-label" for="satisfactory">Satisfactory</label>
-                                <input type="radio" name="academic" id="poor" value="Poor"> <label class="radio-label" for="poor">Poor</label>
-                            </div>
-                            
-                            <div class="mb-3">
-                                <label class="form-label"><strong>Research Potential</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                                <input type="radio" name="research" id="r-excellent" value="Excellent"> <label class="radio-label" for="r-excellent">Excellent</label>
-                                <input type="radio" name="research" id="r-good" value="Good"> <label class="radio-label" for="r-good">Good</label>
-                                <input type="radio" name="research" id="r-satisfactory" value="Satisfactory"> <label class="radio-label" for="r-satisfactory">Satisfactory</label>
-                                <input type="radio" name="research" id="r-poor" value="Poor"> <label class="radio-label" for="r-poor">Poor</label>
-                            </div>
+                        <div class="mb-3">
+                            <label class="form-label"><strong>Academic Qualifications</strong></label>
+                            <input type="radio" name="academic" id="excellent" value="Excellent"> <label class="radio-label" for="excellent">Excellent</label>
+                            <input type="radio" name="academic" id="good" value="Good"> <label class="radio-label" for="good">Good</label>
+                            <input type="radio" name="academic" id="satisfactory" value="Satisfactory"> <label class="radio-label" for="satisfactory">Satisfactory</label>
+                            <input type="radio" name="academic" id="poor" value="Poor"> <label class="radio-label" for="poor">Poor</label>
+                        </div>
 
-                            <div class="mb-3">
-                                <label class="form-label"><strong>Letters of Recommendation</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                                <input type="radio" name="recommendation" id="lr-excellent" value="Excellent"> <label class="radio-label" for="lr-excellent">Excellent</label>
-                                <input type="radio" name="recommendation" id="lr-good" value="Good"> <label class="radio-label" for="lr-good">Good</label>
-                                <input type="radio" name="recommendation" id="lr-satisfactory" value="Satisfactory"> <label class="radio-label" for="lr-satisfactory">Satisfactory</label>
-                                <input type="radio" name="recommendation" id="lr-poor" value="Poor"> <label class="radio-label" for="lr-poor">Poor</label>
-                            </div>
+                        <div class="mb-3">
+                            <label class="form-label"><strong>Research Potential</strong></label>
+                            <input type="radio" name="research" id="r-excellent" value="Excellent"> <label class="radio-label" for="r-excellent">Excellent</label>
+                            <input type="radio" name="research" id="r-good" value="Good"> <label class="radio-label" for="r-good">Good</label>
+                            <input type="radio" name="research" id="r-satisfactory" value="Satisfactory"> <label class="radio-label" for="r-satisfactory">Satisfactory</label>
+                            <input type="radio" name="research" id="r-poor" value="Poor"> <label class="radio-label" for="r-poor">Poor</label>
+                        </div>
 
-                            <div class="mb-3">
-                                <label class="form-label"><strong>Motivation and Fit</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                                <input type="radio" name="motivation" id="m-excellent" value="Excellent"> <label class="radio-label" for="m-excellent">Excellent</label>
-                                <input type="radio" name="motivation" id="m-good" value="Good"> <label class="radio-label" for="m-good">Good</label>
-                                <input type="radio" name="motivation" id="m-satisfactory" value="Satisfactory"> <label class="radio-label" for="m-satisfactory">Satisfactory</label>
-                                <input type="radio" name="motivation" id="m-poor" value="Poor"> <label class="radio-label" for="m-poor">Poor</label>
-                            </div>
+                        <div class="mb-3">
+                            <label class="form-label"><strong>Letters of Recommendation</strong></label>
+                            <input type="radio" name="recommendation" id="lr-excellent" value="Excellent"> <label class="radio-label" for="lr-excellent">Excellent</label>
+                            <input type="radio" name="recommendation" id="lr-good" value="Good"> <label class="radio-label" for="lr-good">Good</label>
+                            <input type="radio" name="recommendation" id="lr-satisfactory" value="Satisfactory"> <label class="radio-label" for="lr-satisfactory">Satisfactory</label>
+                            <input type="radio" name="recommendation" id="lr-poor" value="Poor"> <label class="radio-label" for="lr-poor">Poor</label>
+                        </div>
 
-                            <div class="mb-3">
-                                <label class="form-label"><strong>Overall Impression</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                                <input type="radio" name="overall" id="o-excellent" value="Excellent"> <label class="radio-label" for="o-excellent">Excellent</label>
-                                <input type="radio" name="overall" id="o-good" value="Good"> <label class="radio-label" for="o-good">Good</label>
-                                <input type="radio" name="overall" id="o-satisfactory" value="Satisfactory"> <label class="radio-label" for="o-satisfactory">Satisfactory</label>
-                                <input type="radio" name="overall" id="o-poor" value="Poor"> <label class="radio-label" for="o-poor">Poor</label>
-                            </div>
-                            
-                            
+                        <div class="mb-3">
+                            <label class="form-label"><strong>Motivation and Fit</strong></label>
+                            <input type="radio" name="motivation" id="m-excellent" value="Excellent"> <label class="radio-label" for="m-excellent">Excellent</label>
+                            <input type="radio" name="motivation" id="m-good" value="Good"> <label class="radio-label" for="m-good">Good</label>
+                            <input type="radio" name="motivation" id="m-satisfactory" value="Satisfactory"> <label class="radio-label" for="m-satisfactory">Satisfactory</label>
+                            <input type="radio" name="motivation" id="m-poor" value="Poor"> <label class="radio-label" for="m-poor">Poor</label>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label"><strong>Overall Impression</strong></label>
+                            <input type="radio" name="overall" id="o-excellent" value="Excellent"> <label class="radio-label" for="o-excellent">Excellent</label>
+                            <input type="radio" name="overall" id="o-good" value="Good"> <label class="radio-label" for="o-good">Good</label>
+                            <input type="radio" name="overall" id="o-satisfactory" value="Satisfactory"> <label class="radio-label" for="o-satisfactory">Satisfactory</label>
+                            <input type="radio" name="overall" id="o-poor" value="Poor"> <label class="radio-label" for="o-poor">Poor</label>
+                        </div>
+                              
                             <div class="mb-4">
                                 <label class="form-label"><strong>Comments</strong></label>
                                 <textarea class="form-control" rows="5" placeholder="Enter your review comments here..."></textarea>
                             </div>
-                        
+                            <form id="reviewForm" method="POST" action="review_applicant_page.php">
+                                <!-- Hidden inputs -->
+                                <input type="hidden" name="applicantEmail" id="applicantEmail" value="">
+                                <input type="hidden" name="applicantName" id="applicantName" value="">
+                                <input type="hidden" name="statusField" id="statusField" value="">
 
-                            <!-- Hidden inputs -->
-                            <input type="hidden" name="applicantEmail" id="applicantEmail" value="">
-                            <input type="hidden" name="applicantName" id="applicantName" value="">
-                            <input type="hidden" name="statusField" id="statusField" value="">
-
-
-                            <div class="d-flex gap-2">
-                            <button type="submit" id="acceptButton" class="btn btn-primary">Accept</button>
-                        <button type="submit" id="rejectButton" class="btn btn-danger">Reject</button>
-                        <button type="submit" id="requestDocsButton" class="btn btn-secondary">Request Additional Documents</button>
-                            </div>
+                                <!-- Buttons -->
+                                <button type="submit" id="acceptButton" class="btn btn-primary">Accept</button>
+                                <button type="submit" id="rejectButton" class="btn btn-danger">Reject</button>
+                                <button type="submit" id="requestDocsButton" class="btn btn-secondary">Request Additional Documents</button>
                         </form>
                     </div>
                 </div>
@@ -278,10 +281,21 @@ if (isset($_POST['submit'])) {
 
 <script>
 function setStatus(status) {
-    document.getElementById('statusField').value = status;
-    console.log("Status set to:", status); // Debugging line
-    console.log("Email:", document.getElementById('applicantEmail').value); // Debugging line
-    console.log("Name:", document.getElementById('applicantName').value);   // Debugging line
+    const statusField = document.getElementById('statusField');
+    const applicantEmail = document.getElementById('applicantEmail');
+    const applicantName = document.getElementById('applicantName');
+
+    if (!statusField || !applicantEmail || !applicantName) {
+        console.error("One or more hidden inputs are missing.");
+        return;
+    }
+
+    statusField.value = status;
+
+    console.log("Status set to:", status);
+    console.log("Email:", applicantEmail.value);
+    console.log("Name:", applicantName.value);
 }
+
 
 </script>

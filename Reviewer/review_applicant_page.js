@@ -29,13 +29,15 @@ class ReviewApplicantPage {
         this.init();
     }
 
+
     // Initialize the page
     init() {
         document.addEventListener('DOMContentLoaded', () => {
-            this.fetchFormData();
-            this.addEventListeners();
-        });
+                this.fetchFormData();            
+                this.addEventListeners();       
+            });         
     }
+    
 
     // Format date
     static formatDate(timestamp) {
@@ -62,6 +64,7 @@ class ReviewApplicantPage {
             }
 
             try {
+                
                 this.formData = await this.getMergedFormData();
                 await this.populateApplicantDetails();
                 this.displayFormData();
@@ -75,6 +78,8 @@ class ReviewApplicantPage {
     async getMergedFormData() {
 
         let mergedData = {};
+        const urlParams = new URLSearchParams(window.location.search);
+        this.userId = urlParams.get('uid');
 
         for (let i = 1; i <= 11; i++) {
             const formId = `form${i}`;
@@ -100,6 +105,8 @@ class ReviewApplicantPage {
 
     // Populate applicant details from Realtime Database
     async populateApplicantDetails() {
+        const urlParams = new URLSearchParams(window.location.search);
+        this.userId = urlParams.get('uid');
         const userRef = ref(database, `users/${this.userId}`);
         const snapshot = await get(userRef);
 
@@ -155,6 +162,26 @@ class ReviewApplicantPage {
                 <td>${this.formData.testType || 'N/A'} (${this.formData.overallResult || 'N/A'})</td>
             </tr>
         `;
+
+        // Pre-fill form values if review data exists
+    if (this.formData.academicRating) {
+        document.querySelector(`input[name="academic"][value="${this.formData.academicRating}"]`).checked = true;
+    }
+    if (this.formData.researchRating) {
+        document.querySelector(`input[name="research"][value="${this.formData.researchRating}"]`).checked = true;
+    }
+    if (this.formData.lettersofRecommendationRating) {
+        document.querySelector(`input[name="recommendation"][value="${this.formData.lettersofRecommendationRating}"]`).checked = true;
+    }
+    if (this.formData.motivationRating) {
+        document.querySelector(`input[name="motivation"][value="${this.formData.motivationRating}"]`).checked = true;
+    }
+    if (this.formData.overallRating) {
+        document.querySelector(`input[name="overall"][value="${this.formData.overallRating}"]`).checked = true;
+    }
+    if (this.formData.reviewComments) {
+        document.querySelector('textarea').value = this.formData.reviewComments;
+    }
     }
 
     // Handle the review process
@@ -162,13 +189,32 @@ class ReviewApplicantPage {
         try {
             const urlParams = new URLSearchParams(window.location.search);
             const formId = urlParams.get('formId');
+            this.userId = urlParams.get('uid');
 
             if (!this.userId || !formId) {
                 console.error("Missing userId or formId");
                 return;
             }
 
-            const reviewData = this.getReviewData(status);
+                // Get Review values
+                const academicRating = document.querySelector('input[name="academic"]:checked')?.value || '';
+                const researchRating = document.querySelector('input[name="research"]:checked')?.value || '';
+                const lettersofRecommendationRating = document.querySelector('input[name="recommendation"]:checked')?.value || '';
+                const motivationRating = document.querySelector('input[name="motivation"]:checked')?.value || '';
+                const overallRating = document.querySelector('input[name="overall"]:checked')?.value || '';
+                const reviewComments = document.querySelector('textarea').value || '';
+
+                const reviewData = {
+                    status,
+                    academicRating,
+                    researchRating,
+                    lettersofRecommendationRating,
+                    motivationRating,
+                    overallRating,
+                    reviewComments,
+                    reviewedAt: new Date(),
+                    reviewedBy: auth.currentUser?.uid || 'Unknown Reviewer'
+                };
 
             // Save to the user's form (original location)
             const formRef = doc(db, "users", this.userId, "forms", formId);
@@ -176,7 +222,7 @@ class ReviewApplicantPage {
 
             // Save to the central reviewResponse collection
             const reviewRef = doc(db, "reviewResponse", this.userId);
-            await updateDoc(reviewRef, reviewData).catch(async (error) => {
+            await setDoc(reviewRef, reviewData).catch(async (error) => {
                 if (error.code === "not-found") {
                     await setDoc(reviewRef, reviewData);
                 } else {
@@ -184,47 +230,79 @@ class ReviewApplicantPage {
                 }
             });
 
+
             // alert(`Application ${status} successfully.`);
-            window.location.href = "reviewer_dashboard.html";
+            // window.location.href = "reviewer_dashboard.html";
         } catch (error) {
             console.error("Error saving review: ", error);
             alert("Error updating application status. Please try again.");
         }
     }
 
-    // Get review data from the form
-    getReviewData(status) {
-        return {
-            status,
-            academicRating: document.querySelector('input[name="academic"]:checked')?.value || '',
-            researchRating: document.querySelector('input[name="research"]:checked')?.value || '',
-            lettersofRecommendationRating: document.querySelector('input[name="recommendation"]:checked')?.value || '',
-            motivationRating: document.querySelector('input[name="motivation"]:checked')?.value || '',
-            overallRating: document.querySelector('input[name="overall"]:checked')?.value || '',
-            reviewComments: document.querySelector('textarea').value || '',
-            reviewedAt: new Date(),
-            reviewedBy: auth.currentUser?.uid || 'Unknown Reviewer'
-        };
+    // Function to send email via AJAX
+    sendEmail(status) {
+        const email = document.getElementById('applicantEmail').value;
+        const fullName = document.getElementById('applicantName').value;
+    
+        if (!email || !fullName) {
+            console.error("Email or full name is missing.");
+            return;
+        }
+    
+        const formData = new FormData();
+        formData.append('applicantEmail', email);
+        formData.append('applicantName', fullName);
+        formData.append('statusField', status);
+    
+        fetch('review_applicant_page.php', {
+            method: 'POST',
+            body: formData,
+        })
+            .then((response) => response.json()) // Parse JSON response
+            .then((data) => {
+                if (data.status === "success") {
+                    console.log("Email sent successfully:", data.message);
+                    window.location.href = "reviewer_dashboard.html"; // Redirect after success
+                } else {
+                    console.error("Email sending failed:", data.message);
+                    window.location.href = "reviewer_dashboard.html"; // Redirect after success
+                }
+            })
+            .catch((error) => {
+                console.error("Error sending email:", error);
+                window.location.href = "reviewer_dashboard.html"; // Redirect after success
+            });
     }
 
     // Add event listeners to buttons
     addEventListeners() {
-        document.querySelector('.btn-primary').addEventListener('click', (e) => {
+        document.getElementById('acceptButton').addEventListener('click', async (e) => {
             e.preventDefault();
-            this.handleReview('Accepted');
+            setStatus('Accepted'); // Set the status
+            await this.handleReview('Accepted'); // Save the review
+            this.sendEmail('Accepted'); // Send the email
         });
-
-        document.querySelector('.btn-danger').addEventListener('click', (e) => {
+    
+        document.getElementById('rejectButton').addEventListener('click', async (e) => {
             e.preventDefault();
-            this.handleReview('Rejected');
+            setStatus('Rejected'); // Set the status
+            await this.handleReview('Rejected'); // Save the review
+            this.sendEmail('Rejected'); // Send the email
         });
-
-        document.querySelector('.btn-secondary').addEventListener('click', (e) => {
+    
+        document.getElementById('requestDocsButton').addEventListener('click', async (e) => {
             e.preventDefault();
-            this.handleReview('Additional Documents Requested');
+            setStatus('Request Additional Documents'); // Set the status
+            await this.handleReview('Additional Documents Requested'); // Save the review
+            this.sendEmail('Request Additional Documents'); // Send the email
         });
     }
+
 }
+
+
+
+
 
 // Instantiate the class
 new ReviewApplicantPage();

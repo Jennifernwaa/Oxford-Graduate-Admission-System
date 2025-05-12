@@ -15,9 +15,9 @@ require 'config.php';
 /**
    We have to require the path to the PHPMailer classes.
 */
-require '../PHPMailer/src/Exception.php';
-require '../PHPMailer/src/PHPMailer.php';
-require '../PHPMailer/src/SMTP.php';
+require 'PHPMailer/src/Exception.php';
+require 'PHPMailer/src/PHPMailer.php';
+require 'PHPMailer/src/SMTP.php';
  
 /**
  * The function uses the PHPMailer object to send an email 
@@ -43,6 +43,8 @@ function sendMail($email, $subject, $message){
       our Gmail login	details to send the mail.
    */	
    $mail->SMTPAuth = true;
+   
+   $mail->SMTPDebug = SMTP::DEBUG_SERVER;
  
    /*  
       Setting the Host property to the MAILHOST value 
