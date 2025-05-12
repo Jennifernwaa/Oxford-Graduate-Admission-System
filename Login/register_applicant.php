@@ -53,7 +53,7 @@ try {
         ]
     ]));
 
-    echo json_encode(['success' => 'Account created and saved to database!', 'redirect' => 'applicant_dashboard.php']);
+    echo json_encode(['success' => 'Account created and saved to database!', 'redirect' => 'applicant_dashboard.html']);
 
 } catch (Exception $e) {
     echo json_encode(['error' => 'Server error: ' . $e->getMessage()]);
