@@ -127,31 +127,14 @@
                       echo "<div class='error-message'>{$authData['error']['message']}</div>";
                   } else {
                       $uid = $authData['localId'];
-                      $idToken = $authData['idToken'];  // Retrieve the ID token for the authenticated user
-
-                      // Set session or cookie for the logged-in user
-                      session_start(); // Start a session
-                      $_SESSION['user'] = $uid;  // Store the user UID in the session
-                      $_SESSION['idToken'] = $idToken;  // Store the ID token
-
-                      // Create user data array with username, password, and role
-                      $userData = [
-                          'username' => $email,  // Storing email as username
-                          'password' => $password,  // Plain text password
-                          'role' => 'Applicant'  // Default role
-                      ];
-
-                      // Store user data in Firebase Realtime Database
                       $dbUrl = $firebaseConfig['databaseURL'] . 'users/' . $uid . '.json';
                       file_get_contents($dbUrl, false, stream_context_create([
                           'http' => [
                               'method' => 'PUT',
                               'header' => 'Content-Type: application/json',
-                              'content' => json_encode($userData)
+                              'content' => json_encode(['username' => $email, 'role' => 'Applicant'])
                           ]
                       ]));
-
-                      // Redirect to the applicant dashboard after successful registration
                       header('Location: ../Applicant/applicant_dashboard.html');
                       exit;
                   }
