@@ -108,7 +108,7 @@
                               'content' => json_encode(['username' => $email, 'role' => 'Applicant'])
                           ]
                       ]));
-                      header('Location: applicant_dashboard.html');
+                      header('Location: ../Applicant/applicant_dashboard.html');
                       exit;
                   }
               } catch (Exception $e) {
