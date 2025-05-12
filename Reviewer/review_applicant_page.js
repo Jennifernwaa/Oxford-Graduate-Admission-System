@@ -220,6 +220,12 @@ class ReviewApplicantPage {
             const formRef = doc(db, "users", this.userId, "forms", formId);
             await updateDoc(formRef, reviewData);
 
+            // ✅ Also update the status in the form11 document, if needed
+            const form11DocRef = doc(db, "users", this.userId, "forms", "form11");
+            await setDoc(form11DocRef, {
+                status: reviewData.status // Save the status in the form11 document as well
+            }, { merge: true });
+
             // Save to the central reviewResponse collection
             const reviewRef = doc(db, "reviewResponse", this.userId);
             await setDoc(reviewRef, reviewData).catch(async (error) => {
