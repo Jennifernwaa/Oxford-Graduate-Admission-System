@@ -72,7 +72,7 @@ async function fetchApplicants() {
 
       if (
         formDoc.id === "form11" &&
-        ["Submitted", "Approve", "Reject", "Waitlist"].includes(status)
+        ["Submitted", "Approve", "Reject", "Waitlist", "Reviewed"].includes(status)
       ) {
         const uid = formDoc.ref.parent.parent.id;
 
@@ -80,25 +80,31 @@ async function fetchApplicants() {
           seenUIDs.add(uid);
 
           let assignButtonHTML = "";
-          if (status === "Approve") {
-          // 🔄 Check if reviewer already assigned
+
           try {
             const userDoc = await getDoc(doc(db, "users", uid));
             const userData = userDoc.exists() ? userDoc.data() : {};
             const reviewerName = userData.assignedReviewerName;
 
-            if (reviewerName) {
+            if (status === "Reviewed" && reviewerName) {
+              // ✅ Show reviewer name if already reviewed
               assignButtonHTML = `<span class="text">Reviewer: ${reviewerName}</span>`;
-            } else {
-              assignButtonHTML = `
-                <button class="btn btn-sm btn-outline-secondary assign-btn" data-bs-toggle="modal" data-bs-target="#assignReviewerModal" data-uid="${uid}">
-                  Assign Reviewer
-                </button>`;
+            } else if (status === "Approve") {
+              // ✅ Show assign button only if approved and no reviewer assigned
+              if (reviewerName) {
+                assignButtonHTML = `<span class="text">Reviewer: ${reviewerName}</span>`;
+              } else {
+                assignButtonHTML = `
+                  <button class="btn btn-sm btn-outline-secondary assign-btn" data-bs-toggle="modal" data-bs-target="#assignReviewerModal" data-uid="${uid}">
+                    Assign Reviewer
+                  </button>`;
+              }
             }
+            
           } catch (err) {
             console.error("Error fetching reviewer info:", err);
           }
-        }
+
 
 
           const row = document.createElement("tr");
@@ -106,9 +112,10 @@ async function fetchApplicants() {
             <td>${uid}</td>
             <td>
               <select class="form-select form-select-sm status-select" data-uid="${uid}">
-                <option value="Waitlist" ${status === "Waitlist" ? "selected" : ""}>Waitlist</option>
-                <option value="Approve" ${status === "Approve" ? "selected" : ""}>Approve</option>
-                <option value="Reject" ${status === "Reject" ? "selected" : ""}>Reject</option>
+                <option value="Waitlist" ${status === "Waitlist" ? "selected" : ""} ${status === "Reviewed" ? "style='display:none'" : ""}>Waitlist</option>
+                <option value="Approve" ${status === "Approve" ? "selected" : ""} ${status === "Reviewed" ? "style='display:none'" : ""}>Approve</option>
+                <option value="Reject" ${status === "Reject" ? "selected" : ""} ${status === "Reviewed" ? "style='display:none'" : ""}>Reject</option>
+                <option value="Reviewed" ${status === "Reviewed" ? "selected" : ""} ${status === "Reviewed" ? "disabled" : ""}>Reviewed</option>
               </select>
             </td>
             <td class="assign-column">${assignButtonHTML}</td>

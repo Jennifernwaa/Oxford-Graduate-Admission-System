@@ -7,6 +7,8 @@ export function handleStatus(status) {
     case 'Reject':
     case 'Approve':
     case 'Waitlist':
+    case 'Accepted':
+    case 'Rejected':
       return {
         displayStatus: status,
         statusClass: `application-status ${status.toLowerCase().replace(" ", "-")}`

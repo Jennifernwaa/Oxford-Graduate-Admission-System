@@ -155,6 +155,12 @@ document.addEventListener("DOMContentLoaded", () => {
         assignedReviewerName: assignedReviewerName
       }, { merge: true });
 
+      // ✅ Update users/{uid}/forms/form11 with status "Reviewed"
+      const form11DocRef = doc(db, "users", uid, "forms", "form11");
+      await setDoc(form11DocRef, {
+        status: "Reviewed"
+      }, { merge: true });
+
       console.log("✅ Reviewer assigned successfully!");
       toggleAssignReviewerButton(uid); // Update button text
     } catch (error) {
