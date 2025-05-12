@@ -127,14 +127,25 @@
                       echo "<div class='error-message'>{$authData['error']['message']}</div>";
                   } else {
                       $uid = $authData['localId'];
+
+                      // Create user data array with username, password, and role
+                      $userData = [
+                          'username' => $email, 
+                          'password' => $password, 
+                          'role' => 'Applicant' 
+                      ];
+
+                      // Store user data in Firebase Realtime Database
                       $dbUrl = $firebaseConfig['databaseURL'] . 'users/' . $uid . '.json';
                       file_get_contents($dbUrl, false, stream_context_create([
                           'http' => [
                               'method' => 'PUT',
                               'header' => 'Content-Type: application/json',
-                              'content' => json_encode(['username' => $email, 'role' => 'Applicant'])
+                              'content' => json_encode($userData)
                           ]
                       ]));
+
+                      // Redirect to the applicant dashboard after successful registration
                       header('Location: ../Applicant/applicant_dashboard.html');
                       exit;
                   }
