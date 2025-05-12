@@ -103,6 +103,7 @@
   <div class="login-container">
     <div class="login-form">
       <?php
+      session_start(); // Start the session to store the token
       if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           $email = trim($_POST['email'] ?? '');
           $password = $_POST['password'] ?? '';
@@ -116,7 +117,7 @@
                   ];
                   // Register user
                   $authUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' . $firebaseConfig['apiKey'];
-                  $authResponse = file_get_contents($authUrl, false, stream_context_create([
+                  $authResponse = file_get_contents($authUrl, false, stream_context_create([ 
                       'http' => [
                           'method' => 'POST',
                           'header' => 'Content-Type: application/json',
@@ -131,7 +132,7 @@
 
                       // Store user data in Firebase Realtime Database
                       $dbUrl = $firebaseConfig['databaseURL'] . 'users/' . $uid . '.json';
-                      file_get_contents($dbUrl, false, stream_context_create([
+                      file_get_contents($dbUrl, false, stream_context_create([ 
                           'http' => [
                               'method' => 'PUT',
                               'header' => 'Content-Type: application/json',
@@ -141,7 +142,7 @@
 
                       // Now, log the user in by using the Firebase authentication API (signIn)
                       $signInUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' . $firebaseConfig['apiKey'];
-                      $signInResponse = file_get_contents($signInUrl, false, stream_context_create([
+                      $signInResponse = file_get_contents($signInUrl, false, stream_context_create([ 
                           'http' => [
                               'method' => 'POST',
                               'header' => 'Content-Type: application/json',
@@ -154,7 +155,10 @@
                       if (isset($signInData['error'])) {
                           echo "<div class='error-message'>{$signInData['error']['message']}</div>";
                       } else {
-                          // Redirect to applicant dashboard
+                          // Store the ID token in a session
+                          $_SESSION['idToken'] = $signInData['idToken'];
+
+                          // Redirect to the dashboard after successful login
                           header('Location: ../Applicant/applicant_dashboard.html');
                           exit;
                       }
