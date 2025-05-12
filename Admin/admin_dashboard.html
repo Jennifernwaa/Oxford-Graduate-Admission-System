@@ -129,11 +129,6 @@
                                 Application Statistics
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link sidebar-item" href="#reports">
-                                Generate Reports
-                            </a>
-                        </li>
                     </ul>
                 </div>
             </nav>
@@ -251,28 +246,6 @@
                         </div>
                     </div>
                 </div>
-
-                <div id="reports" style="display: none;">
-                    <h2>Generate Reports</h2>
-                    <div class="card">
-                        <div class="card-header">
-                            Report Generation Options
-                        </div>
-                        <div class="card-body">
-                            <form>
-                                <div class="mb-3">
-                                    <label for="reportType" class="form-label">Select Report Type:</label>
-                                    <select class="form-select" id="reportType">
-                                        <option value="applications">All Applications</option>
-                                        <option value="reviewProgress">Review Progress</option>
-                                        <option value="reviewerLoad">Reviewer Load</option>
-                                        </select>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Generate Report</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
             </main>
         </div>
     </div>
@@ -338,7 +311,6 @@
                 'roles': document.getElementById('roles'),
                 'assign-reviewer': document.getElementById('assign-reviewer'),
                 'statistics': document.getElementById('statistics'),
-                'reports': document.getElementById('reports')
             };
 
             // Initially show the Roles Management section
