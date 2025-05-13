@@ -50,7 +50,7 @@ function getFormData() {
     languageSpeaking: document.getElementById("languageSpeaking").value,
     languageUnderstanding: document.getElementById("languageUnderstanding").value,
 
-    languageTest: document.getElementById("languageTest").value
+    languangeTestFile: document.getElementById("langFile").value
     };
 }
 
