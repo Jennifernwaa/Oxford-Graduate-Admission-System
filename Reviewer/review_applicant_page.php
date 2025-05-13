@@ -204,11 +204,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </table>
                         
                         <h5 class="mt-4 mb-3">Supporting Documents</h5>
-                        <div class="mb-4">
-                            <a href="#" class="document-link"><i class="bi bi-file-text"></i> Personal Statement</a>
-                            <a href="#" class="document-link"><i class="bi bi-file-pdf"></i> Transcript</a>
-                            <a href="#" class="document-link"><i class="bi bi-file-pdf"></i> Recommendation Letter</a>
-                            <a href="#" class="document-link"><i class="bi bi-file-pdf"></i> CV/Resume</a>
+                        <div class="mb-4" id="supportDocuments">
+                            <!-- this will be filled with the supporting documents -->
                         </div>
                         
                         <h5 id="evaluation-form" class="mt-5 mb-3">Evaluation Form</h5>

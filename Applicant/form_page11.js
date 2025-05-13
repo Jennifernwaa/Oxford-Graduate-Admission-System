@@ -1,25 +1,64 @@
 // Import Firebase modules
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
-import { getFirestore, doc, setDoc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
-import { handleStatus } from './statusHandler.js';
-
+import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-storage.js";
 
 // Firebase config
 const firebaseConfig = {
-  apiKey: "AIzaSyCbSqQtKpBtfu6EqTCyk5uTNkFiEc7jejU",
-  authDomain: "oxford-graduate-admission.firebaseapp.com",
-  projectId: "oxford-graduate-admission",
-  storageBucket: "oxford-graduate-admission.appspot.com",
-  messagingSenderId: "992593803011",
-  appId: "1:992593803011:web:4c853113afb814b9c7db36",
-  measurementId: "G-Y3YHM86E5Z"
-};
+    apiKey: "AIzaSyCbSqQtKpBtfu6EqTCyk5uTNkFiEc7jejU",
+    authDomain: "oxford-graduate-admission.firebaseapp.com",
+    databaseURL: "https://oxford-graduate-admission-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "oxford-graduate-admission",
+    storageBucket: "oxford-graduate-admission.firebasestorage.app",
+    messagingSenderId: "992593803011",
+    appId: "1:992593803011:web:4c853113afb814b9c7db36",
+    measurementId: "G-Y3YHM86E5Z"
+  };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+const storage = getStorage(app);
+
+let printNameFile = null;
+const printNameFileInput = document.getElementById('printNameFile');
+const printNameFileBtn = document.getElementById('printNameFileBtn');
+
+async function uploadprintNameFileAndSaveToFirestore(user) {
+    if (!printNameFile) {
+        alert("Please ulpoad your signature .jpg before uploading.");
+        return;
+    }
+
+    if (!user) {
+        alert("User not authenticated.");
+        return;
+    }
+
+    try {
+        const storageRef = ref(storage, `users/${user.uid}/${printNameFile.name}`);
+        const snapshot = await uploadBytes(storageRef, printNameFile);
+        console.log("Upload successful:", snapshot);
+
+        const downloadURL = await getDownloadURL(storageRef);
+        console.log("Download URL:", downloadURL);
+
+        // Save file URL to Firestore under form4
+        const docRef = doc(db, "users", user.uid, "forms", "form11");
+        await setDoc(docRef, {
+            printNameFileURL: downloadURL
+        }, { merge: true });
+
+        alert("File uploaded and URL saved to Firestore!");
+
+    } catch (error) {
+        console.error("Upload failed:", error);
+        alert("Failed to upload file.");
+    }
+}
+
 
 // Function to get form data from the DOM
 function getFormData() {
@@ -52,7 +91,18 @@ async function loadFormDataFromFirestore(user) {
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
             const formData = docSnap.data().formPage11Data || {};
-            populateFormFields(formData);
+            const fileURL = docSnap.data().printNameFileURL;
+
+            // If file URL exists, create and insert link
+            if (fileURL) {
+                const fileLink = document.createElement('a');
+                fileLink.href = fileURL;
+                fileLink.textContent = "View previously uploaded file";
+                fileLink.target = "_blank";
+                document.body.appendChild(fileLink); // Or append to a specific div
+            }
+            console.log("Form data loaded from Firestore:", formData); // Debugging log
+            populateFormFields(formData); // Populate fields after data is fetched
         } else {
             console.log("No form data found for this user.");
         }
@@ -100,9 +150,19 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
     console.log("User authenticated, UID:", user.uid);
+    printNameFileBtn?.addEventListener('click', async () => {
+        await uploadprintNameFileAndSaveToFirestore(user);
+    });
 
     // Load form data from Firestore and populate fields
     await loadFormDataFromFirestore(user);
+
+        // File selection
+        printNameFileInput?.addEventListener('change', (event) => {
+        printNameFile = event.target.files[0];
+        console.log("Selected file:", printNameFile);
+    });
+
 
     // Add event listeners to form fields to save data on change, input, blur, and focus
     const formFields = document.querySelectorAll('input, select, textarea');

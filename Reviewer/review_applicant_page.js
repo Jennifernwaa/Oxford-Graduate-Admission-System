@@ -39,6 +39,41 @@ class ReviewApplicantPage {
     }
     
 
+    // Display document links on the page
+    async displayDocumentLinks(languageTestFileURL, supportFileURL, printNameFileURL) {
+        const documentsContainer = document.querySelector('#supportDocuments');
+
+        // Language Test File
+        const languageTestFileElement = document.createElement('p');
+        languageTestFileElement.innerHTML = `
+            <strong>Language Test File:</strong> 
+            ${languageTestFileURL 
+                ? `<i class="bi bi-file-text"></i><a href="${languageTestFileURL}" target="_blank" class="document-link">View Language Test File</a>` 
+                : `<span class="text-danger">Missing</span>`}
+        `;
+        documentsContainer.appendChild(languageTestFileElement);
+
+        // Supporting File
+        const supportFileElement = document.createElement('p');
+        supportFileElement.innerHTML = `
+            <strong>Supporting File:</strong> 
+            ${supportFileURL 
+                ? `<i class="bi bi-file-text"></i><a href="${supportFileURL}" target="_blank" class="document-link">View Supporting File</a>` 
+                : `<span class="text-danger">Missing</span>`}
+        `;
+        documentsContainer.appendChild(supportFileElement);
+
+        // Supporting File
+        const printNameFileElement = document.createElement('p');
+        printNameFileElement.innerHTML = `
+            <strong>Signature File:</strong> 
+            ${printNameFileURL 
+                ? `<i class="bi bi-file-text"></i><a href="${printNameFileURL}" target="_blank" class="document-link">View Supporting File</a>` 
+                : `<span class="text-danger">Missing</span>`}
+        `;
+        documentsContainer.appendChild(printNameFileElement);
+    }
+
     // Format date
     static formatDate(timestamp) {
         if (!timestamp) return 'N/A';
@@ -64,6 +99,25 @@ class ReviewApplicantPage {
             }
 
             try {
+
+                // Fetch Form 4 data
+            const form4DocRef = doc(db, "users", this.userId, "forms", "form4");
+            const form4DocSnap = await getDoc(form4DocRef);
+
+            // Fetch Form 6 data
+            const form6DocRef = doc(db, "users", this.userId, "forms", "form6");
+            const form6DocSnap = await getDoc(form6DocRef);
+
+            const form11DocRef = doc(db, "users", this.userId, "forms", "form11");
+            const form11DocSnap = await getDoc(form11DocRef);
+
+            // Extract document URLs
+            const languageTestFileURL = form4DocSnap.exists() ? form4DocSnap.data().languageTestFileURL : null;
+            const supportFileURL = form6DocSnap.exists() ? form6DocSnap.data().supportFileURL : null;
+            const printNameFileURL = form11DocSnap.exists() ? form11DocSnap.data().printNameFileURL : null;
+
+            // Display document links
+            this.displayDocumentLinks(languageTestFileURL, supportFileURL, printNameFileURL);
                 
                 this.formData = await this.getMergedFormData();
                 await this.populateApplicantDetails();
