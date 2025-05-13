@@ -88,15 +88,12 @@ function getFormData() {
     languageReading: document.getElementById("languageReading").value,
     languageWriting: document.getElementById("languageWriting").value,
     languageSpeaking: document.getElementById("languageSpeaking").value,
-    languageUnderstanding: document.getElementById("languageUnderstanding").value,
-
-    languangeTestFile: document.getElementById("langFile").value
+    languageUnderstanding: document.getElementById("languageUnderstanding").value
     };
 }
 
 // Function to save form data to Firestore
 async function saveFormDataToFirestore(user) {
-    const formData = getFormData();
         try {
             const docRef = doc(db, "users", user.uid, "forms", "form4");
             await setDoc(docRef, { formPage4Data: formData }, { merge: true });
