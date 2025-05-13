@@ -7,17 +7,20 @@ import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/fireb
 const firebaseConfig = {
   apiKey: "AIzaSyCbSqQtKpBtfu6EqTCyk5uTNkFiEc7jejU",
   authDomain: "oxford-graduate-admission.firebaseapp.com",
+  databaseURL: "https://oxford-graduate-admission-default-rtdb.asia-southeast1.firebasedatabase.app",
   projectId: "oxford-graduate-admission",
-  storageBucket: "oxford-graduate-admission.appspot.com",
+  storageBucket: "oxford-graduate-admission.firebasestorage.app",
   messagingSenderId: "992593803011",
   appId: "1:992593803011:web:4c853113afb814b9c7db36",
   measurementId: "G-Y3YHM86E5Z"
 };
 
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+
 
 // Function to save form data to Firestore
 async function saveFormDataToFirestore(user, formData) {
@@ -82,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
   onAuthStateChanged(auth, async (user) => {
     if (!user) {
       alert("You are not logged in!");
-      window.location.href = "login_applicant_page.html";
+      window.location.href = "../Login/login_applicant_page.html";
       return;
     }
     console.log("User authenticated, UID:", user.uid);

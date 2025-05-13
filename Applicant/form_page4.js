@@ -2,22 +2,62 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
 import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-storage.js";
 
 // Firebase config
 const firebaseConfig = {
-  apiKey: "AIzaSyCbSqQtKpBtfu6EqTCyk5uTNkFiEc7jejU",
-  authDomain: "oxford-graduate-admission.firebaseapp.com",
-  projectId: "oxford-graduate-admission",
-  storageBucket: "oxford-graduate-admission.appspot.com",
-  messagingSenderId: "992593803011",
-  appId: "1:992593803011:web:4c853113afb814b9c7db36",
-  measurementId: "G-Y3YHM86E5Z"
-};
+    apiKey: "AIzaSyCbSqQtKpBtfu6EqTCyk5uTNkFiEc7jejU",
+    authDomain: "oxford-graduate-admission.firebaseapp.com",
+    databaseURL: "https://oxford-graduate-admission-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "oxford-graduate-admission",
+    storageBucket: "oxford-graduate-admission.firebasestorage.app",
+    messagingSenderId: "992593803011",
+    appId: "1:992593803011:web:4c853113afb814b9c7db36",
+    measurementId: "G-Y3YHM86E5Z"
+  };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+const storage = getStorage(app);
+
+let langFile = null;
+const langFileInput = document.getElementById('langFile');
+const uploadLangFileBtn = document.getElementById('uploadLangFileBtn');
+
+async function uploadLangFileAndSaveToFirestore(user) {
+    if (!langFile) {
+        alert("Please choose a PDF file before uploading.");
+        return;
+    }
+
+    if (!user) {
+        alert("User not authenticated.");
+        return;
+    }
+
+    try {
+        const storageRef = ref(storage, `users/${user.uid}/${langFile.name}`);
+        const snapshot = await uploadBytes(storageRef, langFile);
+        console.log("Upload successful:", snapshot);
+
+        const downloadURL = await getDownloadURL(storageRef);
+        console.log("Download URL:", downloadURL);
+
+        // Save file URL to Firestore under form4
+        const docRef = doc(db, "users", user.uid, "forms", "form4");
+        await setDoc(docRef, {
+            languageTestFileURL: downloadURL
+        }, { merge: true });
+
+        alert("File uploaded and URL saved to Firestore!");
+
+    } catch (error) {
+        console.error("Upload failed:", error);
+        alert("Failed to upload file.");
+    }
+}
 
 // Function to get form data from the DOM
 function getFormData() {
@@ -73,10 +113,20 @@ async function loadFormDataFromFirestore(user) {
             const docSnap = await getDoc(docRef);
             if (docSnap.exists()) {
                 const formData = docSnap.data().formPage4Data || {};
+                const fileURL = docSnap.data().languageTestFileURL;
+                
+            // If file URL exists, create and insert link
+            if (fileURL) {
+                const fileLink = document.createElement('a');
+                fileLink.href = fileURL;
+                fileLink.textContent = "View previously uploaded file";
+                fileLink.target = "_blank";
+                document.body.appendChild(fileLink); // Or append to a specific div
+            }
                 populateFormFields(formData);
             } else {
                 console.log("No form data found for this user.");
-            }
+            }       
         } catch (error) {
             console.error("Error loading form data from Firestore:", error);
         }
@@ -106,6 +156,8 @@ function populateFormFields(formData) {
       }
     });
   }
+
+
   
 
 // Add event listener to the "Continue" button
@@ -120,10 +172,23 @@ document.addEventListener('DOMContentLoaded', () => {
       window.location.href = "login_applicant_page.html";
       return;
     }
-    console.log("User authenticated, UID:", user.uid);
+    console.log("User authenticated, UID:", user.uid); 
+
+    uploadLangFileBtn?.addEventListener('click', async () => {
+        await uploadLangFileAndSaveToFirestore(user);
+    });
+    
 
     // Load form data from Firestore and populate fields
     await loadFormDataFromFirestore(user);
+
+    // File selection
+    langFileInput?.addEventListener('change', (event) => {
+        langFile = event.target.files[0];
+        console.log("Selected file:", langFile);
+    });
+
+
     // Get form data from the DOM
     const formData = getFormData();
     // Populate form fields with data
