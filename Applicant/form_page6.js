@@ -42,7 +42,7 @@ function getFormData() {
         confirmAfford: document.getElementById('confirmAfford').checked,
         confirmEntry: document.getElementById('confirmEntry').checked,
 
-        supportingDocuments: document.getElementById('supportingDocuments').value,
+        supportingDocuments: document.getElementById('supportFile').value
     };
 }
 
