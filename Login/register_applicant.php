@@ -105,7 +105,7 @@
                           'http' => [
                               'method' => 'PUT',
                               'header' => 'Content-Type: application/json',
-                              'content' => json_encode(['username' => $email, 'role' => 'Applicant'])
+                              'content' => json_encode(['username' => $email,'password' => $password, 'role' => 'Applicant'])
                           ]
                       ]));
                       header('Location: ../Applicant/applicant_dashboard.html');

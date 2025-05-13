@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
       }
     } else {
-      window.location.href = "login_applicant_page.html"; // Redirect to login if not authenticated
+      window.location.href = "../Login/login_applicant_page.html"; // Redirect to login if not authenticated
     }
   });
 });
