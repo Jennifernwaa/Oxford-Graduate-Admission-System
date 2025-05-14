@@ -94,6 +94,7 @@ function getFormData() {
 
 // Function to save form data to Firestore
 async function saveFormDataToFirestore(user) {
+    const formData = getFormData();
         try {
             const docRef = doc(db, "users", user.uid, "forms", "form4");
             await setDoc(docRef, { formPage4Data: formData }, { merge: true });

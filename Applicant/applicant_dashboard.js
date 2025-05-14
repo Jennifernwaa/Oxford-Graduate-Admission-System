@@ -8,10 +8,11 @@ const firebaseConfig = {
   apiKey: "AIzaSyCbSqQtKpBtfu6EqTCyk5uTNkFiEc7jejU",
   authDomain: "oxford-graduate-admission.firebaseapp.com",
   projectId: "oxford-graduate-admission",
-  storageBucket: "oxford-graduate-admission.appspot.com",
+  storageBucket: "oxford-graduate-admission.firebasestorage.app",
   messagingSenderId: "992593803011",
   appId: "1:992593803011:web:4c853113afb814b9c7db36",
-  measurementId: "G-Y3YHM86E5Z"
+  measurementId: "G-Y3YHM86E5Z",
+  databaseURL: "https://oxford-graduate-admission-default-rtdb.asia-southeast1.firebasedatabase.app/"
 };
 
 // Initialize Firebase
@@ -23,7 +24,10 @@ const db = getFirestore(app);
 document.addEventListener('DOMContentLoaded', () => {
   onAuthStateChanged(auth, async (user) => {
     if (user) {
-      const userFormsRef = collection(db, `users/${user.uid}/forms`);
+      const userUid = user.uid; // Get the authenticated user's UID
+      console.log("Authenticated user UID:", userUid);
+
+      const userFormsRef = collection(db, `users/${userUid}/forms`);
       const formsSnap = await getDocs(userFormsRef);
 
       if (!formsSnap.empty) {
@@ -50,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('.applications-overview').innerHTML = applicationCard;
 
         // Listen for real-time updates to the form status
-        const formRef = doc(db, "users", user.uid, "forms", "form11");
+        const formRef = doc(db, "users", userUid, "forms", "form11");
         onSnapshot(formRef, (docSnap) => {
           if (docSnap.exists()) {
             const updatedStatus = docSnap.data().status;

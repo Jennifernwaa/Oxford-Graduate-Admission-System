@@ -85,7 +85,7 @@ async function fetchApplications() {
               userId: userId,
               formId: formDoc.id,
               submittedAt: formData.submittedAt ? formatDate(formData.submittedAt) : 'N/A',
-              status: formData.status || 'Pending',
+              status: formData.status || 'Not Started',
             };
 
             if (!application.givenName && !application.familyName) return;

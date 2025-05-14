@@ -1,8 +1,9 @@
 // Import Firebase modules
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
-import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+import { getFirestore, doc, setDoc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-storage.js";
+import { handleStatus } from './statusHandler.js';
 
 // Firebase config
 const firebaseConfig = {
@@ -67,7 +68,7 @@ function getFormData() {
         confirmOriginal: document.getElementById('confirmOriginal').checked,
         confirmTerms: document.getElementById('confirmTerms').checked,
         date: document.getElementById('date').value,
-        printName: document.getElementById('printName').value,
+        printNameFile: document.getElementById('printNameFile').value,
         signature: document.getElementById('signFile').value,
     };
 }
