@@ -6,7 +6,7 @@ define('MAILHOST', "smtp.gmail.com");
 define('USERNAME', "jennifernwachinaemere@gmail.com");
  
 // Define your 16 digit Gmail app-password.
-define('PASSWORD', "lrag xche qcmn jzyu");
+define('PASSWORD', "");
  
 // Define the email address from which the email is sent.
 // This email belongs to my website, it has nothing to do with Gmail.
